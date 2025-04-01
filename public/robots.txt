@@ -1,0 +1,31 @@
+# https://devweb.viry-brandon.fr
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://devweb.viry-brandon.fr/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 10
+
+# Directories
+Allow: /images/
+Allow: /projets/
+Allow: /contact/
+
+# Files
+Allow: /site.webmanifest
+Allow: /sitemap.xml
+
+# Common crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /images/
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /

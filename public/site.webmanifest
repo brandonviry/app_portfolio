@@ -1,0 +1,35 @@
+{
+  "name": "Portfolio VIRY BRANDON",
+  "short_name": "VIRY BRANDON",
+  "description": "Portfolio professionnel de VIRY BRANDON - Développeur Full Stack",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "dir": "ltr",
+  "lang": "fr-FR",
+  "icons": [
+    {
+      "src": "/images/og-image.jpg",
+      "sizes": "204x196",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "/images/og-image.jpg",
+      "sizes": "204x196",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["portfolio", "development", "web"],
+  "screenshots": [
+    {
+      "src": "/images/og-image.jpg",
+      "sizes": "204x196",
+      "type": "image/jpeg",
+      "platform": "wide",
+      "label": "Portfolio VIRY BRANDON"
+    }
+  ]
+}
