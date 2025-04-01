@@ -1,9 +1,6 @@
 import { notion } from './client';
-import { 
+import type { 
   PageObjectResponse,
-  PartialPageObjectResponse,
-  DatabaseObjectResponse,
-  PartialDatabaseObjectResponse,
   TitlePropertyItemObjectResponse,
   RichTextPropertyItemObjectResponse,
   UrlPropertyItemObjectResponse
@@ -12,11 +9,18 @@ import {
 export type Project = {
   titre: string;
   Description: string;
-  Cover?: string;
-  Lien?: string;
+  Cover?: string | undefined;
+  Lien?: string | undefined;
 };
 
-type NotionPage = PageObjectResponse | PartialPageObjectResponse | DatabaseObjectResponse | PartialDatabaseObjectResponse;
+const isValidHttpUrl = (string: string) => {
+  try {
+    const url = new URL(string);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
+  }
+};
 
 export async function getProjects(): Promise<Project[]> {
   try {
@@ -30,54 +34,48 @@ export async function getProjects(): Promise<Project[]> {
       ],
     });
 
-    const getTitle = (prop: unknown): string => {
-      if (prop && typeof prop === 'object' && 'title' in prop) {
-        const titleProp = prop as TitlePropertyItemObjectResponse;
-        const titleArray = titleProp.title;
-        if (Array.isArray(titleArray) && titleArray.length > 0) {
-          return titleArray[0].plain_text;
-        }
-      }
-      return '';
-    };
+    return response.results
+      .filter((page): page is PageObjectResponse => 'properties' in page)
+      .map((page) => {
+        const properties = page.properties;
 
-    const getRichText = (prop: unknown): string => {
-      if (prop && typeof prop === 'object' && 'rich_text' in prop) {
-        const richTextProp = prop as RichTextPropertyItemObjectResponse;
-        const richTextArray = richTextProp.rich_text;
-        if (Array.isArray(richTextArray) && richTextArray.length > 0) {
-          return richTextArray[0].plain_text;
-        }
-      }
-      return '';
-    };
+        // Type guards pour vérifier le type de chaque propriété
+        const isTitleProperty = (prop: unknown): prop is TitlePropertyItemObjectResponse =>
+          Boolean(prop && typeof prop === 'object' && 'type' in prop && prop.type === 'title');
 
-    const getUrl = (prop: unknown): string => {
-      if (prop && typeof prop === 'object' && 'url' in prop) {
-        const urlProp = prop as UrlPropertyItemObjectResponse;
-        return urlProp.url || '';
-      }
-      return '';
-    };
+        const isRichTextProperty = (prop: unknown): prop is RichTextPropertyItemObjectResponse =>
+          Boolean(prop && typeof prop === 'object' && 'type' in prop && prop.type === 'rich_text');
 
-    return response.results.map((page: NotionPage) => {
-      if (!('properties' in page)) return { titre: '', Description: '' };
-      
-      const properties = page.properties;
-      const cover = getRichText(properties['Cover ']) || 
-                   getUrl(properties.Cover) || 
-                   getRichText(properties.Cover) || 
-                   '';
+        const isUrlProperty = (prop: unknown): prop is UrlPropertyItemObjectResponse =>
+          Boolean(prop && typeof prop === 'object' && 'type' in prop && prop.type === 'url');
 
-      return {
-        titre: getTitle(properties.titre),
-        Description: getRichText(properties.Description),
-        Cover: cover,
-        Lien: getRichText(properties.Lien) || getUrl(properties.lien) || '',
-      };
-    });
+        // Extraction des valeurs avec type checking
+        const titre = isTitleProperty(properties.titre) ? properties.titre.title[0]?.plain_text : '';
+        const description = isRichTextProperty(properties.Description) ? properties.Description.rich_text[0]?.plain_text : '';
+        
+        // Pour Cover, on essaie d'abord rich_text, puis url
+        const coverRichText = isRichTextProperty(properties['Cover ']) ? properties['Cover '].rich_text[0]?.plain_text : '';
+        const coverUrl = isUrlProperty(properties.Cover) ? properties.Cover.url : '';
+        const cover = coverRichText || coverUrl;
+
+        // Pour Lien, même logique
+        const lienRichText = isRichTextProperty(properties.Lien) ? properties.Lien.rich_text[0]?.plain_text : '';
+        const lienUrl = isUrlProperty(properties.lien) ? properties.lien.url : '';
+        const lien = lienRichText || lienUrl;
+
+        // Validation des URLs
+        const validCover = cover && isValidHttpUrl(cover) ? cover : undefined;
+        const validLien = lien && isValidHttpUrl(lien) ? lien : undefined;
+
+        return {
+          titre,
+          Description: description,
+          Cover: validCover,
+          Lien: validLien,
+        };
+      });
   } catch (error) {
-    console.error('Error fetching projects from Notion database:', error);
-    return [];
+    console.error('Error fetching Notion database:', error);
+    throw error;
   }
 }
