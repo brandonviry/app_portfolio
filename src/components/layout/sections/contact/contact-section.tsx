@@ -46,7 +46,7 @@ export function ContactSection() {
               "leading-relaxed"
             )}
           >
-            N'hésitez pas à me contacter pour discuter de vos projets ou pour toute autre question.
+            N&apos;hésitez pas à me contacter pour discuter de vos projets ou pour toute autre question.
             Je vous répondrai dans les plus brefs délais.
           </Typography>
         </div>

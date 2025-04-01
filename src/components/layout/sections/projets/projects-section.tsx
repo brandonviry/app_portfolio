@@ -1,5 +1,4 @@
 import { Typography } from "@/components/ui/typography/typography";
-import { getProjects } from "@/lib/notion/projet_api";
 import { Project } from "@/types/project";
 import { ProjectsGrid } from "@/components/ui/grid/projects-grid";
 

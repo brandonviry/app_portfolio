@@ -27,6 +27,7 @@ function TechnologyCardSkeleton() {
 export function TechnologiesSection() {
   const [technologies, setTechnologies] = useState<Technology[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     const fetchTechnologies = async () => {
@@ -35,99 +36,91 @@ export function TechnologiesSection() {
         const techs = await getTechnologies();
         setTechnologies(techs);
       } catch (error) {
-        console.error('Error fetching technologies:', error);
+        setError(error instanceof Error ? error : new Error("Une erreur s&apos;est produite"));
       } finally {
         setIsLoading(false);
       }
     };
+
     fetchTechnologies();
   }, []);
+
+  if (error) {
+    return (
+      <section className="py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Typography level="h2" className="text-center text-foreground mb-4">
+            Une erreur s&apos;est produite lors du chargement des technologies
+          </Typography>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className={cn(
       "relative",
-      "py-16 md:py-24",
-      "bg-surface-1/50"
+      "py-16 md:py-24"
     )}>
-      {/* Background decoration */}
-      <div className={cn(
-        "absolute inset-0 -z-10",
-        "bg-grid-pattern",
-        "opacity-5"
-      )} />
-
-      <div className={cn(
-        "container mx-auto",
-        "px-4 sm:px-6"
-      )}>
-        {/* Header */}
-        <div className={cn(
-          "text-center",
-          "mb-12"
-        )}>
-          <Typography 
-            level="h2" 
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Heading */}
+        <div className="text-center mb-12">
+          <Typography
+            level="h2"
             className={cn(
-              "text-text-primary",
+              "text-foreground",
               "mb-4"
             )}
           >
             Technologies
           </Typography>
-          <Typography 
-            level="body1" 
+          <Typography
+            level="body1"
             className={cn(
-              "text-text-secondary",
+              "text-foreground/60",
               "max-w-2xl mx-auto"
             )}
           >
-            Les technologies que j'utilise au quotidien pour créer des applications modernes et performantes
+            Les technologies que j&apos;utilise au quotidien pour créer des applications modernes et performantes
           </Typography>
         </div>
 
-        {/* Technologies Grid */}
+        {/* Grid */}
         <div className={cn(
-          "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6",
-          "gap-6",
-          "max-w-6xl mx-auto"
+          "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5",
+          "gap-6"
         )}>
           {isLoading ? (
-            // Afficher 12 skeletons pendant le chargement
-            <>
-              {[...Array(12)].map((_, index) => (
-                <TechnologyCardSkeleton key={index} />
-              ))}
-            </>
-          ) : technologies.map((tech) => (
-            <div 
-              key={tech.name}
-              className={cn(
-                "group",
-                "flex flex-col items-center",
-                "p-6",
-                "rounded-xl",
-                "bg-surface-2/50",
-                "backdrop-blur-sm",
-                "border border-border/10",
-                "hover:border-accent/20",
-                "transition-all duration-300",
-                "hover:shadow-lg hover:shadow-accent/5",
-                "hover:-translate-y-1"
-              )}
-            >
-              <span className="text-2xl mb-3">{tech.icon}</span>
-              <Typography 
-                level="body2"
+            // Afficher les skeletons pendant le chargement
+            Array.from({ length: 10 }).map((_, index) => (
+              <TechnologyCardSkeleton key={index} />
+            ))
+          ) : (
+            // Afficher les technologies
+            technologies.map((tech) => (
+              <div
+                key={tech.name}
                 className={cn(
-                  "text-text-secondary",
-                  "group-hover:text-text-primary",
-                  "transition-colors duration-300"
+                  "flex flex-col items-center",
+                  "p-6",
+                  "rounded-xl",
+                  "bg-surface-2/50",
+                  "border border-border/10",
+                  "transition-all duration-300",
+                  "hover:scale-105 hover:shadow-lg"
                 )}
               >
-                {tech.name}
-              </Typography>
-            </div>
-          ))}
+                {/* Icon */}
+                <div className="w-8 h-8 mb-3">
+                  {tech.icon}
+                </div>
+                {/* Name */}
+                <Typography level="body2" className="text-foreground text-center">
+                  {tech.name}
+                </Typography>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </section>

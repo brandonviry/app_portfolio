@@ -1,9 +1,10 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { forwardRef, InputHTMLAttributes } from "react";
+import { forwardRef } from "react";
+import { Typography } from "../typography/typography";
 
-interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
 }
 
@@ -12,24 +13,20 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
     return (
       <div className="w-full">
         {label && (
-          <label
-            htmlFor={props.id}
-            className="block text-sm font-medium text-text-primary mb-2"
-          >
+          <Typography level="body2" className="text-foreground mb-1">
             {label}
-          </label>
+          </Typography>
         )}
         <input
           type={type}
           className={cn(
-            "block w-full",
-            "rounded-lg",
-            "border border-border/10",
-            "bg-background/50",
-            "px-4 py-3",
-            "text-black placeholder:text-text-secondary/50",
-            "focus:outline-none focus:ring-2 focus:ring-accent/20",
-            "transition duration-200",
+            "flex h-10 w-full rounded-md border border-border/50",
+            "bg-background/50 px-3 py-2",
+            "text-sm text-black",
+            "ring-offset-background",
+            "placeholder:text-foreground/40",
+            "focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2",
+            "disabled:cursor-not-allowed disabled:opacity-50",
             className
           )}
           ref={ref}
@@ -39,3 +36,5 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
     );
   }
 );
+
+FormInput.displayName = "FormInput";

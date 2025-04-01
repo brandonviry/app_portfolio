@@ -7,8 +7,6 @@ const socialLinks = [
   { name: 'Instagram', href: 'https://www.instagram.com/virybrandon/' },
 ];
 
-
-
 const navigation = [
   { name: 'Accueil', href: '/' },
   { name: 'Projets', href: '/projets' },
@@ -28,7 +26,7 @@ export function Footer() {
               Portfolio
             </Typography>
             <Typography level="body2" className="text-foreground/60">
-              Développeur Full Stack passionné par la création d'expériences web innovantes.
+              Développeur Full Stack passionné par la création d&apos;expériences web innovantes.
             </Typography>
           </div>
 
@@ -40,7 +38,7 @@ export function Footer() {
             <ul className="space-y-2">
               {navigation.map((item) => (
                 <li key={item.name}>
-                  <Link 
+                  <Link
                     href={item.href}
                     className="text-foreground/60 hover:text-foreground transition-colors"
                   >
@@ -76,7 +74,7 @@ export function Footer() {
         {/* Copyright */}
         <div className="mt-8 pt-8 border-t border-border/40 text-center">
           <Typography level="body2" className="text-foreground/60">
-            © {currentYear} Portfolio. Tous droits réservés.
+            &copy; {currentYear} Portfolio. Tous droits réservés.
           </Typography>
         </div>
       </div>

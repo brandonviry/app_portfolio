@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getProjects, type Project } from '@/lib/notion/projet_api';
+import { getProjects } from '@/lib/notion/projet_api';
 
 export async function GET() {
   try {
@@ -13,4 +13,3 @@ export async function GET() {
     );
   }
 }
-
