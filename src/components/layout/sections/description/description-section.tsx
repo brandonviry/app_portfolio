@@ -103,8 +103,8 @@ export function DescriptionSection() {
           <div className="relative w-full aspect-square lg:aspect-[4/5]">
             {!imageLoaded && <ImagePlaceholder />}
             <Image
-              src="https://cdn.prod.website-files.com/65d3f774a78b395bbf5ab0c6/65d3f99d829d749752273d8d__25635614-0fa8-4c07-a612-1430fadb9116-removebg-preview.png"
-              alt="Next.js Banner"
+              src="/images/logo.jpg"
+              alt="logo"
               fill
               className={cn(
                 "object-cover grayscale",
