@@ -6,10 +6,11 @@ import { Typography } from "../typography/typography";
 
 interface FormTextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
+  error?: string;
 }
 
 const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
-  ({ className, label, id, ...props }, ref) => {
+  ({ className, label, error, id, ...props }, ref) => {
     return (
       <div className="w-full">
         {label && (
@@ -32,6 +33,11 @@ const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
           ref={ref}
           {...props}
         />
+        {error && (
+          <Typography level="body2" className="text-red-500 mt-1">
+            {error}
+          </Typography>
+        )}
       </div>
     );
   }

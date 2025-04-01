@@ -6,10 +6,11 @@ import { Typography } from "../typography/typography";
 
 interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
+  error?: string;
 }
 
 export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
-  ({ className, label, type, ...props }, ref) => {
+  ({ className, label, type, error, ...props }, ref) => {
     return (
       <div className="w-full">
         {label && (
@@ -32,6 +33,11 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
           ref={ref}
           {...props}
         />
+        {error && (
+          <Typography level="body2" className="text-error mt-1">
+            {error}
+          </Typography>
+        )}
       </div>
     );
   }

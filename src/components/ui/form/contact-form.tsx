@@ -3,27 +3,32 @@
 import { Button } from "@/components/ui/button/button";
 import { FormInput } from "@/components/ui/form/form-input";
 import { FormTextarea } from "@/components/ui/form/form-textarea";
-import { Typography } from "@/components/ui/typography/typography";
-import { cn } from "@/lib/utils";
+import { emailConfig } from "@/config/email";
 import { zodResolver } from "@hookform/resolvers/zod";
+import emailjs from '@emailjs/browser';
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import emailjs from '@emailjs/browser';
-import { useState, useEffect, useRef } from "react";
-import { emailConfig } from "@/config/email";
 
 const contactFormSchema = z.object({
   name: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
-  from_email: z.string().email("Email invalide"),
+  from_email: z.string().email("L'email n'est pas valide"),
   message: z.string().min(10, "Le message doit contenir au moins 10 caractères"),
 });
 
 type ContactFormData = z.infer<typeof contactFormSchema>;
 
+interface EmailJSError {
+  status?: number;
+  text?: string;
+  name?: string;
+  message?: string;
+}
+
 export function ContactForm() {
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-  const formRef = useRef<HTMLFormElement>(null);
-  
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   useEffect(() => {
     emailjs.init(emailConfig.publicKey);
   }, []);
@@ -38,27 +43,32 @@ export function ContactForm() {
   });
 
   const onSubmit = async (data: ContactFormData) => {
-    if (!formRef.current) return;
-
     try {
       setSubmitStatus('idle');
-      
+      setErrorMessage(null);
+
+      if (!emailConfig.serviceId || !emailConfig.templateId || !emailConfig.publicKey) {
+        setErrorMessage("La configuration du formulaire est incomplète. Veuillez contacter l'administrateur.");
+        setSubmitStatus('error');
+        return;
+      }
+
       const templateParams = {
         name: data.name,
+        from_email: data.from_email,
+        message: data.message,
         time: new Date().toLocaleString('fr-FR', { 
           dateStyle: 'full', 
           timeStyle: 'short' 
-        }),
-        message: data.message,
-        from_email: data.from_email
+        })
       };
 
-      console.log('Envoi avec les paramètres:', {
+      console.log('Tentative d\'envoi avec:', {
         serviceId: emailConfig.serviceId,
         templateId: emailConfig.templateId,
         templateParams
       });
-
+      
       const result = await emailjs.send(
         emailConfig.serviceId,
         emailConfig.templateId,
@@ -69,148 +79,101 @@ export function ContactForm() {
       console.log('Email envoyé avec succès:', result);
       setSubmitStatus('success');
       reset();
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const emailError = error as EmailJSError;
       console.error("Erreur d'envoi:", {
-        message: error?.message,
-        name: error?.name,
-        status: error?.status,
-        text: error?.text
+        message: emailError.message,
+        name: emailError.name,
+        status: emailError.status,
+        text: emailError.text
       });
+      setErrorMessage("Une erreur est survenue lors de l'envoi. Veuillez réessayer plus tard.");
       setSubmitStatus('error');
     }
   };
 
   return (
     <form
-      ref={formRef}
       onSubmit={handleSubmit(onSubmit)}
-      className={cn(
-        "w-full max-w-2xl mx-auto",
-        "p-6 md:p-8",
-        "bg-background/50",
-        "backdrop-blur-sm",
-        "border border-border/10",
-        "rounded-2xl",
-        "shadow-lg shadow-accent/5"
-      )}
+      className="space-y-6"
     >
-      <Typography
-        level="h5"
-        className={cn(
-          "text-text-primary",
-          "text-center",
-          "mb-6"
-        )}
-      >
-        Envoyez-moi un message
-      </Typography>
-
-      <div className="space-y-6">
-        {/* Nom */}
-        <div>
-          <FormInput
-            label="Nom"
-            {...register("name")}
-            name="name"
-            id="name"
-            type="text"
-            placeholder="Votre nom"
-            className={cn(
-              errors.name && "border-red-500 focus:border-red-500 focus:ring-red-500"
-            )}
-          />
-          {errors.name && (
-            <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>
-          )}
-        </div>
-
-        {/* Email */}
-        <div>
-          <FormInput
-            label="Email"
-            {...register("from_email")}
-            name="from_email"
-            id="from_email"
-            type="email"
-            placeholder="votre.email@example.com"
-            className={cn(
-              errors.from_email && "border-red-500 focus:border-red-500 focus:ring-red-500"
-            )}
-          />
-          {errors.from_email && (
-            <p className="mt-1 text-sm text-red-500">{errors.from_email.message}</p>
-          )}
-        </div>
-
-        {/* Message */}
-        <div>
-          <FormTextarea
-            label="Message"
-            {...register("message")}
-            name="message"
-            id="message"
-            rows={5}
-            placeholder="Votre message..."
-            className={cn(
-              errors.message && "border-red-500 focus:border-red-500 focus:ring-red-500",
-              "resize-none"
-            )}
-          />
-          {errors.message && (
-            <p className="mt-1 text-sm text-red-500">{errors.message.message}</p>
-          )}
-        </div>
-
-        {/* Submit Button */}
-        <div className="pt-2">
-          <Button
-            type="submit"
-            variant="cta"
-            size="lg"
-            className={cn(
-              "w-full",
-              "font-medium",
-              "disabled:opacity-50"
-            )}
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? (
-              <span className="flex items-center justify-center gap-2">
-                <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  />
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  />
-                </svg>
-                Envoi en cours...
-              </span>
-            ) : (
-              "Envoyer"
-            )}
-          </Button>
-
-          {/* Status Messages */}
-          {submitStatus === 'success' && (
-            <p className="mt-4 text-sm text-green-500 text-center">
-              Message envoyé avec succès ! Je vous répondrai dès que possible.
-            </p>
-          )}
-          {submitStatus === 'error' && (
-            <p className="mt-4 text-sm text-red-500 text-center">
-              Une erreur est survenue lors de l'envoi. Veuillez réessayer plus tard.
-            </p>
-          )}
-        </div>
+      {/* Name */}
+      <div>
+        <FormInput
+          label="Nom"
+          placeholder="Votre nom"
+          error={errors.name?.message}
+          {...register("name")}
+        />
       </div>
+
+      {/* Email */}
+      <div>
+        <FormInput
+          label="Email"
+          type="email"
+          placeholder="votre.email@example.com"
+          error={errors.from_email?.message}
+          {...register("from_email")}
+        />
+      </div>
+
+      {/* Message */}
+      <div>
+        <FormTextarea
+          label="Message"
+          placeholder="Votre message..."
+          error={errors.message?.message}
+          {...register("message")}
+        />
+      </div>
+
+      {/* Submit Button */}
+      <div>
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          variant="cta"
+          className="w-full"
+        >
+          {isSubmitting ? (
+            <span className="flex items-center justify-center gap-2">
+              <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                />
+              </svg>
+              Envoi en cours...
+            </span>
+          ) : (
+            "Envoyer"
+          )}
+        </Button>
+      </div>
+
+      {/* Success Message */}
+      {submitStatus === 'success' && (
+        <div className="text-green-600 text-center mt-4">
+          Message envoyé avec succès !
+        </div>
+      )}
+
+      {/* Error Message */}
+      {errorMessage && (
+        <div className="text-red-600 text-center mt-4">
+          {errorMessage}
+        </div>
+      )}
     </form>
   );
 }
