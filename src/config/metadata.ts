@@ -81,7 +81,7 @@ const defaultMetadata: Metadata = {
     maximumScale: 1,
   },
   verification: {
-    google: '',
+    google: 'SLV2ObWWagL88vu2aiGtf7-Nf6vKQsT_UrQ2A160Q_E',
   },
   alternates: {
     canonical: siteConfig.url,
