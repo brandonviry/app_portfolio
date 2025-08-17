@@ -79,7 +79,7 @@ export function TechnologiesSection() {
         const techs = await getTechnologies();
         setTechnologies(techs);
       } catch (error) {
-        setError(error instanceof Error ? error : new Error("Une erreur s'est produite"));
+        setError(error instanceof Error ? error : new Error("Une erreur s&apos;est produite"));
       } finally {
         setIsLoading(false);
       }
@@ -93,7 +93,7 @@ export function TechnologiesSection() {
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Typography level="h2" className="text-center text-foreground mb-4">
-            Une erreur s'est produite lors du chargement des technologies
+            Une erreur s&apos;est produite lors du chargement des technologies
           </Typography>
         </div>
       </section>
@@ -124,7 +124,7 @@ export function TechnologiesSection() {
               "max-w-2xl mx-auto"
             )}
           >
-            Les technologies que j'utilise au quotidien pour créer des applications modernes et performantes
+            Les technologies que j&apos;utilise au quotidien pour créer des applications modernes et performantes
           </Typography>
         </div>
 
