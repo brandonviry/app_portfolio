@@ -103,13 +103,12 @@ export function DescriptionSection() {
           <div className="relative w-full aspect-square lg:aspect-[4/5]">
             {!imageLoaded && <ImagePlaceholder />}
             <Image
-              src="/images/logo.jpg"
+              src="/images/avatar.webp"
               alt="logo"
               fill
               className={cn(
-                "object-cover grayscale",
+                "object-cover",
                 "transition-all duration-300",
-                "hover:grayscale-0",
                 !imageLoaded && "opacity-0"
               )}
               onLoadingComplete={() => setImageLoaded(true)}

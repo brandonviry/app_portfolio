@@ -61,7 +61,7 @@ export async function getDescription(): Promise<Description | null> {
     };
 
   } catch (error) {
-    console.error('Error fetching description from Notion database:', error);
+    console.warn('Notion Description API failed:', error);
     return null;
   }
 }

@@ -51,7 +51,7 @@ export async function getProjects(): Promise<Project[]> {
 
         // Extraction des valeurs avec type checking
         const titre = isTitleProperty(properties.titre) ? properties.titre.title[0]?.plain_text : '';
-        const description = isRichTextProperty(properties.Description) ? properties.Description.rich_text[0]?.plain_text : '';
+        const description = isRichTextProperty(properties.description) ? properties.description.rich_text[0]?.plain_text : '';
         
         // Pour Cover, on essaie d'abord rich_text, puis url
         const coverRichText = isRichTextProperty(properties['Cover ']) ? properties['Cover '].rich_text[0]?.plain_text : '';
@@ -75,7 +75,7 @@ export async function getProjects(): Promise<Project[]> {
         };
       });
   } catch (error) {
-    console.error('Error fetching Notion database:', error);
+    console.error('Erreur lors de la récupération des données Notion:', error);
     throw error;
   }
 }

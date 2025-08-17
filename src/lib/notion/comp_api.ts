@@ -59,7 +59,7 @@ export async function getCompetences(): Promise<Competence[]> {
       };
     });
   } catch (error) {
-    console.error('Error fetching Notion CV database:', error);
+    console.warn('Notion CV API failed:', error);
     throw error;
   }
 }

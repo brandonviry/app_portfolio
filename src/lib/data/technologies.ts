@@ -1,31 +1,8 @@
 // Type pour une technologie
 export interface Technology {
   name: string;
-  icon: string;
+  icon: string; // Sera utilisé comme fallback emoji simple
 }
-
-// Mapping des icônes pour les technologies
-export const technologyIcons: { [key: string]: string } = {
-  'React': '⚛️',
-  'Nextjs': '▲',
-  'TypeScript': '🔷',
-  'JavaScript': '💛',
-  'HTML5': '🌐',
-  'CSS': '🎨',
-  'SCSS': '💅',
-  'Nodejs': '🟢',
-  'MySQL': '🐬',
-  'Git': '📚',
-  'Java': '☕',
-  'Python': '🐍',
-  'C': '⚙️',
-  'Shell': '🐚',
-  'Expressjs': '🚂',
-  'Vitejs': '⚡',
-  'PUG': '🐶',
-  'Figma': '🎯',
-  'VScode': '📝',
-};
 
 export async function getTechnologies(): Promise<Technology[]> {
   try {
@@ -36,7 +13,7 @@ export async function getTechnologies(): Promise<Technology[]> {
     const competences = await response.json();
     return competences[0]?.CompTechnique.map((tech: string) => ({
       name: tech,
-      icon: technologyIcons[tech.replace(/[\s.-]/g, '')] || '💻'
+      icon: '💻' // Icône par défaut, sera remplacée par le système dynamique
     })) || [];
   } catch (error) {
     console.error('Error fetching technologies:', error);
