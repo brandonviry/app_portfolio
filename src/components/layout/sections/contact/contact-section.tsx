@@ -1,6 +1,7 @@
 import { Typography } from "@/components/ui/typography/typography";
 import { ContactForm } from "@/components/ui/form/contact-form";
 import { ContactInfo } from "@/components/ui/contact/contact-info";
+import { Divider } from "@/components/ui/decoration/divider";
 import { cn } from "@/lib/utils";
 
 export function ContactSection() {
@@ -28,21 +29,27 @@ export function ContactSection() {
         <div className={cn(
           "text-center",
           "max-w-2xl mx-auto",
-          "mb-16"
+          "mb-16",
+          "space-y-4"
         )}>
-          <Typography 
-            level="h2" 
+          <Typography
+            level="h2"
             className={cn(
               "text-accent",
-              "mb-4"
+              "text-3xl md:text-4xl lg:text-5xl",
+              "font-bold tracking-tight"
             )}
           >
             Me Contacter
           </Typography>
-          <Typography 
-            level="body1" 
+
+          <Divider variant="gradient" align="center" className="mx-auto" />
+
+          <Typography
+            level="body1"
             className={cn(
               "text-text-secondary",
+              "text-base md:text-lg",
               "leading-relaxed"
             )}
           >

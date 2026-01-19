@@ -1,6 +1,7 @@
 'use client';
 
 import { Typography } from "@/components/ui/typography/typography";
+import { Divider } from "@/components/ui/decoration/divider";
 import { cn } from "@/lib/utils";
 import { getTechnologiesByCategory } from "@/lib/data/technologies";
 
@@ -31,11 +32,12 @@ function generateTechIcon(name: string) {
 
   return (
     <div className={cn(
-      "w-full h-full rounded-lg",
+      "w-full h-full",
       "bg-gradient-to-br", gradient,
       "flex items-center justify-center",
-      "text-white font-bold text-sm",
-      "shadow-lg"
+      "text-white font-bold text-xs sm:text-sm",
+      "shadow-lg",
+      "border border-white/20"
     )}>
       {initials.toUpperCase()}
     </div>
@@ -52,21 +54,31 @@ export function TechnologiesSection() {
     )}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
-        <div className="text-center mb-16">
+        <div className={cn(
+          "text-center",
+          "max-w-2xl mx-auto",
+          "mb-16",
+          "space-y-4"
+        )}>
           <Typography
             level="h2"
             className={cn(
-              "text-foreground",
-              "mb-4"
+              "text-accent",
+              "text-3xl md:text-4xl lg:text-5xl",
+              "font-bold tracking-tight"
             )}
           >
             Technologies & Compétences
           </Typography>
+
+          <Divider variant="gradient" align="center" className="mx-auto" />
+
           <Typography
             level="body1"
             className={cn(
-              "text-foreground/60",
-              "max-w-2xl mx-auto"
+              "text-text-secondary",
+              "text-base md:text-lg",
+              "leading-relaxed"
             )}
           >
             Les technologies que j&apos;utilise au quotidien pour créer des applications modernes et performantes
@@ -81,9 +93,10 @@ export function TechnologiesSection() {
               <Typography
                 level="h3"
                 className={cn(
-                  "text-foreground/80",
+                  "text-accent",
                   "mb-6",
-                  "text-xl font-semibold"
+                  "text-xl md:text-2xl",
+                  "font-semibold"
                 )}
               >
                 {category.category}
@@ -91,88 +104,99 @@ export function TechnologiesSection() {
 
               {/* Technologies Grid */}
               <div className={cn(
-                "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6",
-                "gap-4 md:gap-6"
+                "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6",
+                "gap-3 md:gap-4"
               )}>
                 {category.technologies.map((tech) => (
                   <div
                     key={tech}
                     className={cn(
                       "group relative",
-                      "p-6",
-                      "rounded-2xl",
-                      "bg-gradient-to-br from-surface-2/30 to-surface-2/10",
-                      "border border-border/20",
-                      "transition-all duration-500 ease-out",
-                      "hover:scale-105 hover:rotate-1",
-                      "hover:shadow-2xl hover:shadow-primary/10",
-                      "hover:border-primary/30",
-                      "cursor-pointer",
-                      "backdrop-blur-sm"
+                      "p-4 md:p-5",
+                      "bg-surface-1/50",
+                      "border-2 border-border/20",
+                      "backdrop-blur-sm",
+                      "transition-all duration-300",
+                      "hover:border-accent/50",
+                      "hover:-translate-y-1",
+                      "hover:shadow-lg hover:shadow-accent/10",
+                      "cursor-pointer"
                     )}
                   >
-                    {/* Background glow effect */}
+                    {/* Corner accents - Top left */}
                     <div className={cn(
-                      "absolute inset-0 rounded-2xl",
-                      "bg-gradient-to-br from-primary/5 to-accent/5",
+                      "absolute top-0 left-0",
+                      "w-2 h-2",
+                      "border-t-2 border-l-2 border-accent",
                       "opacity-0 group-hover:opacity-100",
-                      "transition-opacity duration-500"
+                      "transition-opacity duration-300"
                     )} />
 
-                    {/* Shine effect */}
+                    {/* Corner accents - Bottom right */}
                     <div className={cn(
-                      "absolute inset-0 rounded-2xl",
-                      "bg-gradient-to-r from-transparent via-white/5 to-transparent",
-                      "translate-x-[-100%] group-hover:translate-x-[100%]",
-                      "transition-transform duration-700 ease-out"
+                      "absolute bottom-0 right-0",
+                      "w-2 h-2",
+                      "border-b-2 border-r-2 border-cta",
+                      "opacity-0 group-hover:opacity-100",
+                      "transition-opacity duration-300"
+                    )} />
+
+                    {/* Scan line effect */}
+                    <div className={cn(
+                      "absolute inset-0",
+                      "bg-gradient-to-b from-transparent via-accent/5 to-transparent",
+                      "translate-y-[-100%] group-hover:translate-y-[100%]",
+                      "transition-transform duration-1000 ease-out",
+                      "pointer-events-none"
                     )} />
 
                     {/* Content */}
-                    <div className="relative z-10 flex flex-col items-center">
+                    <div className="relative z-10 flex flex-col items-center gap-3">
                       {/* Icon container */}
                       <div className={cn(
-                        "w-12 h-12 mb-4",
+                        "w-12 h-12 sm:w-14 sm:h-14",
                         "flex items-center justify-center",
-                        "rounded-xl",
-                        "bg-gradient-to-br from-primary/10 to-accent/10",
-                        "group-hover:from-primary/20 group-hover:to-accent/20",
+                        "border-2 border-border/30",
+                        "bg-surface-2/50",
+                        "group-hover:border-accent/50",
                         "transition-all duration-300",
-                        "group-hover:scale-110",
-                        "overflow-hidden"
+                        "overflow-hidden",
+                        "relative"
                       )}>
-                        <div className="w-8 h-8">
+                        <div className="w-8 h-8 sm:w-10 sm:h-10">
                           {generateTechIcon(tech)}
                         </div>
+
+                        {/* Inner glow */}
+                        <div className={cn(
+                          "absolute inset-0",
+                          "bg-accent/0 group-hover:bg-accent/5",
+                          "transition-colors duration-300"
+                        )} />
                       </div>
 
                       {/* Name */}
                       <Typography
                         level="body2"
                         className={cn(
-                          "text-foreground/80 text-center font-medium",
-                          "group-hover:text-foreground",
+                          "text-text-secondary text-center font-medium",
+                          "group-hover:text-accent",
                           "transition-colors duration-300",
-                          "text-xs sm:text-sm"
+                          "text-xs sm:text-sm",
+                          "leading-tight"
                         )}
                       >
                         {tech}
                       </Typography>
                     </div>
 
-                    {/* Floating particles effect */}
+                    {/* Status indicator */}
                     <div className={cn(
-                      "absolute top-2 right-2 w-1 h-1",
-                      "bg-primary/30 rounded-full",
+                      "absolute top-2 right-2",
+                      "w-1.5 h-1.5",
+                      "bg-cta",
                       "opacity-0 group-hover:opacity-100",
-                      "animate-ping",
                       "transition-opacity duration-300"
-                    )} />
-                    <div className={cn(
-                      "absolute bottom-3 left-3 w-0.5 h-0.5",
-                      "bg-accent/40 rounded-full",
-                      "opacity-0 group-hover:opacity-100",
-                      "animate-pulse",
-                      "transition-opacity duration-300 delay-100"
                     )} />
                   </div>
                 ))}

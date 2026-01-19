@@ -1,6 +1,6 @@
 import { Typography } from "@/components/ui/typography/typography";
+import { Button } from "@/components/ui/button/button";
 import { cn } from "@/lib/utils";
-import { ActionButtons } from "../action/action-buttons";
 
 export function HeroSection() {
   return (
@@ -25,10 +25,11 @@ export function HeroSection() {
       )}>
         {/* Main heading group */}
         <div className="space-y-4">
-          <Typography 
-            level="h1" 
+          {/* H1 - Bleu accent (#00a8e8) selon branding */}
+          <Typography
+            level="h1"
             className={cn(
-              "text-text-primary",
+              "text-accent",
               "animate-fade-in",
               "tracking-tight",
               "leading-tight"
@@ -36,8 +37,10 @@ export function HeroSection() {
           >
             Bienvenue sur mon Portfolio
           </Typography>
-          <Typography 
-            level="h3" 
+
+          {/* H3 - Bleu accent (#00a8e8) selon branding */}
+          <Typography
+            level="h3"
             className={cn(
               "text-accent",
               "animate-fade-in animation-delay-200",
@@ -48,11 +51,11 @@ export function HeroSection() {
           </Typography>
         </div>
 
-        {/* Subtitle */}
-        <Typography 
-          level="h4" 
+        {/* Subtitle - Texte blanc */}
+        <Typography
+          level="h4"
           className={cn(
-            "text-text-secondary",
+            "text-text-primary",
             "animate-fade-in animation-delay-400",
             "max-w-2xl mx-auto",
             "leading-relaxed"
@@ -61,12 +64,40 @@ export function HeroSection() {
           Je crée des expériences web innovantes et performantes
         </Typography>
 
-        {/* Call to action */}
+        {/* Call to action - Atomique avec composants Button */}
         <div className={cn(
           "animate-fade-in animation-delay-600",
-          "pt-8"
+          "pt-8",
+          "flex flex-wrap items-center justify-center",
+          "gap-4 md:gap-6"
         )}>
-          <ActionButtons />
+          {/* CTA Primaire - Rouge */}
+          <Button
+            variant="cta"
+            size="lg"
+            href="/projets"
+            className={cn(
+              "min-w-[180px]",
+              "hover:scale-105",
+              "transition-transform duration-300"
+            )}
+          >
+            Voir mes projets
+          </Button>
+
+          {/* CTA Secondaire - Outline avec border rouge */}
+          <Button
+            variant="outline"
+            size="lg"
+            href="/contact"
+            className={cn(
+              "min-w-[180px]",
+              "hover:scale-105",
+              "transition-transform duration-300"
+            )}
+          >
+            Me contacter
+          </Button>
         </div>
       </div>
     </section>

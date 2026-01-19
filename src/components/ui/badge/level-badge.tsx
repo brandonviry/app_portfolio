@@ -10,7 +10,7 @@ export function LevelBadge({ level, color, className }: LevelBadgeProps) {
   return (
     <div className={cn(
       "px-3 py-0.5",
-      "rounded-full",
+      // Border-radius: 0 (sharp) - branding fintech
       "text-xs font-medium",
       "bg-surface-1",
       "border border-border/10",

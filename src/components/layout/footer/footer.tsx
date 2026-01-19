@@ -1,16 +1,18 @@
 import { Typography } from "@/components/ui/typography/typography";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { Github, Linkedin, Instagram, Home, FolderGit2, Mail } from 'lucide-react';
 
 const socialLinks = [
-  { name: 'GitHub', href: 'https://github.com/brandonviry/' },
-  { name: 'LinkedIn', href: 'https://linkedin.com/in/brandon-viry-81187b237' },
-  { name: 'Instagram', href: 'https://www.instagram.com/virybrandon/' },
+  { name: 'GitHub', href: 'https://github.com/brandonviry/', icon: Github },
+  { name: 'LinkedIn', href: 'https://linkedin.com/in/brandon-viry-81187b237', icon: Linkedin },
+  { name: 'Instagram', href: 'https://www.instagram.com/virybrandon/', icon: Instagram },
 ];
 
 const navigation = [
-  { name: 'Accueil', href: '/' },
-  { name: 'Projets', href: '/projets' },
-  { name: 'Contact', href: '/contact' },
+  { name: 'Accueil', href: '/', icon: Home },
+  { name: 'Projets', href: '/projets', icon: FolderGit2 },
+  { name: 'Contact', href: '/contact', icon: Mail },
 ];
 
 export function Footer() {
@@ -40,8 +42,15 @@ export function Footer() {
                 <li key={item.name}>
                   <Link
                     href={item.href}
-                    className="text-foreground/60 hover:text-foreground transition-colors"
+                    className={cn(
+                      "flex items-center gap-2",
+                      "text-cta",
+                      "hover:text-cta/80 hover:underline",
+                      "transition-colors duration-200",
+                      "font-medium"
+                    )}
                   >
+                    <item.icon className="w-4 h-4" strokeWidth={2.5} />
                     {item.name}
                   </Link>
                 </li>
@@ -61,8 +70,15 @@ export function Footer() {
                     href={item.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-foreground/60 hover:text-foreground transition-colors"
+                    className={cn(
+                      "flex items-center gap-2",
+                      "text-cta",
+                      "hover:text-cta/80 hover:underline",
+                      "transition-colors duration-200",
+                      "font-medium"
+                    )}
                   >
+                    <item.icon className="w-4 h-4" strokeWidth={2.5} />
                     {item.name}
                   </a>
                 </li>

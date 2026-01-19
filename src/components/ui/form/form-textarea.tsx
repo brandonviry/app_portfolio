@@ -21,7 +21,7 @@ const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
         <textarea
           id={id}
           className={cn(
-            "flex min-h-[80px] w-full rounded-md border border-border/50",
+            "flex min-h-[80px] w-full  border border-border/50",
             "bg-background/50 px-3 py-2",
             "text-sm text-black",
             "ring-offset-background",

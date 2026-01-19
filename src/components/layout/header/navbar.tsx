@@ -5,11 +5,12 @@ import { Navigation } from '@/components/ui/navigation/navigation';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Typography } from '@/components/ui/typography/typography';
+import { Home, FolderGit2, Mail } from 'lucide-react';
 
 const navigation = [
-  { name: 'Accueil', href: '/' },
-  { name: 'Projets', href: '/projets' },
-  { name: 'Contact', href: '/contact' },
+  { name: 'Accueil', href: '/', icon: Home },
+  { name: 'Projets', href: '/projets', icon: FolderGit2 },
+  { name: 'Contact', href: '/contact', icon: Mail },
 ];
 
 export function Navbar() {

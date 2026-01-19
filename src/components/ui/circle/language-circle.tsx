@@ -12,68 +12,86 @@ interface LanguageCircleProps {
   className?: string;
 }
 
-export function LanguageCircle({ 
-  name, 
-  icon, 
-  level, 
-  gradientFrom, 
-  gradientTo, 
+export function LanguageCircle({
+  name,
+  icon,
+  level,
+  gradientFrom,
+  gradientTo,
   textColor,
-  className 
+  className
 }: LanguageCircleProps) {
   return (
     <div
       className={cn(
         "group relative",
-        "w-[180px] aspect-square",
-        "p-1",
-        "rounded-full",
+        "w-[160px] md:w-[180px] aspect-square",
         "transition-all duration-500",
         "hover:scale-105",
-        "bg-gradient-to-br",
-        gradientFrom,
-        gradientTo,
         className
       )}
     >
+      {/* Outer border with gradient */}
       <div className={cn(
-        "w-full h-full",
+        "absolute inset-0",
         "rounded-full",
-        "bg-surface-1/90 backdrop-blur-sm",
-        "flex flex-col items-center justify-center",
-        "p-4",
-        "relative"
+        "p-[2px]",
+        "bg-gradient-to-br",
+        gradientFrom,
+        gradientTo,
+        "transition-all duration-500"
       )}>
-        {/* Language Icon */}
-        <span className="text-4xl mb-2 transform transition-transform duration-500 group-hover:scale-110">
-          {icon}
-        </span>
-
-        {/* Language Name */}
-        <Typography 
-          level="h6"
-          className={cn(
-            "font-medium text-sm mb-1 text-center",
-            "w-full px-2",
-            textColor
-          )}
-        >
-          {name}
-        </Typography>
-
-        {/* Level Badge */}
-        <div className="absolute -bottom-2">
-          <LevelBadge level={level} color={textColor} />
-        </div>
-
-        {/* Decorative Ring */}
+        {/* Inner content */}
         <div className={cn(
-          "absolute inset-0",
-          "border-2 border-dashed rounded-full",
-          "opacity-20",
-          "animate-[spin_20s_linear_infinite]",
-          textColor || 'border-text-secondary'
-        )} />
+          "w-full h-full",
+          "rounded-full",
+          "bg-background",
+          "flex flex-col items-center justify-center",
+          "gap-2",
+          "relative",
+          "border-2 border-border/10"
+        )}>
+          {/* Language Icon */}
+          <span className={cn(
+            "text-5xl md:text-6xl",
+            "transform transition-transform duration-500",
+            "group-hover:scale-110"
+          )}>
+            {icon}
+          </span>
+
+          {/* Language Name */}
+          <Typography
+            level="h6"
+            className={cn(
+              "font-bold text-sm md:text-base",
+              "text-center",
+              "text-text-primary"
+            )}
+          >
+            {name}
+          </Typography>
+
+          {/* Glow effect on hover */}
+          <div className={cn(
+            "absolute inset-0 rounded-full",
+            "bg-gradient-to-br",
+            gradientFrom,
+            gradientTo,
+            "opacity-0 group-hover:opacity-10",
+            "transition-opacity duration-500",
+            "pointer-events-none"
+          )} />
+        </div>
+      </div>
+
+      {/* Level Badge - positioned outside bottom */}
+      <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 z-10">
+        <LevelBadge
+          level={level}
+          color={textColor}
+          className="shadow-lg"
+        />
       </div>
     </div>
   );

@@ -44,22 +44,21 @@ export function ContactInfo() {
             "p-6",
             "bg-gradient-to-r from-surface-2/50 to-surface-1/30",
             "backdrop-blur-sm",
-            "border border-border/10",
-            "rounded-2xl",
-            // Hover effects
+            "border-2 border-border/20",
+            // Hover effects - CTA styling
             "hover:from-surface-2/70 hover:to-surface-1/50",
-            "hover:border-accent/20",
-            "hover:shadow-xl hover:shadow-accent/5",
+            "hover:border-cta/50",
+            "hover:shadow-xl hover:shadow-cta/10",
             // Transitions
             "transition-all duration-500 ease-out",
             // Layout
             "overflow-hidden"
           )}
         >
-          {/* Glowing effect */}
+          {/* Glowing effect - CTA color */}
           <div className={cn(
             "absolute inset-0",
-            "bg-gradient-to-r from-accent/0 to-accent/0",
+            "bg-gradient-to-r from-cta/0 to-cta/0",
             "opacity-0 group-hover:opacity-10",
             "transition-opacity duration-500",
             "pointer-events-none"
@@ -71,7 +70,7 @@ export function ContactInfo() {
               "flex-shrink-0",
               "w-12 h-12",
               "flex items-center justify-center",
-              "rounded-2xl",
+              "",
               "bg-gradient-to-r from-surface-3/80 to-surface-2/50",
               "text-2xl",
               "shadow-lg shadow-accent/5",
@@ -83,11 +82,11 @@ export function ContactInfo() {
 
             {/* Content */}
             <div className="flex-grow min-w-0">
-              <Typography 
-                level="h6" 
+              <Typography
+                level="h6"
                 className={cn(
                   "text-text-primary",
-                  "group-hover:text-accent",
+                  "group-hover:text-cta",
                   "transition-colors duration-300",
                   "whitespace-nowrap",
                   "text-lg font-semibold",

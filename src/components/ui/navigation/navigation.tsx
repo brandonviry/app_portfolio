@@ -3,10 +3,12 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import type { LucideIcon } from 'lucide-react';
 
 interface NavigationItem {
   name: string;
   href: string;
+  icon?: LucideIcon;
 }
 
 interface NavigationProps {
@@ -31,7 +33,7 @@ export function Navigation({ items, className, isMobile }: NavigationProps) {
           "bg-surface-1/80",
           "backdrop-blur-md",
           "border border-border/20",
-          "rounded-2xl",
+          "",
           "shadow-sm"
         ],
         className
@@ -52,29 +54,33 @@ export function Navigation({ items, className, isMobile }: NavigationProps) {
               href={item.href}
               className={cn(
                 // Base styles
-                "block px-4 py-3",
+                "flex items-center justify-center gap-2",
+                "px-4 py-3",
                 "text-base font-medium",
-                "rounded-xl",
                 "transition-all duration-200",
-                "text-center",
                 // Width
                 isMobile ? "w-full" : "w-auto",
-                // Colors & Effects
+                // Colors & Effects - CTA visible par défaut
                 isActive ? [
-                  "bg-surface-2/90",
-                  "text-text-primary",
-                  "shadow-sm",
-                  "border border-border/20"
+                  "bg-cta/15",
+                  "text-cta",
+                  "shadow-md shadow-cta/20",
+                  "border-2 border-cta"
                 ].join(" ") : [
-                  "text-text-secondary/90",
-                  "hover:text-text-primary",
-                  "hover:bg-surface-1/90",
-                  "hover:border-border/20",
-                  "hover:shadow-sm",
-                  "border border-transparent"
+                  "text-cta",
+                  "hover:bg-cta/10",
+                  "hover:shadow-sm shadow-cta/10",
+                  "hover:border-cta",
+                  "border-2 border-cta/30"
                 ].join(" ")
               )}
             >
+              {item.icon && (
+                <item.icon
+                  className="w-4 h-4"
+                  strokeWidth={2.5}
+                />
+              )}
               {item.name}
             </Link>
           </li>

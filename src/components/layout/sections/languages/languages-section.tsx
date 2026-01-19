@@ -2,9 +2,10 @@
 
 import { cn } from "@/lib/utils";
 import { getLanguages, Language } from "@/lib/data/languages";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { Typography } from "@/components/ui/typography/typography";
 import { LanguageCircle } from "@/components/ui/circle/language-circle";
+import { Divider } from "@/components/ui/decoration/divider";
 
 // Couleurs pour les différents niveaux
 const levelColors: { [key: string]: { from: string; to: string; text: string } } = {
@@ -76,21 +77,27 @@ export function LanguagesSection() {
         {/* Header */}
         <div className={cn(
           "text-center",
-          "mb-12"
+          "mb-12",
+          "space-y-4"
         )}>
-          <Typography 
-            level="h2" 
+          <Typography
+            level="h2"
             className={cn(
-              "text-text-primary",
-              "mb-4"
+              "text-accent",
+              "text-3xl md:text-4xl lg:text-5xl",
+              "font-bold tracking-tight"
             )}
           >
             Langues
           </Typography>
-          <Typography 
-            level="body1" 
+
+          <Divider variant="gradient" align="center" className="mx-auto" />
+
+          <Typography
+            level="body1"
             className={cn(
               "text-text-secondary",
+              "text-base md:text-lg",
               "max-w-2xl mx-auto"
             )}
           >
