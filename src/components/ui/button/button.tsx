@@ -37,7 +37,7 @@ const buttonVariants = cva(
           "hover:shadow-xl hover:shadow-cta/20",
         ].join(" "),
         outline: [
-          "border-2 border-cta text-accent bg-transparent",
+          "border-2 border-cta text-cta  bg-transparent",
           "hover:bg-cta/10",
           "active:bg-cta/15",
         ].join(" "),

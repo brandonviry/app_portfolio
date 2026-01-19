@@ -94,7 +94,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         {project.Lien && (
           <div className="pt-3 md:pt-4 mt-auto">
             <Button
-              variant="ghost"
+              variant="outline"
               size="sm"
               href={project.Lien}
               external
