@@ -9,18 +9,18 @@ Portfolio professionnel développé avec Next.js 13, TypeScript et Tailwind CSS.
 ## 🚀 Fonctionnalités
 
 - **Design Modern** : Interface utilisateur élégante et responsive avec Tailwind CSS
-- **Performance Optimisée** : Utilisation des dernières fonctionnalités de Next.js 13
-- **Base de Données Notion** : Intégration avec l'API Notion pour gérer le contenu
+- **Performance Optimisée** : Utilisation des dernières fonctionnalités de Next.js 15
+- **Gestion de Contenu** : Stores locaux pour les projets, compétences et descriptions
 - **Formulaire de Contact** : Système d'envoi d'emails avec EmailJS
 - **SEO Optimisé** : Meta tags, sitemap.xml et robots.txt configurés
 - **Progressive Web App (PWA)** : Installation possible sur les appareils mobiles
 
 ## 🛠️ Technologies Utilisées
 
-- **Framework** : Next.js 13.5+
+- **Framework** : Next.js 15+
 - **Language** : TypeScript 5.0+
 - **Styles** : Tailwind CSS 3.0+
-- **Base de Données** : Notion API
+- **Gestion de Contenu** : Stores TypeScript locaux
 - **Emails** : EmailJS
 - **Animations** : Framer Motion
 - **Validation** : Zod
@@ -42,9 +42,6 @@ npm install
 3. Configurez les variables d'environnement :
 Créez un fichier `.env.local` à la racine du projet avec :
 ```env
-NOTION_API_KEY=votre_clé_api_notion
-NOTION_DATABASE_ID_PROJET=votre_id_database_projets
-NOTION_DATABASE_ID_CV=votre_id_database_cv
 NEXT_PUBLIC_EMAILJS_SERVICE_ID=votre_service_id
 NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=votre_template_id
 NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=votre_public_key
@@ -59,13 +56,14 @@ npm run dev
 
 ## ⚙️ Configuration
 
-### Notion API
+### Contenu du Portfolio
 
-1. Créez un compte [Notion](https://www.notion.so/)
-2. Créez une nouvelle intégration dans [My Integrations](https://www.notion.so/my-integrations)
-3. Copiez l'API Key dans votre `.env.local`
-4. Partagez vos bases de données Notion avec votre intégration
-5. Copiez les IDs des bases de données dans votre `.env.local`
+Le contenu (projets, compétences, descriptions) est géré via des stores TypeScript locaux dans le dossier `src/store/` :
+- `description_data.ts` : Votre description personnelle et compétences
+- `projects_data.ts` : Liste de vos projets
+- `competences_data.ts` : Vos compétences par catégorie
+
+Modifiez ces fichiers pour personnaliser votre portfolio.
 
 ### EmailJS
 

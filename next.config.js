@@ -4,27 +4,17 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: '**.notion.so',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'www.notion.so',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'notion.so',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
         hostname: 'i.ibb.co',
         pathname: '/**',
       },
       {
         protocol: 'https',
         hostname: 'raw.githubusercontent.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
         pathname: '/**',
       }
     ],

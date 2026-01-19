@@ -1,5 +1,5 @@
 import { Typography } from "@/components/ui/typography/typography";
-import { Project } from "@/lib/notion/projet_api";
+import { Project } from "@/store/projects_data";
 import { ProjectsGrid } from "@/components/ui/grid/projects-grid";
 
 interface ProjectsSectionProps {

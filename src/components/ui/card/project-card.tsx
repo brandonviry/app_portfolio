@@ -2,7 +2,7 @@
 
 import { Button } from "../button/button";
 import { Typography } from "../typography/typography";
-import type { Project } from "@/lib/notion/projet_api";
+import type { Project } from "@/store/projects_data";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";

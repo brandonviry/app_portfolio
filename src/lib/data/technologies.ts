@@ -1,22 +1,31 @@
+import { competencesData } from '@/store/competences_data';
+
 // Type pour une technologie
 export interface Technology {
   name: string;
-  icon: string; // Sera utilisé comme fallback emoji simple
+  category: string;
 }
 
-export async function getTechnologies(): Promise<Technology[]> {
-  try {
-    const response = await fetch('/api/competences');
-    if (!response.ok) {
-      throw new Error('Failed to fetch competences');
-    }
-    const competences = await response.json();
-    return competences[0]?.CompTechnique.map((tech: string) => ({
-      name: tech,
-      icon: '💻' // Icône par défaut, sera remplacée par le système dynamique
-    })) || [];
-  } catch (error) {
-    console.error('Error fetching technologies:', error);
-    return [];
-  }
+export function getTechnologies(): Technology[] {
+  // Récupère toutes les technologies de toutes les catégories
+  const allTechnologies: Technology[] = [];
+
+  competencesData.forEach(comp => {
+    comp.CompTechnique.forEach(tech => {
+      allTechnologies.push({
+        name: tech,
+        category: comp.description
+      });
+    });
+  });
+
+  return allTechnologies;
+}
+
+// Récupère les technologies groupées par catégorie
+export function getTechnologiesByCategory() {
+  return competencesData.map(comp => ({
+    category: comp.description,
+    technologies: comp.CompTechnique
+  }));
 }

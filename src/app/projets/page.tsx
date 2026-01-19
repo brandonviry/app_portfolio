@@ -1,5 +1,5 @@
 import { ProjectsSection } from "@/components/layout/sections/projets/projects-section";
-import { getProjects } from "@/lib/notion/projet_api";
+import { projectsData } from "@/store/projects_data";
 import type { Metadata, Viewport } from "next";
 
 export const metadata: Metadata = {
@@ -16,8 +16,6 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default async function ProjectsPage() {
-  const projects = await getProjects();
-
-  return <ProjectsSection projects={projects} />;
+export default function ProjectsPage() {
+  return <ProjectsSection projects={projectsData} />;
 }

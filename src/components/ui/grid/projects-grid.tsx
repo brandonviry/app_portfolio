@@ -1,5 +1,5 @@
 import { ProjectCard } from "../card/project-card";
-import { Project } from "@/lib/notion/projet_api";
+import { Project } from "@/store/projects_data";
 
 interface ProjectsGridProps {
   projects: Project[];
