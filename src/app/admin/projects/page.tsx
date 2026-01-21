@@ -212,7 +212,7 @@ export default function AdminProjectsPage() {
           </div>
         ) : (
           <div className="grid gap-4">
-            {filteredProjects.map((project, index) => {
+            {filteredProjects.map((project) => {
               // Trouver l'index réel dans le tableau complet
               const realIndex = projects.indexOf(project);
 

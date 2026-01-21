@@ -1,4 +1,4 @@
-# Portfolio de Brandon VIRY
+l# Portfolio de Brandon VIRY
 
 ![Next.js](https://img.shields.io/badge/Next.js-15.1+-000000?style=for-the-badge&logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178C6?style=for-the-badge&logo=typescript)
@@ -9,6 +9,7 @@ Portfolio professionnel développé avec Next.js 15, TypeScript et Tailwind CSS.
 
 ## 🚀 Fonctionnalités
 
+### Portfolio Public
 - **Design System Fintech** : Interface utilisateur élégante avec branding cohérent (pas de border-radius, corners accent, effets scan line)
 - **Architecture Atomique** : Organisation du code selon les principes d'Atomic Design (Atoms → Molecules → Organisms → Pages)
 - **Filtrage Avancé** :
@@ -21,22 +22,41 @@ Portfolio professionnel développé avec Next.js 15, TypeScript et Tailwind CSS.
   - Next.js 15 avec App Router et React Server Components
   - Turbopack pour le développement ultra-rapide
   - Hydratation optimisée (prévention des erreurs SSR/Client)
-- **Gestion de Contenu** : Stores TypeScript locaux (62 projets, compétences, témoignages)
 - **Formulaire de Contact** : Intégration API Route Next.js pour l'envoi d'emails
 - **SEO Ready** : Structure optimisée pour le référencement
 - **Responsive Design** : Adaptation mobile-first avec breakpoints Tailwind (sm, md, lg, xl)
 
+### 🎛️ Interface Admin (v1.0)
+- **Authentification Sécurisée** : NextAuth.js avec hash bcrypt (OWASP 2024)
+- **CRUD Projets Complet** : Créer, lire, modifier, supprimer les projets via interface web
+- **Dashboard Statistiques** : Vue d'ensemble en temps réel (total projets, catégories, technologies)
+- **Recherche & Filtrage** : Recherche texte et filtre par catégorie
+- **Backups Automatiques** : Sauvegarde avant chaque modification avec timestamp
+- **Design Cohérent** : Interface admin qui respecte le design system fintech
+- **Documentation Complète** : 8 fichiers de documentation détaillée
+
 ## 🛠️ Technologies Utilisées
 
+### Frontend & Architecture
 - **Framework** : Next.js 15.1+ avec App Router et Turbopack
 - **Runtime** : React 19+
 - **Language** : TypeScript 5.0+
 - **Styles** : Tailwind CSS 3.4+
-- **Gestion de Contenu** : Stores TypeScript locaux
-- **Emails** : API Route Next.js (migration depuis EmailJS)
 - **Icônes** : Lucide React
 - **Utilitaires** : clsx, tailwind-merge
 - **Architecture** : Atomic Design Pattern
+
+### Backend & Authentification
+- **Authentification** : NextAuth.js 5.0+ (beta)
+- **Sécurité** : bcryptjs (hash 12 rounds)
+- **Session** : JWT avec cookies httpOnly
+- **API Routes** : Next.js App Router
+
+### Gestion de Contenu
+- **Stores** : TypeScript locaux (62 projets, compétences, témoignages)
+- **Admin** : Interface web complète avec CRUD
+- **Backups** : Automatiques avec timestamp
+- **Emails** : API Route Next.js via Resend
 
 ## 📦 Installation
 
@@ -52,16 +72,31 @@ npm install
 ```
 
 3. Configurez les variables d'environnement :
-Créez un fichier `.env.local` à la racine du projet avec vos informations pour l'API d'envoi d'emails :
+Créez un fichier `.env.local` à la racine du projet :
+
+**Pour l'envoi d'emails (Resend) :**
 ```env
-# Configuration email (à adapter selon votre service)
-SMTP_HOST=smtp.example.com
-SMTP_PORT=587
-SMTP_USER=votre@email.com
-SMTP_PASSWORD=votre_mot_de_passe
-EMAIL_FROM=contact@votreportfolio.com
-EMAIL_TO=votremail@example.com
+RESEND_API_KEY=re_votre_cle_api_resend
 ```
+
+**Pour l'interface admin (génération via script) :**
+```bash
+# Générez vos credentials avec le script fourni
+node generate-hash.js "VotreMotDePasseSecurise123!"
+```
+
+Puis ajoutez dans `.env.local` :
+```env
+# NextAuth Configuration
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=<généré-par-le-script>
+
+# Admin Credentials
+ADMIN_EMAIL=admin@example.com
+ADMIN_PASSWORD_HASH=<généré-par-le-script>
+```
+
+📖 Voir [doc/phase-3-authentification-COMPLETE.md](./doc/phase-3-authentification-COMPLETE.md) pour plus de détails.
 
 4. Lancez le serveur de développement :
 ```bash
@@ -69,6 +104,11 @@ npm run dev
 ```
 
 5. Ouvrez [http://localhost:3000](http://localhost:3000) dans votre navigateur.
+
+6. **Accès à l'interface admin** :
+   - URL : [http://localhost:3000/admin](http://localhost:3000/admin)
+   - Connectez-vous avec les credentials configurés
+   - Gérez vos projets directement depuis l'interface web
 
 ## ⚙️ Configuration
 
@@ -92,7 +132,17 @@ Le contenu est géré via des stores TypeScript locaux dans le dossier `src/stor
 
 - **`technology-groups.ts`** (config) : Configuration des groupes de technologies pour le dropdown de filtrage
 
-Modifiez ces fichiers pour personnaliser votre portfolio.
+**Deux méthodes de modification :**
+
+1. **Via l'interface admin** (recommandé) :
+   - Accédez à `/admin` après authentification
+   - Interface visuelle complète pour gérer les projets
+   - Backups automatiques avant chaque modification
+   - Aucune connaissance technique requise
+
+2. **Modification manuelle des fichiers** :
+   - Éditez directement les fichiers `.ts` dans `src/store/`
+   - Utile pour modifications en masse ou scripts
 
 ### Configuration des groupes de technologies
 
@@ -109,16 +159,44 @@ export const TECHNOLOGY_GROUPS = {
 
 Ajoutez vos technologies dans les groupes appropriés ou créez de nouveaux groupes selon vos besoins.
 
+### Interface Admin
+
+**Accès :**
+- Dashboard : `/admin`
+- Login : `/admin/login`
+- Gestion projets : `/admin/projects`
+
+**Fonctionnalités :**
+- ✅ CRUD complet des projets
+- ✅ Recherche et filtrage
+- ✅ Statistiques en temps réel
+- ✅ Backups automatiques
+- ✅ Authentification sécurisée (NextAuth.js + bcrypt)
+
 ### API d'envoi d'emails
 
-Le formulaire de contact utilise une API Route Next.js (`src/app/api/contact/route.ts`). Configurez votre service d'envoi d'emails préféré (Nodemailer, SendGrid, Resend, etc.) dans cette route.
+Le formulaire de contact utilise l'API Resend via la route Next.js (`src/app/api/contact/route.ts`).
 
 ## 📂 Structure du Projet
 
 ```
 src/
 ├── app/                          # Next.js App Router
-│   ├── api/contact/             # API Route pour le formulaire
+│   ├── admin/                   # 🎛️ Interface Admin (v1.0)
+│   │   ├── layout.tsx           # Layout admin avec header/déconnexion
+│   │   ├── page.tsx             # Dashboard statistiques
+│   │   ├── login/page.tsx       # Page de connexion
+│   │   └── projects/            # Gestion des projets
+│   │       ├── page.tsx         # Liste + recherche/filtre
+│   │       ├── new/page.tsx     # Formulaire création
+│   │       └── [id]/page.tsx    # Formulaire édition
+│   ├── api/
+│   │   ├── admin/projects/      # 🔐 API CRUD Projets
+│   │   │   ├── route.ts         # GET/POST
+│   │   │   └── [id]/route.ts    # GET/PUT/DELETE
+│   │   ├── auth/                # 🔐 NextAuth Routes
+│   │   │   └── [...nextauth]/route.ts
+│   │   └── contact/route.ts     # API emails
 │   ├── layout.tsx               # Layout principal
 │   └── page.tsx                 # Page d'accueil
 ├── components/
@@ -146,6 +224,10 @@ src/
 │           └── testimonials/
 ├── config/
 │   └── technology-groups.ts     # Configuration groupes tech
+├── lib/
+│   ├── auth.ts                  # 🔐 Configuration NextAuth
+│   └── utils.ts                 # Utilitaires (cn function)
+├── middleware.ts                # 🔐 Protection routes /admin/*
 ├── store/                       # Stores de données
 │   ├── projects_data.ts         # 62 projets
 │   ├── competences_data.ts
@@ -153,8 +235,8 @@ src/
 │   ├── faq_data.ts
 │   ├── testimonials_data.ts
 │   └── logos_data.ts
-└── lib/
-    └── utils.ts                 # Utilitaires (cn function)
+├── generate-hash.js             # 🔧 Script génération credentials
+└── doc/                         # 📚 Documentation (8 fichiers)
 ```
 
 ## 🎨 Design System
@@ -215,5 +297,5 @@ Email : brandonviry@gmail.com
 
 ---
 
-*Portfolio développé avec ❤️ et Next.js 15*
+*Portfolio développé en  Next.js 15*
 
