@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { descriptionData } from "@/store/description_data";
 import { useState } from "react";
 import Image from "next/image";
+import { FolderGit2 } from 'lucide-react';
 
 function ImagePlaceholder() {
   return (
@@ -199,7 +200,7 @@ export function DescriptionSection() {
               <Button
                 variant="outline"
                 size="lg"
-                href="https://github.com/brandonviry"
+                href="/projets"
                 external
                 fullWidth
                 className={cn(
@@ -209,9 +210,10 @@ export function DescriptionSection() {
                 )}
               >
                 <Icon size="md">
-                  <GithubIcon />
+                  <FolderGit2/>
                 </Icon>
-                Voir mon GitHub
+                
+                Voir mes projets
               </Button>
             </div>
 

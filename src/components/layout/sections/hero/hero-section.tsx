@@ -1,6 +1,8 @@
 import { Typography } from "@/components/ui/typography/typography";
 import { Button } from "@/components/ui/button/button";
 import { cn } from "@/lib/utils";
+import { FolderGit2, Mail } from 'lucide-react';
+import { Icon } from "@/components/ui/icon/icon";
 
 export function HeroSection() {
   return (
@@ -61,7 +63,7 @@ export function HeroSection() {
             "leading-relaxed"
           )}
         >
-          Je crée des expériences web innovantes et performantes
+        Création de solutions web modulaires et évolutives (monolithe ou microservices). Je privilégie un code propre et efficace, livré dans les temps. Discutons de vos besoins !
         </Typography>
 
         {/* Call to action - Atomique avec composants Button */}
@@ -79,9 +81,13 @@ export function HeroSection() {
             className={cn(
               "min-w-[180px]",
               "hover:scale-105",
-              "transition-transform duration-300"
+              "transition-transform duration-300",
+              "gap-2"
             )}
           >
+            <Icon size="md">
+              <FolderGit2 />
+            </Icon>
             Voir mes projets
           </Button>
 
@@ -93,9 +99,13 @@ export function HeroSection() {
             className={cn(
               "min-w-[180px]",
               "hover:scale-105",
-              "transition-transform duration-300"
+              "transition-transform duration-300",
+              "gap-2"
             )}
           >
+            <Icon size="md">
+              <Mail />
+            </Icon>
             Me contacter
           </Button>
         </div>

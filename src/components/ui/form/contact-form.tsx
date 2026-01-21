@@ -3,10 +3,8 @@
 import { Button } from "@/components/ui/button/button";
 import { FormInput } from "@/components/ui/form/form-input";
 import { FormTextarea } from "@/components/ui/form/form-textarea";
-import { emailConfig } from "@/config/email";
 import { zodResolver } from "@hookform/resolvers/zod";
-import emailjs from '@emailjs/browser';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -18,20 +16,9 @@ const contactFormSchema = z.object({
 
 type ContactFormData = z.infer<typeof contactFormSchema>;
 
-interface EmailJSError {
-  status?: number;
-  text?: string;
-  name?: string;
-  message?: string;
-}
-
 export function ContactForm() {
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-  useEffect(() => {
-    emailjs.init(emailConfig.publicKey);
-  }, []);
 
   const {
     register,
@@ -47,47 +34,39 @@ export function ContactForm() {
       setSubmitStatus('idle');
       setErrorMessage(null);
 
-      if (!emailConfig.serviceId || !emailConfig.templateId || !emailConfig.publicKey) {
-        setErrorMessage("La configuration du formulaire est incomplète. Veuillez contacter l'administrateur.");
-        setSubmitStatus('error');
-        return;
+      console.log('Envoi du formulaire avec:', data);
+
+      // Appel à l'API Route Next.js
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Erreur lors de l\'envoi');
       }
 
-      const templateParams = {
-        name: data.name,
-        from_email: data.from_email,
-        message: data.message,
-        time: new Date().toLocaleString('fr-FR', { 
-          dateStyle: 'full', 
-          timeStyle: 'short' 
-        })
-      };
-
-      console.log('Tentative d\'envoi avec:', {
-        serviceId: emailConfig.serviceId,
-        templateId: emailConfig.templateId,
-        templateParams
-      });
-      
-      const result = await emailjs.send(
-        emailConfig.serviceId,
-        emailConfig.templateId,
-        templateParams,
-        emailConfig.publicKey
-      );
-
-      console.log('Email envoyé avec succès:', result);
+      console.log('Email envoyé avec succès via Resend:', result);
       setSubmitStatus('success');
       reset();
-    } catch (error: unknown) {
-      const emailError = error as EmailJSError;
-      console.error("Erreur d'envoi:", {
-        message: emailError.message,
-        name: emailError.name,
-        status: emailError.status,
-        text: emailError.text
-      });
-      setErrorMessage("Une erreur est survenue lors de l'envoi. Veuillez réessayer plus tard.");
+
+      // Réinitialiser le message de succès après 5 secondes
+      setTimeout(() => {
+        setSubmitStatus('idle');
+      }, 5000);
+
+    } catch (error) {
+      console.error("Erreur d'envoi:", error);
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : "Une erreur est survenue lors de l'envoi. Veuillez réessayer plus tard."
+      );
       setSubmitStatus('error');
     }
   };
@@ -164,14 +143,14 @@ export function ContactForm() {
       {/* Success Message */}
       {submitStatus === 'success' && (
         <div className="text-green-600 text-center mt-4">
-          Message envoyé avec succès !
+          ✅ Message envoyé avec succès !
         </div>
       )}
 
       {/* Error Message */}
       {errorMessage && (
         <div className="text-red-600 text-center mt-4">
-          {errorMessage}
+          ❌ {errorMessage}
         </div>
       )}
     </form>

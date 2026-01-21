@@ -1,5 +1,6 @@
 /**
  * Store local pour les données de compétences techniques
+ * Basé sur les compétences actuelles et l'évolution vers des technologies modernes
  */
 
 export type Competence = {
@@ -9,65 +10,81 @@ export type Competence = {
 
 export const competencesData: Competence[] = [
   {
-    description: 'Langages de programmation',
+    description: 'Développement Web & Stack',
     CompTechnique: [
-      'JavaScript',
+      'Next.js/React',
+      'SvelteKit (Svelte 5)',
+      'Astro',
+      'React/TypeScript',
+      'Next.js (SSR/SSG)',
+      'Tailwind CSS',
+      'Node.js/Express (JWT)',
+      'Python FastAPI/Flask',
+      'PostgreSQL/MySQL + Prisma',
+      'WebSockets',
+      'Supabase'
+    ]
+  },
+  {
+    description: 'Mobile & Desktop',
+    CompTechnique: [
+      'Ionic (Capacitor)',
+      'Tauri v2'
+    ]
+  },
+  {
+    description: 'Langages (Legacy → Moderne)',
+    CompTechnique: [
       'TypeScript',
+      'JavaScript',
+      'HTML5/CSS3',
+      'Python → Mojo',
+      'C++ → Rust',
+      'Java/C# → Go',
+      'C → Zig',
+      'Bash',
       'Python',
-      'Java',
-      'C',
-      'C++',
-      'Shell'
+      'Rust'
     ]
   },
   {
-    description: 'Frontend & Design',
+    description: 'Outils, Qualité & DevOps',
     CompTechnique: [
-      'React.js',
-      'Next.js',
-      'HTML5',
-      'CSS',
-      'SCSS',
-      'PUG',
-      'Vite.js',
-      'Figma',
-      'UX/UI'
-    ]
-  },
-  {
-    description: 'Backend & Base de données',
-    CompTechnique: [
-      'Express.js',
-      'MySQL'
-    ]
-  },
-  {
-    description: 'DevOps & Déploiement',
-    CompTechnique: [
+      'Zustand',
+      'React Hook Form',
+      'Zod',
+      'Shadcn-ui',
+      'Vitest',
+      'Playwright (E2E)',
+      'Jest',
+      'Cypress',
       'Git',
-      'Vercel',
-      'VPS OVH',
-      'VS Code'
+      'GitHub Actions',
+      'Docker',
+      'Vercel/VPS',
+      'OVH',
+      'Figma',
+      'UX/UI responsive',
+      'Mobile-first'
     ]
   },
   {
-    description: 'Méthodologies',
+    description: 'Méthodes & Soft Skills',
     CompTechnique: [
-      'Méthode Agile',
-      'Méthode Spiral',
-      'Méthode Cascade'
+      'Agile/Scrum',
+      'Documentation technique',
+      'Revues de code',
+      'Polyvalence et adaptation aux besoins projet'
     ]
   },
   {
-    description: 'Soft Skills',
+    description: 'Environnement de Développement',
     CompTechnique: [
-      'Stratégique',
-      'Sens du détail',
-      'Travail en équipe',
-      'Résolution de problèmes',
-      'Gestion du temps',
-      'Autonomie',
-      'Adaptabilité'
+      'VSCodium + Claude Code',
+      'VS Code + GPT-Codex',
+      'Windsurf + Gemini Pro/DeepSeek V3',
+      '03 + Kimi K2',
+      'Zed + Mistral CLI'
     ]
   }
 ];

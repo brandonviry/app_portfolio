@@ -1,6 +1,10 @@
+'use client';
+
+import { useState, useMemo } from "react";
 import { Typography } from "@/components/ui/typography/typography";
 import { Project } from "@/store/projects_data";
 import { ProjectsGrid } from "@/components/ui/grid/projects-grid";
+import { ProjectFilters } from "@/components/ui/filter/project-filters";
 import { Divider } from "@/components/ui/decoration/divider";
 import { cn } from "@/lib/utils";
 
@@ -9,6 +13,82 @@ interface ProjectsSectionProps {
 }
 
 export function ProjectsSection({ projects }: ProjectsSectionProps) {
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedTechnologies, setSelectedTechnologies] = useState<string[]>([]);
+  const [sortBy, setSortBy] = useState<string>('default');
+
+  // Toggle catégorie (multi-sélection)
+  const handleCategoryToggle = (category: string) => {
+    setSelectedCategories(prev =>
+      prev.includes(category)
+        ? prev.filter(c => c !== category)
+        : [...prev, category]
+    );
+  };
+
+  // Toggle technologie (multi-sélection)
+  const handleTechnologyToggle = (technology: string) => {
+    setSelectedTechnologies(prev =>
+      prev.includes(technology)
+        ? prev.filter(t => t !== technology)
+        : [...prev, technology]
+    );
+  };
+
+  // Reset filtres
+  const handleReset = () => {
+    setSelectedCategories([]);
+    setSelectedTechnologies([]);
+    setSortBy('default');
+  };
+
+  // Filtrage et tri des projets
+  const filteredAndSortedProjects = useMemo(() => {
+    let filtered = projects;
+
+    // Filtrage par catégories sélectionnées
+    if (selectedCategories.length > 0) {
+      filtered = filtered.filter(project =>
+        project.categories.some(cat => selectedCategories.includes(cat))
+      );
+    }
+
+    // Filtrage par technologies sélectionnées
+    if (selectedTechnologies.length > 0) {
+      filtered = filtered.filter(project =>
+        project.technologies.some(tech => selectedTechnologies.includes(tech))
+      );
+    }
+
+    // Tri
+    const sorted = [...filtered];
+
+    switch (sortBy) {
+      case 'title-asc':
+        sorted.sort((a, b) => a.titre.localeCompare(b.titre));
+        break;
+
+      case 'title-desc':
+        sorted.sort((a, b) => b.titre.localeCompare(a.titre));
+        break;
+
+      case 'category':
+        sorted.sort((a, b) => {
+          const catA = a.categories[0] || '';
+          const catB = b.categories[0] || '';
+          return catA.localeCompare(catB);
+        });
+        break;
+
+      case 'default':
+      default:
+        // Ordre par défaut (tel que dans le fichier)
+        break;
+    }
+
+    return sorted;
+  }, [projects, selectedCategories, selectedTechnologies, sortBy]);
+
   return (
     <section className={cn(
       "relative",
@@ -30,7 +110,7 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
         <div className={cn(
           "text-center",
           "max-w-2xl mx-auto",
-          "mb-16",
+          "mb-12",
           "space-y-4"
         )}>
           <Typography
@@ -59,7 +139,22 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
           </Typography>
         </div>
 
-        <ProjectsGrid projects={projects} />
+        {/* Filtres */}
+        <ProjectFilters
+          projects={projects}
+          selectedCategories={selectedCategories}
+          selectedTechnologies={selectedTechnologies}
+          sortBy={sortBy}
+          onCategoryToggle={handleCategoryToggle}
+          onTechnologyToggle={handleTechnologyToggle}
+          onSortChange={setSortBy}
+          onReset={handleReset}
+        />
+
+        {/* Grille de projets */}
+        <div className="mt-8">
+          <ProjectsGrid projects={filteredAndSortedProjects} />
+        </div>
       </div>
     </section>
   );
