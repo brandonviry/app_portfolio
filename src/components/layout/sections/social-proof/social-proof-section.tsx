@@ -37,7 +37,7 @@ export function SocialProofSection() {
               "text-sm font-bold"
             )}
           >
-           Ils m'ont fait confiance
+           Ils m&apos;ont fait confiance
           </Typography>
         </div>
 

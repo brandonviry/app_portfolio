@@ -46,7 +46,7 @@ export function TestimonialsSection() {
               "max-w-2xl mx-auto"
             )}
           >
-            Ce qu'ils disent de moi
+            Ce qu&apos;ils disent de moi
           </Typography>
         </div>
 

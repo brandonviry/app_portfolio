@@ -118,7 +118,7 @@ export type TechnologyGroupName = keyof typeof TECHNOLOGY_GROUPS;
  */
 export function getTechnologyGroup(technology: string): TechnologyGroupName | null {
   for (const [groupName, technologies] of Object.entries(TECHNOLOGY_GROUPS)) {
-    if (technologies.includes(technology as any)) {
+    if ((technologies as readonly string[]).includes(technology)) {
       return groupName as TechnologyGroupName;
     }
   }

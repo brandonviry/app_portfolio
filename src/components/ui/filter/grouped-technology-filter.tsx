@@ -5,7 +5,7 @@ import { AccordionItem } from "../accordion/accordion-item";
 import { FilterChip } from "../chip/filter-chip";
 import { cn } from "@/lib/utils";
 import type { Project } from "@/store/projects_data";
-import { TECHNOLOGY_GROUPS, type TechnologyGroupName, groupTechnologies } from "@/config/technology-groups";
+import { TECHNOLOGY_GROUPS, type TechnologyGroupName } from "@/config/technology-groups";
 
 interface GroupedTechnologyFilterProps {
   projects: Project[];
@@ -42,7 +42,7 @@ export function GroupedTechnologyFilter({
       let groupName: TechnologyGroupName | 'Non classées' = 'Non classées';
 
       for (const [gName, techs] of Object.entries(TECHNOLOGY_GROUPS)) {
-        if (techs.includes(technology as any)) {
+        if ((techs as readonly string[]).includes(technology)) {
           groupName = gName as TechnologyGroupName;
           break;
         }
@@ -55,7 +55,7 @@ export function GroupedTechnologyFilter({
     });
 
     // Trier les technologies dans chaque groupe par count décroissant puis alphabétiquement
-    grouped.forEach((technologies, groupName) => {
+    grouped.forEach((technologies) => {
       technologies.sort((a, b) => {
         if (b[1] !== a[1]) return b[1] - a[1];
         return a[0].localeCompare(b[0]);

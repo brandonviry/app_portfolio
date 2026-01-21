@@ -7,7 +7,7 @@ import { DescriptionSection } from "@/components/layout/sections/description/des
 import { SocialProofSection } from "@/components/layout/sections/social-proof/social-proof-section";
 import { BenefitsSection } from "@/components/layout/sections/benefits/benefits-section";
 import { FAQSection } from "@/components/layout/sections/faq/faq-section";
-import { TestimonialsSection } from "@/components/layout/sections/testimonials/testimonials-section";
+// import { TestimonialsSection } from "@/components/layout/sections/testimonials/testimonials-section";
 import { FinalCTASection } from "@/components/layout/sections/cta/final-cta-section";
 
 export const metadata: Metadata = getPageMetadata('home');

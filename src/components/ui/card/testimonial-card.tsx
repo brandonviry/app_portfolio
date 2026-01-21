@@ -70,14 +70,14 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
             "text-accent/30",
             "text-2xl font-bold"
           )}>
-            "
+            &ldquo;
           </span>
           {testimonial.content}
           <span className={cn(
             "text-accent/30",
             "text-2xl font-bold"
           )}>
-            "
+            &rdquo;
           </span>
         </Typography>
       </div>

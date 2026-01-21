@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button/button";
 import { StatusBadge } from "@/components/ui/badge/status-badge";
 import { InfoItem } from "@/components/ui/info/info-item";
 import { Divider } from "@/components/ui/decoration/divider";
-import { Icon, LocationIcon, BriefcaseIcon, GithubIcon, MailIcon, PingIcon } from "@/components/ui/icon/icon";
+import { Icon, LocationIcon, BriefcaseIcon, MailIcon, PingIcon } from "@/components/ui/icon/icon";
 import { cn } from "@/lib/utils";
 import { descriptionData } from "@/store/description_data";
 import { useState } from "react";
