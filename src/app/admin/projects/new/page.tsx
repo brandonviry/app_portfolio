@@ -66,12 +66,23 @@ export default function NewProjectPage() {
     try {
       setSaving(true);
 
+      // Transformer les données pour correspondre au format Supabase (minuscules)
+      const projectData = {
+        titre: project.titre,
+        description: project.Description, // Conversion: Description → description
+        cover: project.Cover || undefined,
+        lien: project.Lien || undefined,
+        categories: project.categories,
+        technologies: project.technologies,
+        year: project.year
+      };
+
       const response = await fetch('/api/admin/projects', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(project),
+        body: JSON.stringify(projectData),
       });
 
       const data = await response.json();

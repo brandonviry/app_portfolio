@@ -3,7 +3,7 @@
 import { useState, useMemo, useRef, useEffect } from "react";
 import { ChevronDown, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { Project } from "@/store/projects_data";
+import type { Project } from "@/lib/supabase";
 import { TECHNOLOGY_GROUPS, type TechnologyGroupName } from "@/config/technology-groups";
 
 interface TechnologyDropdownProps {

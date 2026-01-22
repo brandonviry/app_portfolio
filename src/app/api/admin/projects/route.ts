@@ -1,85 +1,40 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs/promises';
-import path from 'path';
-
-const PROJECTS_FILE = path.join(process.cwd(), 'src/store/projects_data.ts');
-
-type Project = {
-  titre: string;
-  Description: string;
-  Cover?: string | undefined;
-  Lien?: string | undefined;
-  categories: string[];
-  technologies: string[];
-  year?: number;
-};
-
-/**
- * Parse le fichier TypeScript pour extraire le tableau de projets
- */
-function parseProjectsFromTS(content: string): Project[] {
-  try {
-    // Extraction du tableau entre "export const projectsData: Project[] = [" et le dernier "];"
-    const match = content.match(/export const projectsData: Project\[\] = (\[[\s\S]*\]);/);
-
-    if (!match) {
-      throw new Error('Format de fichier invalide');
-    }
-
-    // Utiliser une évaluation sécurisée via Function constructor
-    // Plus sûr que eval() car limité au scope
-    const projectsArrayStr = match[1];
-    const projects = new Function(`return ${projectsArrayStr}`)();
-
-    return projects;
-  } catch (error) {
-    console.error('Erreur lors du parsing du fichier TS:', error);
-    throw error;
-  }
-}
-
-/**
- * Génère le contenu TypeScript du fichier projects_data.ts
- */
-function generateTSContent(projects: Project[]): string {
-  return `/**
- * Store local pour les données de projets
- */
-
-export type Project = {
-  titre: string;
-  Description: string;
-  Cover?: string | undefined;
-  Lien?: string | undefined;
-  categories: string[];      // Catégories principales (Web, WordPress, Jeux, etc.)
-  technologies: string[];    // Technologies utilisées (React, Python, etc.)
-  year?: number;            // Année du projet (optionnel)
-};
-
-export const projectsData: Project[] = ${JSON.stringify(projects, null, 2)};
-`;
-}
+import { supabaseAdmin } from '@/lib/supabase';
 
 /**
  * GET /api/admin/projects
- * Retourne la liste de tous les projets
+ * Retourne la liste de tous les projets depuis Supabase
  */
 export async function GET() {
   try {
-    const content = await fs.readFile(PROJECTS_FILE, 'utf-8');
-    const projects = parseProjectsFromTS(content);
+    const { data: projects, error } = await supabaseAdmin
+      .from('projects')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Erreur Supabase GET /api/admin/projects:', error);
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Erreur lors de la récupération des projets',
+          details: error.message
+        },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json({
       success: true,
       projects,
-      count: projects.length
+      count: projects?.length || 0
     });
   } catch (error) {
     console.error('Erreur GET /api/admin/projects:', error);
     return NextResponse.json(
       {
         success: false,
-        error: 'Erreur lors de la lecture des projets',
+        error: 'Erreur serveur',
         details: error instanceof Error ? error.message : 'Erreur inconnue'
       },
       { status: 500 }
@@ -89,18 +44,18 @@ export async function GET() {
 
 /**
  * POST /api/admin/projects
- * Crée un nouveau projet
+ * Crée un nouveau projet dans Supabase
  */
 export async function POST(request: NextRequest) {
   try {
-    const newProject: Project = await request.json();
+    const newProject = await request.json();
 
     // Validation des champs requis
-    if (!newProject.titre || !newProject.Description) {
+    if (!newProject.titre || !newProject.description) {
       return NextResponse.json(
         {
           success: false,
-          error: 'Les champs "titre" et "Description" sont requis'
+          error: 'Les champs "titre" et "description" sont requis'
         },
         { status: 400 }
       );
@@ -117,29 +72,37 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Backup automatique avant modification
-    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const backupFile = `${PROJECTS_FILE}.backup-${timestamp}`;
-    await fs.copyFile(PROJECTS_FILE, backupFile);
+    // Insérer dans Supabase
+    const { data, error } = await supabaseAdmin
+      .from('projects')
+      .insert([{
+        titre: newProject.titre,
+        description: newProject.description,
+        cover: newProject.cover || null,
+        lien: newProject.lien || null,
+        categories: newProject.categories,
+        technologies: newProject.technologies,
+        year: newProject.year || null
+      }])
+      .select()
+      .single();
 
-    // Lecture du fichier actuel
-    const content = await fs.readFile(PROJECTS_FILE, 'utf-8');
-    const projects = parseProjectsFromTS(content);
-
-    // Ajout du nouveau projet
-    projects.push(newProject);
-
-    // Génération du nouveau contenu TS
-    const newContent = generateTSContent(projects);
-
-    // Écriture du fichier
-    await fs.writeFile(PROJECTS_FILE, newContent, 'utf-8');
+    if (error) {
+      console.error('Erreur Supabase POST /api/admin/projects:', error);
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Erreur lors de la création du projet',
+          details: error.message
+        },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json({
       success: true,
       message: 'Projet créé avec succès',
-      project: newProject,
-      totalProjects: projects.length
+      project: data
     }, { status: 201 });
 
   } catch (error) {
@@ -147,7 +110,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         success: false,
-        error: 'Erreur lors de la création du projet',
+        error: 'Erreur serveur',
         details: error instanceof Error ? error.message : 'Erreur inconnue'
       },
       { status: 500 }

@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { Typography } from "@/components/ui/typography/typography";
-import { Project } from "@/store/projects_data";
+import type { Project } from "@/lib/supabase";
 import { ProjectsGrid } from "@/components/ui/grid/projects-grid";
 import { ProjectFilters } from "@/components/ui/filter/project-filters";
 import { Divider } from "@/components/ui/decoration/divider";

@@ -9,7 +9,7 @@ import { Button } from "../button/button";
 import { InfoTooltip } from "../tooltip/info-tooltip";
 import { cn } from "@/lib/utils";
 import { RotateCcw } from "lucide-react";
-import type { Project } from "@/store/projects_data";
+import type { Project } from "@/lib/supabase";
 
 interface ProjectFiltersProps {
   projects: Project[];

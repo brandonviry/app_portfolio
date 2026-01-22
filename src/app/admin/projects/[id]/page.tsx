@@ -7,25 +7,27 @@ import { Save, X, Trash2, ArrowLeft, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 type Project = {
+  id: string;
   titre: string;
-  Description: string;
-  Cover?: string;
-  Lien?: string;
+  description: string;
+  cover?: string | null;
+  lien?: string | null;
   categories: string[];
   technologies: string[];
-  year?: number;
+  year?: number | null;
 };
 
 export default function EditProjectPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);
   const router = useRouter();
-  const projectId = parseInt(resolvedParams.id, 10);
+  const projectId = resolvedParams.id; // UUID string, pas parseInt!
 
   const [project, setProject] = useState<Project>({
+    id: '',
     titre: '',
-    Description: '',
-    Cover: '',
-    Lien: '',
+    description: '',
+    cover: '',
+    lien: '',
     categories: [],
     technologies: [],
     year: undefined
@@ -42,6 +44,7 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
   // Charger le projet
   useEffect(() => {
     loadProject();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectId]);
 
   const loadProject = async () => {
@@ -72,7 +75,7 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
       return;
     }
 
-    if (!project.Description.trim()) {
+    if (!project.description.trim()) {
       alert('La description est requise');
       return;
     }
@@ -90,12 +93,23 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
     try {
       setSaving(true);
 
+      // Transformer les données pour correspondre au format Supabase (minuscules)
+      const projectData = {
+        titre: project.titre,
+        description: project.description, // Conversion: description → description
+        cover: project.cover || undefined,
+        lien: project.lien || undefined,
+        categories: project.categories,
+        technologies: project.technologies,
+        year: project.year
+      };
+
       const response = await fetch(`/api/admin/projects/${projectId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(project),
+        body: JSON.stringify(projectData),
       });
 
       const data = await response.json();
@@ -243,14 +257,14 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
             />
           </div>
 
-          {/* Description */}
+          {/* description */}
           <div>
             <label className="block text-sm font-semibold text-text-primary mb-2">
-              Description *
+              description *
             </label>
             <textarea
-              value={project.Description}
-              onChange={(e) => setProject({ ...project, Description: e.target.value })}
+              value={project.description}
+              onChange={(e) => setProject({ ...project, description: e.target.value })}
               rows={6}
               className={cn(
                 "w-full px-4 py-3",
@@ -260,22 +274,22 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
                 "transition-all duration-200",
                 "resize-vertical"
               )}
-              placeholder="Description détaillée du projet"
+              placeholder="description détaillée du projet"
             />
             <p className="text-xs text-text-secondary mt-1">
-              {project.Description.length} caractères
+              {project.description.length} caractères
             </p>
           </div>
 
-          {/* Cover Image URL */}
+          {/* cover Image URL */}
           <div>
             <label className="block text-sm font-semibold text-text-primary mb-2">
               URL de l&apos;image de couverture
             </label>
             <input
               type="url"
-              value={project.Cover || ''}
-              onChange={(e) => setProject({ ...project, Cover: e.target.value })}
+              value={project.cover || ''}
+              onChange={(e) => setProject({ ...project, cover: e.target.value })}
               className={cn(
                 "w-full px-4 py-3",
                 "bg-surface-1/10 border-2 border-border/20",
@@ -285,11 +299,11 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
               )}
               placeholder="https://example.com/image.png"
             />
-            {project.Cover && (
+            {project.cover && (
               <div className="mt-3">
                 <p className="text-xs text-text-secondary mb-2">Preview:</p>
                 <img
-                  src={project.Cover}
+                  src={project.cover}
                   alt="Preview"
                   className="w-48 h-48 object-cover bg-surface-2"
                   onError={(e) => {
@@ -300,15 +314,15 @@ export default function EditProjectPage({ params }: { params: Promise<{ id: stri
             )}
           </div>
 
-          {/* Lien */}
+          {/* lien */}
           <div>
             <label className="block text-sm font-semibold text-text-primary mb-2">
-              Lien du projet
+              lien du projet
             </label>
             <input
               type="url"
-              value={project.Lien || ''}
-              onChange={(e) => setProject({ ...project, Lien: e.target.value })}
+              value={project.lien || ''}
+              onChange={(e) => setProject({ ...project, lien: e.target.value })}
               className={cn(
                 "w-full px-4 py-3",
                 "bg-surface-1/10 border-2 border-border/20",

@@ -1,5 +1,5 @@
 import { ProjectCard } from "../card/project-card";
-import { Project } from "@/store/projects_data";
+import { Project } from "@/lib/supabase";
 
 interface ProjectsGridProps {
   projects: Project[];

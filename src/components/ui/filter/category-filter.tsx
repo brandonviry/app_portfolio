@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { FilterChip } from "../chip/filter-chip";
 import { cn } from "@/lib/utils";
-import type { Project } from "@/store/projects_data";
+import type { Project } from "@/lib/supabase";
 
 interface CategoryFilterProps {
   projects: Project[];

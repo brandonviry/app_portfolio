@@ -6,13 +6,16 @@ import { Trash2, Edit, Plus, Search, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 type Project = {
+  id: string;
   titre: string;
-  Description: string;
-  Cover?: string;
-  Lien?: string;
+  description: string;
+  cover?: string | null;
+  lien?: string | null;
   categories: string[];
   technologies: string[];
-  year?: number;
+  year?: number | null;
+  created_at?: string;
+  updated_at?: string;
 };
 
 export default function AdminProjectsPage() {
@@ -48,13 +51,13 @@ export default function AdminProjectsPage() {
   };
 
   // Supprimer un projet
-  const handleDelete = async (index: number) => {
-    if (!confirm(`Êtes-vous sûr de vouloir supprimer le projet "${projects[index].titre}" ?`)) {
+  const handleDelete = async (projectId: string, projectTitle: string) => {
+    if (!confirm(`Êtes-vous sûr de vouloir supprimer le projet "${projectTitle}" ?`)) {
       return;
     }
 
     try {
-      const response = await fetch(`/api/admin/projects/${index}`, {
+      const response = await fetch(`/api/admin/projects/${projectId}`, {
         method: 'DELETE',
       });
 
@@ -76,7 +79,7 @@ export default function AdminProjectsPage() {
   // Filtrer les projets
   const filteredProjects = projects.filter(project => {
     const matchesSearch = project.titre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      project.Description.toLowerCase().includes(searchTerm.toLowerCase());
+      project.description.toLowerCase().includes(searchTerm.toLowerCase());
 
     const matchesCategory = !selectedCategory || project.categories.includes(selectedCategory);
 
@@ -212,13 +215,9 @@ export default function AdminProjectsPage() {
           </div>
         ) : (
           <div className="grid gap-4">
-            {filteredProjects.map((project) => {
-              // Trouver l'index réel dans le tableau complet
-              const realIndex = projects.indexOf(project);
-
-              return (
+            {filteredProjects.map((project) => (
                 <div
-                  key={realIndex}
+                  key={project.id}
                   className={cn(
                     "bg-surface-1/10 border-2 border-border/20",
                     "p-6",
@@ -228,11 +227,11 @@ export default function AdminProjectsPage() {
                   )}
                 >
                   <div className="flex gap-6">
-                    {/* Cover image */}
-                    {project.Cover && (
+                    {/* cover image */}
+                    {project.cover && (
                       <div className="w-32 h-32 flex-shrink-0 bg-surface-2 overflow-hidden">
                         <img
-                          src={project.Cover}
+                          src={project.cover}
                           alt={project.titre}
                           className="w-full h-full object-cover"
                         />
@@ -256,7 +255,7 @@ export default function AdminProjectsPage() {
                         {/* Actions */}
                         <div className="flex gap-2">
                           <Link
-                            href={`/admin/projects/${realIndex}`}
+                            href={`/admin/projects/${project.id}`}
                             className={cn(
                               "p-2",
                               "bg-accent/10 text-accent",
@@ -269,7 +268,7 @@ export default function AdminProjectsPage() {
                           </Link>
 
                           <button
-                            onClick={() => handleDelete(realIndex)}
+                            onClick={() => handleDelete(project.id, project.titre)}
                             className={cn(
                               "p-2",
                               "bg-red-500/10 text-red-500",
@@ -284,7 +283,7 @@ export default function AdminProjectsPage() {
                       </div>
 
                       <p className="text-sm text-text-secondary line-clamp-2 mb-3">
-                        {project.Description}
+                        {project.description}
                       </p>
 
                       {/* Catégories */}
@@ -324,10 +323,10 @@ export default function AdminProjectsPage() {
                         )}
                       </div>
 
-                      {/* Lien */}
-                      {project.Lien && (
+                      {/* lien */}
+                      {project.lien && (
                         <a
-                          href={project.Lien}
+                          href={project.lien}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-accent hover:underline text-sm mt-2 inline-block"
@@ -338,8 +337,7 @@ export default function AdminProjectsPage() {
                     </div>
                   </div>
                 </div>
-              );
-            })}
+            ))}
           </div>
         )}
       </div>

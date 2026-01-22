@@ -4,7 +4,7 @@ import { useMemo, useState, useEffect } from "react";
 import { AccordionItem } from "../accordion/accordion-item";
 import { FilterChip } from "../chip/filter-chip";
 import { cn } from "@/lib/utils";
-import type { Project } from "@/store/projects_data";
+import type { Project } from "@/lib/supabase";
 import { TECHNOLOGY_GROUPS, type TechnologyGroupName } from "@/config/technology-groups";
 
 interface GroupedTechnologyFilterProps {
