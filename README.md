@@ -26,14 +26,15 @@ Portfolio professionnel développé avec Next.js 15, TypeScript et Tailwind CSS.
 - **SEO Ready** : Structure optimisée pour le référencement
 - **Responsive Design** : Adaptation mobile-first avec breakpoints Tailwind (sm, md, lg, xl)
 
-### 🎛️ Interface Admin (v1.0)
+### 🎛️ Interface Admin (v2.0 - Supabase)
 - **Authentification Sécurisée** : NextAuth.js avec hash bcrypt (OWASP 2024)
 - **CRUD Projets Complet** : Créer, lire, modifier, supprimer les projets via interface web
+- **Base de Données Supabase** : PostgreSQL avec UUIDs, timestamps automatiques, RLS
 - **Dashboard Statistiques** : Vue d'ensemble en temps réel (total projets, catégories, technologies)
 - **Recherche & Filtrage** : Recherche texte et filtre par catégorie
-- **Backups Automatiques** : Sauvegarde avant chaque modification avec timestamp
+- **Production Ready** : Fonctionne en production Vercel (filesystem read-only compatible)
 - **Design Cohérent** : Interface admin qui respecte le design system fintech
-- **Documentation Complète** : 8 fichiers de documentation détaillée
+- **Documentation Complète** : Guide de migration Supabase inclus
 
 ## 🛠️ Technologies Utilisées
 
@@ -51,11 +52,13 @@ Portfolio professionnel développé avec Next.js 15, TypeScript et Tailwind CSS.
 - **Sécurité** : bcryptjs (hash 12 rounds)
 - **Session** : JWT avec cookies httpOnly
 - **API Routes** : Next.js App Router
+- **Base de données** : Supabase (PostgreSQL)
 
 ### Gestion de Contenu
-- **Stores** : TypeScript locaux (62 projets, compétences, témoignages)
-- **Admin** : Interface web complète avec CRUD
-- **Backups** : Automatiques avec timestamp
+- **Projets** : Base de données Supabase PostgreSQL (60+ projets)
+- **Autres stores** : TypeScript locaux (compétences, témoignages, FAQ)
+- **Admin** : Interface web complète avec CRUD Supabase
+- **Architecture** : Client Supabase avec types TypeScript
 - **Emails** : API Route Next.js via Resend
 
 ## 📦 Installation
@@ -73,6 +76,13 @@ npm install
 
 3. Configurez les variables d'environnement :
 Créez un fichier `.env.local` à la racine du projet :
+
+**Pour Supabase (requis) :**
+```env
+SUPABASE_URL=https://xxx.supabase.co
+SUPABASE_ANON_KEY=sb_publishable_xxx
+SUPABASE_SERVICE_ROLE_KEY=sb_secret_xxx
+```
 
 **Pour l'envoi d'emails (Resend) :**
 ```env
@@ -96,7 +106,7 @@ ADMIN_EMAIL=admin@example.com
 ADMIN_PASSWORD_HASH=<généré-par-le-script>
 ```
 
-📖 Voir [doc/phase-3-authentification-COMPLETE.md](./doc/phase-3-authentification-COMPLETE.md) pour plus de détails.
+📖 Voir [doc/phase-4-migration-supabase.md](./doc/phase-4-migration-supabase.md) pour le guide complet de configuration Supabase.
 
 4. Lancez le serveur de développement :
 ```bash
@@ -114,35 +124,29 @@ npm run dev
 
 ### Contenu du Portfolio
 
-Le contenu est géré via des stores TypeScript locaux dans le dossier `src/store/` :
+#### Projets (Base de données Supabase)
+- **60+ projets** stockés dans PostgreSQL via Supabase
+- Chaque projet contient : titre, description, catégories, technologies, liens, images
+- Les catégories et technologies sont extraites dynamiquement pour les filtres
+- **Gestion via interface admin** :
+  - Accédez à `/admin` après authentification
+  - CRUD complet : Créer, lire, modifier, supprimer
+  - Fonctionne en production Vercel
+  - Stockage persistant et scalable
 
-- **`projects_data.ts`** : 62 projets avec catégories et technologies
-  - Chaque projet contient : titre, description, catégories, technologies, liens, images
-  - Les catégories et technologies sont extraites dynamiquement pour les filtres
+#### Autres contenus (Stores TypeScript locaux)
+Le contenu statique est géré via des fichiers dans `src/store/` :
 
 - **`competences_data.ts`** : Compétences organisées par domaines
-
 - **`benefits_data.ts`** : Avantages et services proposés
-
 - **`faq_data.ts`** : Questions fréquentes
-
-- **`testimonials_data.ts`** : Témoignages clients (⚠️ actuellement commentés dans le code en attendant des témoignages réels - à décommenter dans `src/app/page.tsx` quand prêt)
-
+- **`testimonials_data.ts`** : Témoignages clients (⚠️ actuellement commentés - à décommenter quand prêt)
 - **`logos_data.ts`** : Logos des technologies et clients
+- **`technology-groups.ts`** (config) : Configuration des groupes de technologies pour le dropdown
 
-- **`technology-groups.ts`** (config) : Configuration des groupes de technologies pour le dropdown de filtrage
-
-**Deux méthodes de modification :**
-
-1. **Via l'interface admin** (recommandé) :
-   - Accédez à `/admin` après authentification
-   - Interface visuelle complète pour gérer les projets
-   - Backups automatiques avant chaque modification
-   - Aucune connaissance technique requise
-
-2. **Modification manuelle des fichiers** :
-   - Éditez directement les fichiers `.ts` dans `src/store/`
-   - Utile pour modifications en masse ou scripts
+**Modification du contenu statique :**
+- Éditez directement les fichiers `.ts` dans `src/store/`
+- Utile pour modifications en masse ou scripts
 
 ### Configuration des groupes de technologies
 
@@ -159,7 +163,7 @@ export const TECHNOLOGY_GROUPS = {
 
 Ajoutez vos technologies dans les groupes appropriés ou créez de nouveaux groupes selon vos besoins.
 
-### Interface Admin
+### Interface Admin (v2.0 - Supabase)
 
 **Accès :**
 - Dashboard : `/admin`
@@ -167,11 +171,17 @@ Ajoutez vos technologies dans les groupes appropriés ou créez de nouveaux grou
 - Gestion projets : `/admin/projects`
 
 **Fonctionnalités :**
-- ✅ CRUD complet des projets
-- ✅ Recherche et filtrage
-- ✅ Statistiques en temps réel
-- ✅ Backups automatiques
+- ✅ CRUD complet des projets (Supabase PostgreSQL)
+- ✅ Recherche et filtrage en temps réel
+- ✅ Statistiques dynamiques
+- ✅ Support UUIDs pour identification unique
+- ✅ Fonctionne en production Vercel (pas de limitation filesystem)
 - ✅ Authentification sécurisée (NextAuth.js + bcrypt)
+
+**Architecture :**
+- Routes API : `/api/admin/projects` (GET/POST) et `/api/admin/projects/[id]` (GET/PUT/DELETE)
+- Client Supabase : `src/lib/supabase.ts`
+- Types TypeScript pour sécurité des données
 
 ### API d'envoi d'emails
 
@@ -182,21 +192,24 @@ Le formulaire de contact utilise l'API Resend via la route Next.js (`src/app/api
 ```
 src/
 ├── app/                          # Next.js App Router
-│   ├── admin/                   # 🎛️ Interface Admin (v1.0)
+│   ├── admin/                   # 🎛️ Interface Admin (v2.0 Supabase)
 │   │   ├── layout.tsx           # Layout admin avec header/déconnexion
 │   │   ├── page.tsx             # Dashboard statistiques
 │   │   ├── login/page.tsx       # Page de connexion
-│   │   └── projects/            # Gestion des projets
-│   │       ├── page.tsx         # Liste + recherche/filtre
+│   │   └── projects/            # Gestion des projets (Supabase)
+│   │       ├── page.tsx         # Liste + recherche/filtre (UUIDs)
 │   │       ├── new/page.tsx     # Formulaire création
-│   │       └── [id]/page.tsx    # Formulaire édition
+│   │       └── [id]/page.tsx    # Formulaire édition (UUID)
 │   ├── api/
-│   │   ├── admin/projects/      # 🔐 API CRUD Projets
-│   │   │   ├── route.ts         # GET/POST
-│   │   │   └── [id]/route.ts    # GET/PUT/DELETE
+│   │   ├── projects/            # 📡 API Publique
+│   │   │   └── route.ts         # GET (portfolio public)
+│   │   ├── admin/projects/      # 🔐 API CRUD Admin
+│   │   │   ├── route.ts         # GET/POST (Supabase)
+│   │   │   └── [id]/route.ts    # GET/PUT/DELETE (UUID)
 │   │   ├── auth/                # 🔐 NextAuth Routes
 │   │   │   └── [...nextauth]/route.ts
 │   │   └── contact/route.ts     # API emails
+│   ├── projets/page.tsx         # Page projets (charge via API)
 │   ├── layout.tsx               # Layout principal
 │   └── page.tsx                 # Page d'accueil
 ├── components/
