@@ -90,7 +90,7 @@ export function Footer() {
         {/* Copyright */}
         <div className="mt-8 pt-8 border-t border-border/40 text-center">
           <Typography level="body2" className="text-foreground/60">
-            &copy; {currentYear} Portfolio. Tous droits réservés.
+            &copy; {currentYear} VIRY BRANDON - Développeur Full Stack La Réunion. Tous droits réservés.
           </Typography>
         </div>
       </div>

@@ -8,7 +8,6 @@ export type Description = {
 };
 
 export const descriptionData: Description = {
-  description: `💻 Aspirant développeur web, je suis à la recherche d'opportunités professionnelles pour appliquer mes compétences naissantes et développer mon savoir-faire dans le domaine du développement web. 🚀 Motivé, adaptable et prêt à apprendre, je suis ouvert aux stages et aux opportunités d'emploi pour contribuer à des projets concrets tout en affinant mes compétences techniques. 🎯 Mon objectif ultime est de m'épanouir en tant que développeur web compétent au sein d'une équipe dynamique. 👨‍💻🌟
-`,
+  description: `Je m'appelle Brandon Viry, développeur Web basé à La Réunion.Mon approche est pragmatique : je ne code pas seulement pour coder, je conçois des solutions numériques pour répondre à des besoins précis. Que la réponse soit un site vitrine performant sous Astro, un blog Svelte, ou une application SaaS complexe, je m'attache à livrer des projets propres, flexibles et faciles à maintenir.Je ne me limite pas à un type de projet : mon objectif est de trouver l'architecture la plus pertinente pour résoudre la problématique posée. Motivé et rigoureux, je cherche aujourd'hui à intégrer une équipe pour mettre cette polyvalence et cette exigence de qualité au service de projets concrets.`,
   imageUrl: '/images/avatar2.webp'
 };

@@ -37,7 +37,7 @@ export function HeroSection() {
               "leading-tight"
             )}
           >
-            Bienvenue sur mon Portfolio
+            Portfolio VIRY BRANDON - Développeur Full Stack
           </Typography>
 
           {/* H3 - Bleu accent (#00a8e8) selon branding */}

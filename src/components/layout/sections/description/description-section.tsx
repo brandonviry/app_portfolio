@@ -76,7 +76,7 @@ export function DescriptionSection() {
               {!imageLoaded && <ImagePlaceholder />}
               <Image
                 src={descriptionData.imageUrl}
-                alt="Photo de profil"
+                alt="Photo de VIRY BRANDON - Développeur Full Stack à La Réunion"
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw"
                 className={cn(

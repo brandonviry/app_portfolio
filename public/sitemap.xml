@@ -6,19 +6,19 @@
   <!-- Page d'accueil -->
   <url>
     <loc>https://devweb.viry-brandon.fr</loc>
-    <lastmod>2025-04-01</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://devweb.viry-brandon.fr/images/og-image.jpg</image:loc>
-      <image:title>Portfolio VIRY BRANDON</image:title>
+      <image:loc>https://devweb.viry-brandon.fr/images/og-image-1200x630.jpg</image:loc>
+      <image:title>Portfolio VIRY BRANDON - Développeur Full Stack La Réunion</image:title>
     </image:image>
   </url>
 
   <!-- Page Projets -->
   <url>
     <loc>https://devweb.viry-brandon.fr/projets</loc>
-    <lastmod>2025-04-01</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -26,7 +26,7 @@
   <!-- Page Contact -->
   <url>
     <loc>https://devweb.viry-brandon.fr/contact</loc>
-    <lastmod>2025-04-01</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

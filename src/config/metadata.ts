@@ -33,10 +33,10 @@ const defaultOpenGraph: NonNullable<Metadata['openGraph']> = {
   siteName: siteConfig.title,
   images: [
     {
-      url: `${siteConfig.url}/images/og-image.jpg`,
-      width: 204,
-      height: 196,
-      alt: siteConfig.title,
+      url: `${siteConfig.url}/images/og-image-1200x630.jpg`,
+      width: 1200,
+      height: 630,
+      alt: 'Portfolio VIRY BRANDON - Développeur Full Stack La Réunion',
     },
   ],
 }
@@ -100,14 +100,14 @@ const defaultMetadata: Metadata = {
 export const metadata: PageMetadata = {
   home: {
     ...defaultMetadata,
-    title: 'Accueil | Portfolio VIRY BRANDON',
+    title: 'Portfolio VIRY BRANDON | Développeur Full Stack La Réunion',
     description: 'Bienvenue sur le portfolio de VIRY BRANDON - Développeur Full Stack passionné par la création d\'expériences web innovantes et performantes',
     alternates: {
       canonical: siteConfig.url,
     },
     openGraph: {
       ...defaultOpenGraph,
-      title: 'Accueil | Portfolio VIRY BRANDON',
+      title: 'Portfolio VIRY BRANDON | Développeur Full Stack La Réunion',
       url: siteConfig.url,
     },
   },
