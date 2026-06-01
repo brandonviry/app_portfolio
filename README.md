@@ -347,6 +347,18 @@ Conventions : **aucun border-radius**, coins géométriques, grille de points, p
 
 ---
 
+## 🎛️ Interface Admin
+
+| Route | Accès |
+|-------|-------|
+| `/admin` | Dashboard statistiques |
+| `/admin/login` | Connexion |
+| `/admin/projects` | Liste projets |
+| `/admin/projects/new` | Créer un projet |
+| `/admin/projects/[id]` | Modifier un projet |
+
+---
+
 ## 🚀 Déploiement (Vercel)
 
 ```
