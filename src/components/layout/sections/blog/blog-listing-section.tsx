@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import Link from "next/link";
 import { Typography } from "@/components/ui/typography/typography";
 import { ArticleCard } from "@/components/ui/card/article-card";
 import type { Article } from "@/types/article";
 import { cn } from "@/lib/utils";
+import { ArrowLeft } from "lucide-react";
 
 const ALL = "Tous";
 
@@ -36,6 +38,20 @@ export function BlogListingSection({ articles }: BlogListingSectionProps) {
       />
 
       <div className="container mx-auto px-4 sm:px-6">
+
+        {/* Retour */}
+        <Link
+          href="/accueil"
+          className={cn(
+            "inline-flex items-center gap-2 mb-10",
+            "text-xs text-text-secondary uppercase tracking-widest font-medium",
+            "hover:text-accent transition-colors duration-200",
+            "group"
+          )}
+        >
+          <ArrowLeft className="w-3.5 h-3.5 transition-transform duration-200 group-hover:-translate-x-0.5" />
+          Accueil
+        </Link>
 
         {/* Filtres */}
         <div className="flex flex-wrap gap-2 mb-12">
