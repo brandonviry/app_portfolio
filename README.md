@@ -6,49 +6,242 @@
 ![React](https://img.shields.io/badge/React-19+-61DAFB?style=for-the-badge&logo=react)
 ![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?style=for-the-badge&logo=supabase)
 
-Portfolio professionnel de VIRY Brandon — Programmeur, Développeur web, Graphiste & Designer Visuel, Full-Stack Product maker. Développé avec Next.js 15, TypeScript et Tailwind CSS. Architecture Atomic Design.
+Portfolio professionnel de VIRY Brandon — Programmeur, Développeur web, Graphiste & Designer Visuel, Full-Stack Product maker. Développé avec Next.js 15, TypeScript et Tailwind CSS. Architecture basée sur l'Atomic Design.
 
----
+## 🚀 Pages & Fonctionnalités
 
-## 🗺️ Pages & Routes
+### Pages publiques
 
 | Route | Description |
 |-------|-------------|
-| `/accueil` | Page principale : Hero, Compétences, Derniers articles, À propos, Contact |
+| `/accueil` | Page principale : Hero (nom + rôles), Compétences, Derniers articles, À propos, Contact |
 | `/blog` | Listing de tous les articles avec filtre par catégorie |
 | `/blog/[slug]` | Article individuel avec rendu Markdown complet |
-| `/projets` | Galerie des projets avec filtres avancés |
-| `/contact` | Page de contact |
-| `/dev` | Ancienne page d'accueil portfolio (conservée) |
-| `/admin` | Interface admin protégée (NextAuth) |
+| `/projets` | Galerie des projets avec filtres (catégorie, technologie, tri) |
+| `/contact` | Page de contact dédiée |
+| `/dev` | Ancienne page d'accueil portfolio conservée (sections : Hero, Technologies, Langages, Description, Benefits, FAQ, CTA) |
 
----
+### Page /accueil (nouvelle page principale)
 
-## 🚀 Fonctionnalités
+- **Hero** : Nom VIRY Brandon + 4 rôles listés (Programmeur, Développeur web, Graphiste & Designer Visuel, Full-Stack Product maker) — décoration graphique : grille de points, watermark, coins géométriques accent/cta, étiquettes latérales, année dynamique
+- **Compétences** : 3 blocs DEV / CRAFT / GRAPH avec liens — DEV pointe vers `/projets` ; CRAFT et GRAPH vers les articles de blog à venir
+- **Derniers Articles** : 6 derniers articles publiés depuis Supabase
+- **À propos** : Biographie complète + liens réseaux sociaux (Instagram, LinkedIn, Reddit)
+- **Contact** : Formulaire complet (Nom, Prénom, Mail, Sujet, Message, consentement RGPD) avec validation Zod
 
-### Page `/accueil`
-- **Hero graphique** : Nom VIRY Brandon + 4 rôles, décoration géométrique (grille de points, watermark, coins accent/cta, étiquettes latérales, année dynamique)
-- **Compétences** : 3 blocs DEV / CRAFT / GRAPH
-- **Derniers articles** : 6 derniers articles publiés depuis Supabase
-- **À propos** : Biographie complète + réseaux sociaux
-- **Contact** : Formulaire complet (Nom, Prénom, Mail, Sujet, Message, consentement RGPD)
+### Blog /blog & /blog/[slug]
+- **Listing** : tous les articles publiés depuis Supabase, filtrage client-side instantané par catégorie
+- **Article** : rendu Markdown complet avec branding, embeds médias automatiques (YouTube, TikTok, images)
+- **Génération statique** : `generateStaticParams` pour les articles publiés, `generateMetadata` (SEO)
 
-### Blog `/blog` & `/blog/[slug]`
-- Listing avec filtre par catégorie (client-side, instantané)
-- Pages articles avec rendu **Markdown complet** et **embeds médias automatiques**
-- Données 100 % depuis Supabase (table `articles`)
-- Génération statique (`generateStaticParams`) pour les articles publiés
+### Portfolio /projets
+- **Filtrage Avancé** : par catégorie, par technologie (dropdown multi-sélection groupé), tri personnalisable
+- **Logique AND/OR** intelligente entre filtres, tooltips explicatifs
+- **Projets** : Chargés depuis Supabase PostgreSQL
 
-### Portfolio `/projets`
-- Filtres par catégorie, technologie (dropdown multi-sélection groupé), tri
-- Projets chargés depuis Supabase PostgreSQL
+### 🎛️ Interface Admin
+- **Authentification Sécurisée** : NextAuth.js avec hash bcrypt
+- **CRUD Projets** : Créer, lire, modifier, supprimer via interface web
+- **Base de Données** : Supabase PostgreSQL (UUIDs, timestamps, RLS)
+- **Dashboard** : Statistiques en temps réel (total projets, catégories, technologies)
+- **Production Ready** : Compatible Vercel (filesystem read-only)
 
-### Interface Admin `/admin`
-- Authentification NextAuth.js + bcrypt
-- CRUD complet projets et articles via Supabase
-- Dashboard statistiques en temps réel
+## 🛠️ Stack Technique
 
----
+### Frontend & Architecture
+- **Framework** : Next.js 15.1+ avec App Router et Turbopack
+- **Runtime** : React 19+
+- **Language** : TypeScript 5.0+ (strict mode, alias `@/*`)
+- **Styles** : Tailwind CSS 3.4+ avec variables CSS custom
+- **Icônes** : Lucide React
+- **Animations** : Framer Motion 12
+- **Utilitaires CSS** : clsx, tailwind-merge, class-variance-authority (CVA)
+- **Architecture** : Atomic Design (Atomes → Molécules → Organismes → Pages)
+
+### Backend & Authentification
+- **Base de données** : Supabase (PostgreSQL) — projets + articles
+- **Authentification** : NextAuth.js 5.0+ beta (Credentials, JWT)
+- **Sécurité** : bcryptjs (hash)
+- **API Routes** : Next.js App Router
+- **Emails** : Resend (API route `/api/contact`)
+
+### Blog & Contenu
+- **Markdown** : react-markdown + remark-gfm (GFM : tableaux, barré, autolinks)
+- **Embeds** : YouTube (youtube-nocookie), TikTok (iframe v2)
+- **Images** : détection automatique ou syntaxe `![alt](url)`
+
+### Formulaires & Validation
+- **react-hook-form** + **@hookform/resolvers** + **Zod**
+
+### Données
+- **Projets** : Supabase PostgreSQL
+- **Articles** : Supabase PostgreSQL (table `articles`)
+- **Stores statiques** : TypeScript locaux (`src/store/`) — compétences, FAQ, témoignages, logos
+
+## 📦 Installation
+
+1. Clonez le repository :
+```bash
+git clone https://github.com/BrandonViry/app_portfolio.git
+cd app_portfolio
+```
+
+2. Installez les dépendances :
+```bash
+npm install
+```
+
+3. Configurez les variables d'environnement dans `.env.local` :
+
+```env
+# Supabase (requis)
+SUPABASE_URL=https://xxx.supabase.co
+SUPABASE_ANON_KEY=sb_publishable_xxx
+SUPABASE_SERVICE_ROLE_KEY=sb_secret_xxx
+
+# Emails (Resend)
+RESEND_API_KEY=re_votre_cle_api_resend
+
+# NextAuth
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=<généré>
+
+# Admin
+ADMIN_EMAIL=admin@example.com
+ADMIN_PASSWORD_HASH=<généré via node generate-hash.js "MotDePasse">
+```
+
+4. Lancez le serveur de développement :
+```bash
+npm run dev
+```
+
+5. Ouvrez [http://localhost:3000/accueil](http://localhost:3000/accueil)
+
+**Interface admin** : [http://localhost:3000/admin](http://localhost:3000/admin)
+
+## 📂 Structure du Projet
+
+```
+src/
+├── app/                              # Next.js App Router
+│   ├── accueil/                      # ✨ Page principale (Hero, Compétences, Articles, À propos, Contact)
+│   ├── blog/                         # ✨ Blog
+│   │   ├── page.tsx                  # Listing articles (/blog)
+│   │   └── [slug]/page.tsx           # Article individuel (/blog/[slug])
+│   ├── dev/                          # Page ancienne homepage portfolio (conservée)
+│   ├── projets/                      # Galerie projets avec filtres
+│   ├── contact/                      # Page de contact
+│   ├── admin/                        # Interface admin (protégée)
+│   │   ├── login/
+│   │   └── projects/                 # CRUD projets
+│   ├── api/
+│   │   ├── contact/route.ts          # Envoi emails (Resend)
+│   │   ├── projects/route.ts         # API publique projets
+│   │   ├── admin/projects/           # API CRUD admin (Supabase)
+│   │   └── auth/[...nextauth]/       # NextAuth routes
+│   ├── layout.tsx                    # Layout global (Navbar + Footer)
+│   └── page.tsx                      # Route / (racine)
+│
+├── components/
+│   ├── ui/                           # ⚛️ Atomes — composants indivisibles
+│   │   ├── article/
+│   │   │   └── article-content.tsx   # ✨ Parseur Markdown + médias
+│   │   ├── media/
+│   │   │   ├── article-image.tsx     # ✨ Rendu image branding
+│   │   │   ├── youtube-embed.tsx     # ✨ Embed YouTube 16:9
+│   │   │   └── tiktok-embed.tsx      # ✨ Embed TikTok 9:16
+│   │   ├── button/button.tsx
+│   │   ├── typography/typography.tsx
+│   │   ├── card/
+│   │   │   ├── article-card.tsx      # ✨ Carte article (image, catégorie, titre, auteur, date)
+│   │   │   ├── project-card.tsx
+│   │   │   ├── benefit-card.tsx
+│   │   │   └── testimonial-card.tsx
+│   │   ├── form/
+│   │   │   ├── contact-form.tsx      # Formulaire simple (Nom, Email, Message)
+│   │   │   ├── contact-form-full.tsx # ✨ Formulaire complet (6 champs + consentement RGPD)
+│   │   │   ├── form-input.tsx
+│   │   │   ├── form-textarea.tsx
+│   │   │   └── form-checkbox.tsx     # ✨ Atome checkbox avec label et gestion d'erreur
+│   │   ├── chip/, dropdown/, filter/ # Filtres projets
+│   │   ├── decoration/divider.tsx
+│   │   ├── icon/, badge/, avatar/
+│   │   ├── navigation/navigation.tsx
+│   │   └── ...
+│   │
+│   └── layout/                       # 🏗️ Organismes — assemblage de composants
+│       ├── header/navbar.tsx
+│       ├── footer/footer.tsx
+│       └── sections/
+│           ├── hero-accueil/         # ✨ Hero page /accueil (décorations graphiques)
+│           ├── competences/          # ✨ Blocs DEV / CRAFT / GRAPH
+│           ├── articles/             # ✨ Grille derniers articles (Supabase)
+│           ├── apropos/              # ✨ Biographie + réseaux sociaux
+│           ├── contact-accueil/      # ✨ Section contact page /accueil
+│           ├── blog/                 # ✨ Listing blog avec filtres
+│           ├── hero/                 # Hero page /dev
+│           ├── benefits/
+│           ├── cta/
+│           ├── description/
+│           ├── faq/
+│           ├── languages/
+│           ├── projets/
+│           ├── social-proof/
+│           ├── technologies/
+│           └── testimonials/
+│
+├── config/
+│   ├── metadata.ts                   # Métadonnées SEO par page
+│   └── technology-groups.ts          # Groupes de technologies pour dropdown
+│
+├── lib/
+│   ├── supabase.ts                   # Clients Supabase (anon + admin) + types + CRUD articles
+│   ├── auth.ts                       # Configuration NextAuth
+│   ├── apollo/client.ts              # Client Apollo GraphQL
+│   └── utils.ts                      # Utilitaires (cn)
+│
+├── middleware.ts                     # Protection routes /admin/*
+│
+├── store/                            # Données statiques TypeScript
+│   ├── articles_data.ts              # ✨ Données articles de fallback
+│   ├── benefits_data.ts
+│   ├── competences_data.ts
+│   ├── description_data.ts
+│   ├── faq_data.ts
+│   ├── logos_data.ts
+│   └── testimonials_data.ts
+│
+└── types/
+    ├── article.ts                    # ✨ Type Article
+    └── project.ts
+```
+
+> ✨ = ajouté récemment
+
+## 🎨 Design System
+
+Palette de couleurs définie via variables CSS dans `globals.css` et `tailwind.config.ts` :
+
+| Variable | Valeur | Usage |
+|----------|--------|-------|
+| `--accent` | `#00a8e8` | Bleu électrique — titres, liens actifs |
+| `--cta` | `#ff3b3f` | Rouge vif — boutons d'action |
+| `--background` | `#ffffff` / `#0d0d0d` | Fond (clair / sombre) |
+| `--surface-1/2/3` | Niveaux de surface | Cartes, conteneurs |
+| `--text-primary/secondary/muted` | Hiérarchie texte | — |
+
+Conventions : **aucun border-radius**, coins géométriques, grille de points, palette accent/cta cohérente sur toutes les pages.
+
+## 🎛️ Interface Admin
+
+| Route | Accès |
+|-------|-------|
+| `/admin` | Dashboard statistiques |
+| `/admin/login` | Connexion |
+| `/admin/projects` | Liste projets |
+| `/admin/projects/new` | Créer un projet |
+| `/admin/projects/[id]` | Modifier un projet |
 
 ## ✍️ Rédaction des articles — Syntaxe complète
 
@@ -152,8 +345,6 @@ https://www.youtube.com/watch?v=dQw4w9WgXcQ
 Concept & réalisation : VIRY Brandon
 ```
 
----
-
 ## 🗄️ Base de données Supabase
 
 ### Table `articles`
@@ -204,162 +395,11 @@ CREATE POLICY "Service role full access" ON articles
 
 Gérée via l'interface admin `/admin/projects`. Voir la documentation Supabase existante.
 
----
-
-## 🛠️ Stack Technique
-
-### Frontend & Architecture
-- **Framework** : Next.js 15.1+ avec App Router et Turbopack
-- **Runtime** : React 19+
-- **Language** : TypeScript 5.0+ (strict, alias `@/*`)
-- **Styles** : Tailwind CSS 3.4+ avec variables CSS custom
-- **Icônes** : Lucide React
-- **Animations** : Framer Motion 12
-- **Utilitaires CSS** : clsx, tailwind-merge, class-variance-authority (CVA)
-- **Architecture** : Atomic Design (Atomes → Molécules → Organismes → Pages)
-
-### Backend & Données
-- **Base de données** : Supabase (PostgreSQL) — projets + articles
-- **Authentification** : NextAuth.js 5.0+ beta (Credentials, JWT, bcryptjs)
-- **API Routes** : Next.js App Router
-- **Emails** : Resend (`/api/contact`)
-
-### Blog & Contenu
-- **Markdown** : react-markdown + remark-gfm (GFM : tableaux, barré, autolinks)
-- **Embeds** : YouTube (youtube-nocookie), TikTok (iframe v2)
-- **Images** : détection automatique ou syntaxe `![alt](url)`
-
-### Formulaires & Validation
-- **react-hook-form** + **@hookform/resolvers** + **Zod**
-
----
-
-## 📂 Structure du Projet
-
-```
-src/
-├── app/
-│   ├── accueil/                      # Page principale
-│   ├── blog/
-│   │   ├── page.tsx                  # Listing articles (/blog)
-│   │   └── [slug]/page.tsx           # Article individuel (/blog/[slug])
-│   ├── projets/
-│   ├── contact/
-│   ├── dev/                          # Ancienne homepage (conservée)
-│   ├── admin/                        # Interface admin protégée
-│   ├── api/
-│   │   ├── contact/route.ts
-│   │   ├── projects/route.ts
-│   │   ├── admin/projects/
-│   │   └── auth/[...nextauth]/
-│   └── layout.tsx
-│
-├── components/
-│   ├── ui/                           # ⚛️ Atomes
-│   │   ├── article/
-│   │   │   └── article-content.tsx   # Parseur Markdown + médias
-│   │   ├── media/
-│   │   │   ├── article-image.tsx     # Rendu image branding
-│   │   │   ├── youtube-embed.tsx     # Embed YouTube 16:9
-│   │   │   └── tiktok-embed.tsx      # Embed TikTok 9:16
-│   │   ├── button/, typography/, card/, form/, ...
-│   │
-│   └── layout/                       # 🏗️ Organismes
-│       ├── header/navbar.tsx
-│       ├── footer/footer.tsx
-│       └── sections/
-│           ├── hero-accueil/         # Hero graphique décoré
-│           ├── competences/          # Blocs DEV / CRAFT / GRAPH
-│           ├── articles/             # Derniers articles (Supabase)
-│           ├── apropos/              # Bio + réseaux sociaux
-│           ├── contact-accueil/      # Formulaire complet
-│           ├── blog/                 # Listing blog avec filtres
-│           └── hero/, benefits/, faq/, ...
-│
-├── lib/
-│   ├── supabase.ts                   # Clients + types + CRUD projets & articles
-│   ├── auth.ts
-│   └── utils.ts
-│
-├── store/
-│   └── articles_data.ts              # Données statiques de fallback
-│
-└── types/
-    ├── article.ts                    # Type Article
-    └── project.ts
-```
-
----
-
-## 📦 Installation
-
-```bash
-git clone https://github.com/BrandonViry/app_portfolio.git
-cd app_portfolio
-npm install
-```
-
-Créer `.env.local` :
-
-```env
-# Supabase
-SUPABASE_URL=https://xxx.supabase.co
-SUPABASE_ANON_KEY=sb_publishable_xxx
-SUPABASE_SERVICE_ROLE_KEY=sb_secret_xxx
-
-# Emails
-RESEND_API_KEY=re_xxx
-
-# NextAuth
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=<généré>
-ADMIN_EMAIL=admin@example.com
-ADMIN_PASSWORD_HASH=<généré via node generate-hash.js "MotDePasse">
-```
-
-```bash
-npm run dev
-```
-
----
-
-## 🎨 Design System
-
-| Variable | Valeur | Usage |
-|----------|--------|-------|
-| `--accent` | `#00a8e8` | Bleu électrique — titres, liens actifs, décorations |
-| `--cta` | `#ff3b3f` | Rouge vif — boutons d'action, coins bas |
-| `--background` | `#ffffff` / `#0d0d0d` | Fond clair / sombre |
-| `--surface-1/2/3` | Niveaux de gris | Cartes, conteneurs, code |
-| `--text-primary/secondary/muted` | Hiérarchie texte | — |
-
-Conventions : **aucun border-radius**, coins géométriques, grille de points, palette accent/cta cohérente sur toutes les pages.
-
----
-
-## ⚠️ Notes importantes
-
-- **Images dans les articles** : toujours utiliser `![alt](url)` — les URLs sans extension ne sont pas détectées automatiquement
-- **Blocs de code dans Supabase** : utiliser 4 espaces d'indentation plutôt que les backticks triples (évite les problèmes de copier-coller dans l'éditeur SQL)
-- **Champ `publie`** : un article en `false` n'est jamais visible publiquement, utile pour les brouillons
-- **Section Témoignages** : commentée dans `dev/page.tsx`, à décommenter quand les données sont prêtes
-- **Liens CRAFT / GRAPH** dans la section Compétences : pointent vers `/blog/...` non encore créés
-
----
-
-## 🎛️ Interface Admin
-
-| Route | Accès |
-|-------|-------|
-| `/admin` | Dashboard statistiques |
-| `/admin/login` | Connexion |
-| `/admin/projects` | Liste projets |
-| `/admin/projects/new` | Créer un projet |
-| `/admin/projects/[id]` | Modifier un projet |
-
----
-
 ## 🚀 Déploiement (Vercel)
+
+1. Connectez le repository GitHub à Vercel
+2. Configurez les variables d'environnement dans les paramètres Vercel
+3. Le déploiement est automatique à chaque push sur `main`
 
 ```
 Build Command  : npm run build
@@ -367,13 +407,17 @@ Output         : .next
 Install        : npm install
 ```
 
-Variables d'environnement à configurer dans les paramètres Vercel (identiques à `.env.local`).
+## ⚠️ Notes
 
----
+- **Section Témoignages** : commentée dans `/dev/page.tsx`, décommenter quand les données sont prêtes
+- **Liens CRAFT / GRAPH** dans la section Compétences : pointent vers `/blog/...` non encore créés
+- **Images dans les articles** : toujours utiliser `![alt](url)` — les URLs sans extension ne sont pas détectées automatiquement
+- **Blocs de code dans Supabase** : utiliser 4 espaces d'indentation plutôt que les backticks triples (évite les problèmes de copier-coller dans l'éditeur SQL)
+- **Champ `publie`** : un article en `false` n'est jamais visible publiquement, utile pour les brouillons
 
 ## 📝 License
 
-Aucune licence spécifique.
+Ce projet n'a pas de licence spécifique.
 
 ## 🤝 Contact
 
