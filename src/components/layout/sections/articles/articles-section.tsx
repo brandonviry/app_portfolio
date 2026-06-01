@@ -1,52 +1,13 @@
 import { Typography } from "@/components/ui/typography/typography";
 import { ArticleCard } from "@/components/ui/card/article-card";
 import { Divider } from "@/components/ui/decoration/divider";
+import { getPublishedArticles } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
 
-const articles = [
-  {
-    title: "Dragovia Studios – Identité Visuelle & Univers de Marque",
-    author: "chikara974",
-    date: "mai 19, 2025",
-    category: "Graphiste",
-    href: "/blog/dragovia-studios-identite-visuelle",
-    imageSrc: undefined,
-  },
-  {
-    title: "Saints Row: The Third — Campagne Instagram publicitaire",
-    author: "chikara974",
-    date: "mai 19, 2025",
-    category: "Graphiste",
-    href: "/blog/saints-row-campagne-instagram",
-    imageSrc: undefined,
-  },
-  {
-    title: "CodeNova : Identité & Mini Campagne Instagram",
-    author: "chikara974",
-    date: "mai 17, 2025",
-    category: "Graphiste",
-    href: "/blog/codenova-identite-mini-campagne-instagram",
-    imageSrc: undefined,
-  },
-  {
-    title: "Article de Full-Stack Product Maker",
-    author: "chikara974",
-    date: "mai 17, 2025",
-    category: "Full-Stack Product Maker",
-    href: "/blog/full-stack-product-maker-viry-brandon",
-    imageSrc: undefined,
-  },
-  {
-    title: "Article de développeur web",
-    author: "chikara974",
-    date: "mai 16, 2025",
-    category: "Développeur web",
-    href: "/blog/projet-de-developpement-web-viry-brandon",
-    imageSrc: undefined,
-  },
-];
+export async function ArticlesSection() {
+  const articles = await getPublishedArticles();
+  const latest = articles.slice(0, 6);
 
-export function ArticlesSection() {
   return (
     <section className={cn("relative py-16 md:py-24")}>
       <div className={cn("container mx-auto px-4 sm:px-6")}>
@@ -60,14 +21,26 @@ export function ArticlesSection() {
           <Divider variant="gradient" align="center" className="mx-auto" />
         </div>
 
-        <div className={cn(
-          "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6",
-          "max-w-6xl mx-auto"
-        )}>
-          {articles.map((article) => (
-            <ArticleCard key={article.title} {...article} />
-          ))}
-        </div>
+        {latest.length > 0 ? (
+          <div className={cn(
+            "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6",
+            "max-w-6xl mx-auto"
+          )}>
+            {latest.map((article) => (
+              <ArticleCard
+                key={article.slug}
+                title={article.title}
+                author={article.author}
+                date={article.date}
+                category={article.category}
+                href={`/blog/${article.slug}`}
+                imageSrc={article.imageSrc}
+              />
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-text-muted">Aucun article publié pour l&apos;instant.</p>
+        )}
       </div>
     </section>
   );
