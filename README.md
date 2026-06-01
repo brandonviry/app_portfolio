@@ -1,65 +1,69 @@
-l# Portfolio de Brandon VIRY
+# Portfolio de Brandon VIRY
 
 ![Next.js](https://img.shields.io/badge/Next.js-15.1+-000000?style=for-the-badge&logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178C6?style=for-the-badge&logo=typescript)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4+-38B2AC?style=for-the-badge&logo=tailwind-css)
 ![React](https://img.shields.io/badge/React-19+-61DAFB?style=for-the-badge&logo=react)
 
-Portfolio professionnel développé avec Next.js 15, TypeScript et Tailwind CSS. Architecture moderne basée sur l'Atomic Design, présentant 62 projets avec système de filtrage avancé.
+Portfolio professionnel de VIRY Brandon — Programmeur, Développeur web, Graphiste & Designer Visuel, Full-Stack Product maker. Développé avec Next.js 15, TypeScript et Tailwind CSS. Architecture basée sur l'Atomic Design.
 
-## 🚀 Fonctionnalités
+## 🚀 Pages & Fonctionnalités
 
-### Portfolio Public
-- **Design System Fintech** : Interface utilisateur élégante avec branding cohérent (pas de border-radius, corners accent, effets scan line)
-- **Architecture Atomique** : Organisation du code selon les principes d'Atomic Design (Atoms → Molecules → Organisms → Pages)
-- **Filtrage Avancé** :
-  - Filtres par catégorie (dynamiques, basés sur les projets)
-  - Filtres par technologie (dropdown multi-sélection avec groupes)
-  - Tri personnalisable (par défaut, titre A-Z/Z-A, par catégorie)
-  - Logique AND/OR intelligente entre filtres
-  - Tooltips explicatifs pour la compréhension des filtres
-- **Performance Optimisée** :
-  - Next.js 15 avec App Router et React Server Components
-  - Turbopack pour le développement ultra-rapide
-  - Hydratation optimisée (prévention des erreurs SSR/Client)
-- **Formulaire de Contact** : Intégration API Route Next.js pour l'envoi d'emails
-- **SEO Ready** : Structure optimisée pour le référencement
-- **Responsive Design** : Adaptation mobile-first avec breakpoints Tailwind (sm, md, lg, xl)
+### Pages publiques
 
-### 🎛️ Interface Admin (v2.0 - Supabase)
-- **Authentification Sécurisée** : NextAuth.js avec hash bcrypt (OWASP 2024)
-- **CRUD Projets Complet** : Créer, lire, modifier, supprimer les projets via interface web
-- **Base de Données Supabase** : PostgreSQL avec UUIDs, timestamps automatiques, RLS
-- **Dashboard Statistiques** : Vue d'ensemble en temps réel (total projets, catégories, technologies)
-- **Recherche & Filtrage** : Recherche texte et filtre par catégorie
-- **Production Ready** : Fonctionne en production Vercel (filesystem read-only compatible)
-- **Design Cohérent** : Interface admin qui respecte le design system fintech
-- **Documentation Complète** : Guide de migration Supabase inclus
+| Route | Description |
+|-------|-------------|
+| `/accueil` | Page principale : Hero (nom + rôles), Compétences, Derniers articles, À propos, Contact |
+| `/projets` | Galerie des projets avec filtres (catégorie, technologie, tri) |
+| `/contact` | Page de contact dédiée |
+| `/dev` | Ancienne page d'accueil portfolio conservée (sections : Hero, Technologies, Langages, Description, Benefits, FAQ, CTA) |
 
-## 🛠️ Technologies Utilisées
+### Page /accueil (nouvelle page principale)
+
+- **Hero** : Nom VIRY Brandon + 4 rôles listés (Programmeur, Développeur web, Graphiste & Designer Visuel, Full-Stack Product maker)
+- **Compétences** : 3 blocs DEV / CRAFT / GRAPH avec liens — DEV pointe vers `/projets` ; CRAFT et GRAPH vers les articles de blog à venir
+- **Derniers Articles** : Grille des 5 derniers articles (données statiques, extensibles via API blog)
+- **À propos** : Biographie complète + liens réseaux sociaux (Instagram, LinkedIn, Reddit)
+- **Contact** : Formulaire complet (Nom, Prénom, Mail, Sujet, Message, consentement RGPD) avec validation Zod
+
+### Portfolio /projets
+- **Filtrage Avancé** : par catégorie, par technologie (dropdown multi-sélection groupé), tri personnalisable
+- **Logique AND/OR** intelligente entre filtres, tooltips explicatifs
+- **Projets** : Chargés depuis Supabase PostgreSQL
+
+### 🎛️ Interface Admin
+- **Authentification Sécurisée** : NextAuth.js avec hash bcrypt
+- **CRUD Projets** : Créer, lire, modifier, supprimer via interface web
+- **Base de Données** : Supabase PostgreSQL (UUIDs, timestamps, RLS)
+- **Dashboard** : Statistiques en temps réel (total projets, catégories, technologies)
+- **Production Ready** : Compatible Vercel (filesystem read-only)
+
+## 🛠️ Stack Technique
 
 ### Frontend & Architecture
 - **Framework** : Next.js 15.1+ avec App Router et Turbopack
 - **Runtime** : React 19+
-- **Language** : TypeScript 5.0+
-- **Styles** : Tailwind CSS 3.4+
+- **Language** : TypeScript 5.0+ (strict mode, alias `@/*`)
+- **Styles** : Tailwind CSS 3.4+ avec variables CSS custom
 - **Icônes** : Lucide React
-- **Utilitaires** : clsx, tailwind-merge
-- **Architecture** : Atomic Design Pattern
+- **Animations** : Framer Motion 12
+- **Utilitaires CSS** : clsx, tailwind-merge, class-variance-authority (CVA)
+- **Architecture** : Atomic Design (Atomes → Molécules → Organismes → Pages)
 
 ### Backend & Authentification
-- **Authentification** : NextAuth.js 5.0+ (beta)
-- **Sécurité** : bcryptjs (hash 12 rounds)
-- **Session** : JWT avec cookies httpOnly
-- **API Routes** : Next.js App Router
 - **Base de données** : Supabase (PostgreSQL)
+- **Authentification** : NextAuth.js 5.0+ beta (Credentials, JWT)
+- **Sécurité** : bcryptjs (hash)
+- **API Routes** : Next.js App Router
+- **Emails** : Resend (API route `/api/contact`)
 
-### Gestion de Contenu
-- **Projets** : Base de données Supabase PostgreSQL (60+ projets)
-- **Autres stores** : TypeScript locaux (compétences, témoignages, FAQ)
-- **Admin** : Interface web complète avec CRUD Supabase
-- **Architecture** : Client Supabase avec types TypeScript
-- **Emails** : API Route Next.js via Resend
+### Formulaires & Validation
+- **react-hook-form** + **@hookform/resolvers** + **Zod**
+
+### Données
+- **Projets** : Supabase PostgreSQL
+- **Articles** : Données statiques (extensibles)
+- **Stores statiques** : TypeScript locaux (`src/store/`) — compétences, FAQ, témoignages, logos
 
 ## 📦 Installation
 
@@ -74,230 +78,161 @@ cd app_portfolio
 npm install
 ```
 
-3. Configurez les variables d'environnement :
-Créez un fichier `.env.local` à la racine du projet :
+3. Configurez les variables d'environnement dans `.env.local` :
 
-**Pour Supabase (requis) :**
 ```env
+# Supabase (requis)
 SUPABASE_URL=https://xxx.supabase.co
 SUPABASE_ANON_KEY=sb_publishable_xxx
 SUPABASE_SERVICE_ROLE_KEY=sb_secret_xxx
-```
 
-**Pour l'envoi d'emails (Resend) :**
-```env
+# Emails (Resend)
 RESEND_API_KEY=re_votre_cle_api_resend
-```
 
-**Pour l'interface admin (génération via script) :**
-```bash
-# Générez vos credentials avec le script fourni
-node generate-hash.js "VotreMotDePasseSecurise123!"
-```
-
-Puis ajoutez dans `.env.local` :
-```env
-# NextAuth Configuration
+# NextAuth
 NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=<généré-par-le-script>
+NEXTAUTH_SECRET=<généré>
 
-# Admin Credentials
+# Admin
 ADMIN_EMAIL=admin@example.com
-ADMIN_PASSWORD_HASH=<généré-par-le-script>
+ADMIN_PASSWORD_HASH=<généré via node generate-hash.js "MotDePasse">
 ```
-
-📖 Voir [doc/phase-4-migration-supabase.md](./doc/phase-4-migration-supabase.md) pour le guide complet de configuration Supabase.
 
 4. Lancez le serveur de développement :
 ```bash
 npm run dev
 ```
 
-5. Ouvrez [http://localhost:3000](http://localhost:3000) dans votre navigateur.
+5. Ouvrez [http://localhost:3000/accueil](http://localhost:3000/accueil)
 
-6. **Accès à l'interface admin** :
-   - URL : [http://localhost:3000/admin](http://localhost:3000/admin)
-   - Connectez-vous avec les credentials configurés
-   - Gérez vos projets directement depuis l'interface web
-
-## ⚙️ Configuration
-
-### Contenu du Portfolio
-
-#### Projets (Base de données Supabase)
-- **60+ projets** stockés dans PostgreSQL via Supabase
-- Chaque projet contient : titre, description, catégories, technologies, liens, images
-- Les catégories et technologies sont extraites dynamiquement pour les filtres
-- **Gestion via interface admin** :
-  - Accédez à `/admin` après authentification
-  - CRUD complet : Créer, lire, modifier, supprimer
-  - Fonctionne en production Vercel
-  - Stockage persistant et scalable
-
-#### Autres contenus (Stores TypeScript locaux)
-Le contenu statique est géré via des fichiers dans `src/store/` :
-
-- **`competences_data.ts`** : Compétences organisées par domaines
-- **`benefits_data.ts`** : Avantages et services proposés
-- **`faq_data.ts`** : Questions fréquentes
-- **`testimonials_data.ts`** : Témoignages clients (⚠️ actuellement commentés - à décommenter quand prêt)
-- **`logos_data.ts`** : Logos des technologies et clients
-- **`technology-groups.ts`** (config) : Configuration des groupes de technologies pour le dropdown
-
-**Modification du contenu statique :**
-- Éditez directement les fichiers `.ts` dans `src/store/`
-- Utile pour modifications en masse ou scripts
-
-### Configuration des groupes de technologies
-
-Le fichier `src/config/technology-groups.ts` définit comment les technologies sont groupées dans le dropdown de filtrage :
-
-```typescript
-export const TECHNOLOGY_GROUPS = {
-  'Frontend': ['React', 'Next.js', 'Vue.js', ...],
-  'Backend': ['Node.js', 'PHP', 'Python', ...],
-  'Mobile': ['React Native', 'Flutter', ...],
-  // ... autres groupes
-} as const;
-```
-
-Ajoutez vos technologies dans les groupes appropriés ou créez de nouveaux groupes selon vos besoins.
-
-### Interface Admin (v2.0 - Supabase)
-
-**Accès :**
-- Dashboard : `/admin`
-- Login : `/admin/login`
-- Gestion projets : `/admin/projects`
-
-**Fonctionnalités :**
-- ✅ CRUD complet des projets (Supabase PostgreSQL)
-- ✅ Recherche et filtrage en temps réel
-- ✅ Statistiques dynamiques
-- ✅ Support UUIDs pour identification unique
-- ✅ Fonctionne en production Vercel (pas de limitation filesystem)
-- ✅ Authentification sécurisée (NextAuth.js + bcrypt)
-
-**Architecture :**
-- Routes API : `/api/admin/projects` (GET/POST) et `/api/admin/projects/[id]` (GET/PUT/DELETE)
-- Client Supabase : `src/lib/supabase.ts`
-- Types TypeScript pour sécurité des données
-
-### API d'envoi d'emails
-
-Le formulaire de contact utilise l'API Resend via la route Next.js (`src/app/api/contact/route.ts`).
+**Interface admin** : [http://localhost:3000/admin](http://localhost:3000/admin)
 
 ## 📂 Structure du Projet
 
 ```
 src/
-├── app/                          # Next.js App Router
-│   ├── admin/                   # 🎛️ Interface Admin (v2.0 Supabase)
-│   │   ├── layout.tsx           # Layout admin avec header/déconnexion
-│   │   ├── page.tsx             # Dashboard statistiques
-│   │   ├── login/page.tsx       # Page de connexion
-│   │   └── projects/            # Gestion des projets (Supabase)
-│   │       ├── page.tsx         # Liste + recherche/filtre (UUIDs)
-│   │       ├── new/page.tsx     # Formulaire création
-│   │       └── [id]/page.tsx    # Formulaire édition (UUID)
+├── app/                              # Next.js App Router
+│   ├── accueil/                      # ✨ Page principale (Hero, Compétences, Articles, À propos, Contact)
+│   ├── dev/                          # Page ancienne homepage portfolio (conservée)
+│   ├── projets/                      # Galerie projets avec filtres
+│   ├── contact/                      # Page de contact
+│   ├── admin/                        # Interface admin (protégée)
+│   │   ├── login/
+│   │   └── projects/                 # CRUD projets
 │   ├── api/
-│   │   ├── projects/            # 📡 API Publique
-│   │   │   └── route.ts         # GET (portfolio public)
-│   │   ├── admin/projects/      # 🔐 API CRUD Admin
-│   │   │   ├── route.ts         # GET/POST (Supabase)
-│   │   │   └── [id]/route.ts    # GET/PUT/DELETE (UUID)
-│   │   ├── auth/                # 🔐 NextAuth Routes
-│   │   │   └── [...nextauth]/route.ts
-│   │   └── contact/route.ts     # API emails
-│   ├── projets/page.tsx         # Page projets (charge via API)
-│   ├── layout.tsx               # Layout principal
-│   └── page.tsx                 # Page d'accueil
+│   │   ├── contact/route.ts          # Envoi emails (Resend)
+│   │   ├── projects/route.ts         # API publique projets
+│   │   ├── admin/projects/           # API CRUD admin (Supabase)
+│   │   └── auth/[...nextauth]/       # NextAuth routes
+│   ├── layout.tsx                    # Layout global (Navbar + Footer)
+│   └── page.tsx                      # Route / (racine)
+│
 ├── components/
-│   ├── ui/                      # Atoms (composants atomiques)
-│   │   ├── button/
+│   ├── ui/                           # ⚛️ Atomes — composants indivisibles
+│   │   ├── button/button.tsx
+│   │   ├── typography/typography.tsx
 │   │   ├── card/
-│   │   ├── chip/                # FilterChip
-│   │   ├── dropdown/            # TechnologyDropdown, SortDropdown
-│   │   ├── filter/              # CategoryFilter, ProjectFilters
-│   │   ├── form/                # ContactForm
-│   │   ├── logo/
-│   │   ├── rating/
-│   │   └── tooltip/             # InfoTooltip
-│   └── layout/                  # Organisms et structure
-│       ├── header/              # Navbar
-│       ├── footer/              # Footer
-│       └── sections/            # Sections de page
+│   │   │   ├── article-card.tsx      # ✨ Carte article (image, catégorie, titre, auteur, date)
+│   │   │   ├── project-card.tsx
+│   │   │   ├── benefit-card.tsx
+│   │   │   └── testimonial-card.tsx
+│   │   ├── form/
+│   │   │   ├── contact-form.tsx      # Formulaire simple (Nom, Email, Message)
+│   │   │   ├── contact-form-full.tsx # ✨ Formulaire complet (6 champs + consentement RGPD)
+│   │   │   ├── form-input.tsx
+│   │   │   ├── form-textarea.tsx
+│   │   │   └── form-checkbox.tsx     # ✨ Atome checkbox avec label et gestion d'erreur
+│   │   ├── chip/, dropdown/, filter/ # Filtres projets
+│   │   ├── decoration/divider.tsx
+│   │   ├── icon/, badge/, avatar/
+│   │   ├── navigation/navigation.tsx
+│   │   └── ...
+│   │
+│   └── layout/                       # 🏗️ Organismes — assemblage de composants
+│       ├── header/navbar.tsx
+│       ├── footer/footer.tsx
+│       └── sections/
+│           ├── hero-accueil/         # ✨ Hero page /accueil
+│           ├── competences/          # ✨ Blocs DEV / CRAFT / GRAPH
+│           ├── articles/             # ✨ Grille derniers articles
+│           ├── apropos/              # ✨ Biographie + réseaux sociaux
+│           ├── contact-accueil/      # ✨ Section contact page /accueil
+│           ├── hero/                 # Hero page /dev
 │           ├── benefits/
-│           ├── competences/
 │           ├── cta/
+│           ├── description/
 │           ├── faq/
-│           ├── hero/
-│           ├── projets/         # ProjectsSection avec filtres
+│           ├── languages/
+│           ├── projets/
 │           ├── social-proof/
+│           ├── technologies/
 │           └── testimonials/
+│
 ├── config/
-│   └── technology-groups.ts     # Configuration groupes tech
+│   ├── metadata.ts                   # Métadonnées SEO par page
+│   └── technology-groups.ts          # Groupes de technologies pour dropdown
+│
 ├── lib/
-│   ├── auth.ts                  # 🔐 Configuration NextAuth
-│   └── utils.ts                 # Utilitaires (cn function)
-├── middleware.ts                # 🔐 Protection routes /admin/*
-├── store/                       # Stores de données
-│   ├── projects_data.ts         # 62 projets
-│   ├── competences_data.ts
+│   ├── supabase.ts                   # Clients Supabase (anon + admin) + types
+│   ├── auth.ts                       # Configuration NextAuth
+│   ├── apollo/client.ts              # Client Apollo GraphQL
+│   └── utils.ts                      # Utilitaires (cn)
+│
+├── middleware.ts                     # Protection routes /admin/*
+│
+├── store/                            # Données statiques TypeScript
 │   ├── benefits_data.ts
+│   ├── competences_data.ts
+│   ├── description_data.ts
 │   ├── faq_data.ts
-│   ├── testimonials_data.ts
-│   └── logos_data.ts
-├── generate-hash.js             # 🔧 Script génération credentials
-└── doc/                         # 📚 Documentation (8 fichiers)
+│   ├── logos_data.ts
+│   └── testimonials_data.ts
+│
+└── types/
+    └── project.ts
 ```
+
+> ✨ = ajouté récemment
 
 ## 🎨 Design System
 
-Le portfolio utilise un design system fintech cohérent :
+Palette de couleurs définie via variables CSS dans `globals.css` et `tailwind.config.ts` :
 
-- **Pas de border-radius** : Design géométrique et moderne
-- **Corners accent** : Petits accents dans les coins (top-left) pour les éléments interactifs
-- **Scan line effects** : Animations de balayage au survol
-- **Palette de couleurs** : Définie dans `tailwind.config.ts`
-  - `accent` : Couleur principale d'accentuation
-  - `cta` : Call-to-action
-  - `surface-1`, `surface-2` : Niveaux de surface
-  - `text-primary`, `text-secondary` : Hiérarchie typographique
+| Variable | Valeur | Usage |
+|----------|--------|-------|
+| `--accent` | `#00a8e8` | Bleu électrique — titres, liens actifs |
+| `--cta` | `#ff3b3f` | Rouge vif — boutons d'action |
+| `--background` | `#ffffff` / `#0d0d0d` | Fond (clair / sombre) |
+| `--surface-1/2/3` | Niveaux de surface | Cartes, conteneurs |
+| `--text-primary/secondary/muted` | Hiérarchie texte | — |
 
-## 🚀 Déploiement
+## 🎛️ Interface Admin
 
-Le projet est optimisé pour Vercel avec Next.js 15 :
+| Route | Accès |
+|-------|-------|
+| `/admin` | Dashboard statistiques |
+| `/admin/login` | Connexion |
+| `/admin/projects` | Liste projets |
+| `/admin/projects/new` | Créer un projet |
+| `/admin/projects/[id]` | Modifier un projet |
 
-1. Connectez votre repository GitHub à Vercel
+## 🚀 Déploiement (Vercel)
+
+1. Connectez le repository GitHub à Vercel
 2. Configurez les variables d'environnement dans les paramètres Vercel
 3. Le déploiement est automatique à chaque push sur `main`
 
-**Build Command** : `npm run build`
-**Output Directory** : `.next`
-**Install Command** : `npm install`
-
-## ⚠️ Notes Importantes
-
-### Section Témoignages
-La section testimonials est actuellement **commentée** dans `src/app/page.tsx` car elle contient des données de démonstration. Pour l'activer :
-
-1. Ajoutez de vrais témoignages dans `src/store/testimonials_data.ts`
-2. Décommentez l'import et le composant dans `src/app/page.tsx` :
-```typescript
-// Décommenter ces lignes :
-// import { TestimonialsSection } from "@/components/layout/sections/testimonials/testimonials-section";
-// import { testimonials } from "@/store/testimonials_data";
-
-// Et dans le JSX :
-// <TestimonialsSection testimonials={testimonials} />
+```
+Build Command  : npm run build
+Output         : .next
+Install        : npm install
 ```
 
-### Hydratation React
-Le projet utilise des patterns d'hydratation sécurisés pour éviter les erreurs SSR/Client :
-- `isMounted` state dans les composants client avec rendu conditionnel
-- `suppressHydrationWarning` sur le `<body>` pour les classes de fonts Next.js
-- Rendu côté client uniquement pour les dropdowns et tooltips
+## ⚠️ Notes
+
+- **Section Témoignages** : commentée dans `/dev/page.tsx`, décommenter quand les données sont prêtes
+- **Articles blog** : données statiques dans `articles-section.tsx` — à connecter à une API blog (les slugs `/blog/...` sont déjà en place)
+- **Liens CRAFT / GRAPH** dans la section Compétences : pointent vers `/blog/...` non encore créés
 
 ## 📝 License
 
@@ -305,10 +240,4 @@ Ce projet n'a pas de licence spécifique.
 
 ## 🤝 Contact
 
-**Brandon VIRY**
-Email : brandonviry@gmail.com
-
----
-
-*Portfolio développé en  Next.js 15*
-
+**Brandon VIRY** — brandonviry@gmail.com
