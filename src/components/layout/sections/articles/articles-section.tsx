@@ -45,10 +45,18 @@ export async function ArticlesSection() {
         )}
 
         {/* CTA */}
-        <div className="mt-12 text-center">
-          <Button href="/blog" variant="cta" size="lg" className="gap-3">
-            Voir tous les articles
-            <ArrowRight className="w-5 h-5" />
+        <div className="mt-14 text-center">
+          <Button
+            href="/blog"
+            variant="cta"
+            size="xl"
+            className="group/cta min-w-[240px] hover:scale-105 transition-transform duration-300"
+          >
+            <span>Voir tous les articles</span>
+            <ArrowRight
+              className="ml-2 w-5 h-5 transition-transform duration-200 group-hover/cta:translate-x-1"
+              strokeWidth={2.5}
+            />
           </Button>
         </div>
       </div>

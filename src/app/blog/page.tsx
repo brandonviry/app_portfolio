@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { Typography } from "@/components/ui/typography/typography";
+import { Button } from "@/components/ui/button/button";
 import { Divider } from "@/components/ui/decoration/divider";
 import { BlogListingSection } from "@/components/layout/sections/blog/blog-listing-section";
 import { getPublishedArticles } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
+import { ArrowLeft } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Blog - VIRY Brandon",
@@ -23,6 +25,13 @@ export default async function BlogPage() {
       )}>
         <div className="absolute top-6 left-6 w-10 h-10 border-l-2 border-t-2 border-accent/50" />
         <div className="absolute top-6 right-6 w-10 h-10 border-r-2 border-t-2 border-accent/30" />
+
+        <div className="container mx-auto px-4 sm:px-6 max-w-3xl mb-6">
+          <Button variant="ghost" href="/accueil" className="gap-2">
+            <ArrowLeft className="w-4 h-4" />
+            Retour à l&apos;accueil
+          </Button>
+        </div>
 
         <div className="container mx-auto px-4 sm:px-6 text-center space-y-4">
           <div className="flex items-center justify-center gap-3 mb-2">
