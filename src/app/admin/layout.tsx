@@ -38,6 +38,12 @@ export default async function AdminLayout({
               >
                 Projets
               </Link>
+              <Link
+                href="/admin/articles"
+                className="text-sm text-text-secondary hover:text-accent transition-colors"
+              >
+                Articles
+              </Link>
             </nav>
           </div>
 

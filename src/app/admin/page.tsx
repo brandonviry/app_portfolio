@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { FolderGit2, Plus, Edit, BarChart3, Clock } from 'lucide-react';
+import { FolderGit2, Plus, Edit, BarChart3, Clock, FileText, Eye } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 type Project = {
@@ -15,8 +15,17 @@ type Project = {
   year?: number;
 };
 
+type ArticleAdmin = {
+  id: string;
+  titre: string;
+  categorie: string;
+  publie: boolean;
+  date_publication: string;
+};
+
 export default function AdminDashboard() {
   const [projects, setProjects] = useState<Project[]>([]);
+  const [articles, setArticles] = useState<ArticleAdmin[]>([]);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
     total: 0,
@@ -26,35 +35,27 @@ export default function AdminDashboard() {
   });
 
   useEffect(() => {
-    loadProjects();
-  }, []);
-
-  const loadProjects = async () => {
-    try {
-      const response = await fetch('/api/admin/projects');
-      const data = await response.json();
-
-      if (data.success) {
-        setProjects(data.projects);
-
-        // Calculer les statistiques
-        const allCategories = new Set(data.projects.flatMap((p: Project) => p.categories));
-        const allTechnologies = new Set(data.projects.flatMap((p: Project) => p.technologies));
-        const recent = data.projects.slice(-5).reverse(); // 5 derniers projets
-
+    Promise.all([
+      fetch('/api/admin/projects').then(r => r.json()),
+      fetch('/api/admin/articles').then(r => r.json()),
+    ]).then(([projData, artData]) => {
+      if (projData.success) {
+        setProjects(projData.projects);
+        const allCategories = new Set(projData.projects.flatMap((p: Project) => p.categories));
+        const allTechnologies = new Set(projData.projects.flatMap((p: Project) => p.technologies));
         setStats({
-          total: data.projects.length,
+          total: projData.projects.length,
           categories: allCategories.size,
           technologies: allTechnologies.size,
-          recent
+          recent: projData.projects.slice(-5).reverse(),
         });
       }
-    } catch (err) {
-      console.error('Erreur chargement:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
+      if (artData.success) {
+        setArticles(artData.articles);
+      }
+    }).catch(err => console.error('Erreur chargement:', err))
+      .finally(() => setLoading(false));
+  }, []);
 
   if (loading) {
     return (
@@ -82,6 +83,7 @@ export default function AdminDashboard() {
 
         {/* Quick Actions */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+          {/* Projets */}
           <Link
             href="/admin/projects"
             className={cn(
@@ -141,10 +143,71 @@ export default function AdminDashboard() {
               </div>
             </div>
           </Link>
+
+          {/* Articles */}
+          <Link
+            href="/admin/articles"
+            className={cn(
+              "p-6",
+              "bg-cta/10 border-2 border-cta/30",
+              "hover:bg-cta/20",
+              "transition-all duration-200",
+              "group"
+            )}
+          >
+            <div className="flex items-center gap-4">
+              <div className={cn(
+                "w-12 h-12",
+                "bg-cta/20",
+                "flex items-center justify-center",
+                "group-hover:scale-110 transition-transform"
+              )}>
+                <FileText className="w-6 h-6 text-cta" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-cta mb-1">
+                  Gérer les articles
+                </h3>
+                <p className="text-sm text-text-secondary">
+                  Blog — créer, éditer, publier les articles
+                </p>
+              </div>
+            </div>
+          </Link>
+
+          <Link
+            href="/admin/articles/new"
+            className={cn(
+              "p-6",
+              "bg-surface-1/10 border-2 border-border/20",
+              "hover:border-cta/50",
+              "transition-all duration-200",
+              "group"
+            )}
+          >
+            <div className="flex items-center gap-4">
+              <div className={cn(
+                "w-12 h-12",
+                "bg-surface-2",
+                "flex items-center justify-center",
+                "group-hover:scale-110 transition-transform"
+              )}>
+                <Plus className="w-6 h-6 text-cta" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-text-primary mb-1">
+                  Nouvel article
+                </h3>
+                <p className="text-sm text-text-secondary">
+                  Rédiger un nouvel article de blog
+                </p>
+              </div>
+            </div>
+          </Link>
         </div>
 
         {/* Statistiques */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
           {/* Total projets */}
           <div className={cn(
             "p-6",
@@ -199,6 +262,44 @@ export default function AdminDashboard() {
             </h3>
             <p className="text-sm text-text-secondary">
               Technologies utilisées
+            </p>
+          </div>
+
+          {/* Articles publiés */}
+          <div className={cn(
+            "p-6",
+            "bg-surface-1/10 border-2 border-border/20"
+          )}>
+            <div className="flex items-center justify-between mb-4">
+              <Eye className="w-8 h-8 text-cta" />
+              <span className="text-4xl font-bold text-cta">
+                {articles.filter(a => a.publie).length}
+              </span>
+            </div>
+            <h3 className="text-lg font-semibold text-text-primary mb-1">
+              Articles publiés
+            </h3>
+            <p className="text-sm text-text-secondary">
+              Visibles sur /blog
+            </p>
+          </div>
+
+          {/* Brouillons */}
+          <div className={cn(
+            "p-6",
+            "bg-surface-1/10 border-2 border-border/20"
+          )}>
+            <div className="flex items-center justify-between mb-4">
+              <FileText className="w-8 h-8 text-text-muted" />
+              <span className="text-4xl font-bold text-text-muted">
+                {articles.filter(a => !a.publie).length}
+              </span>
+            </div>
+            <h3 className="text-lg font-semibold text-text-primary mb-1">
+              Brouillons
+            </h3>
+            <p className="text-sm text-text-secondary">
+              Non publiés
             </p>
           </div>
         </div>
@@ -275,6 +376,65 @@ export default function AdminDashboard() {
               );
             })}
           </div>
+        </div>
+
+        {/* Derniers articles */}
+        <div className="mt-10">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
+              <FileText className="w-6 h-6 text-cta" />
+              <h2 className="text-2xl font-bold text-text-primary">
+                Articles récents
+              </h2>
+            </div>
+            <Link href="/admin/articles" className="text-cta hover:underline text-sm">
+              Voir tout →
+            </Link>
+          </div>
+
+          {articles.length === 0 ? (
+            <div className="text-center py-10 border-2 border-dashed border-border/20">
+              <p className="text-text-secondary mb-2">Aucun article</p>
+              <Link href="/admin/articles/new" className="text-cta hover:underline text-sm">
+                Créer le premier article →
+              </Link>
+            </div>
+          ) : (
+            <div className="grid gap-3">
+              {articles.slice(0, 5).map(article => (
+                <Link
+                  key={article.id}
+                  href={`/admin/articles/${article.id}`}
+                  className={cn(
+                    "p-4",
+                    "bg-surface-1/10 border-2 border-border/20",
+                    "hover:border-cta/50",
+                    "transition-all duration-200",
+                    "group flex items-center justify-between"
+                  )}
+                >
+                  <div className="flex items-center gap-3 min-w-0">
+                    <span className={cn(
+                      "w-2 h-2 shrink-0",
+                      article.publie ? "bg-green-500" : "bg-text-muted/40"
+                    )} />
+                    <span className="font-semibold text-text-primary group-hover:text-cta transition-colors truncate">
+                      {article.titre}
+                    </span>
+                    <span className="shrink-0 px-2 py-0.5 bg-cta/10 text-cta text-xs font-semibold">
+                      {article.categorie}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-3 shrink-0 ml-4">
+                    <span className="text-xs text-text-muted hidden sm:block">
+                      {article.date_publication}
+                    </span>
+                    <Edit className="w-4 h-4 text-text-secondary group-hover:text-cta transition-colors" />
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Info utiles */}
