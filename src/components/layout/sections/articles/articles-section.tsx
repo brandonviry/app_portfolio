@@ -1,8 +1,10 @@
 import { Typography } from "@/components/ui/typography/typography";
 import { ArticleCard } from "@/components/ui/card/article-card";
+import { Button } from "@/components/ui/button/button";
 import { Divider } from "@/components/ui/decoration/divider";
 import { getPublishedArticles } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
+import { ArrowRight } from "lucide-react";
 
 export async function ArticlesSection() {
   const articles = await getPublishedArticles();
@@ -41,6 +43,14 @@ export async function ArticlesSection() {
         ) : (
           <p className="text-center text-text-muted">Aucun article publié pour l&apos;instant.</p>
         )}
+
+        {/* CTA */}
+        <div className="mt-12 text-center">
+          <Button href="/blog" variant="cta" size="lg" className="gap-3">
+            Voir tous les articles
+            <ArrowRight className="w-5 h-5" />
+          </Button>
+        </div>
       </div>
     </section>
   );
