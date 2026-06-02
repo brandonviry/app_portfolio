@@ -4,7 +4,6 @@ import { DescriptionSection } from "@/components/layout/sections/description/des
 import { CompetencesSection } from "@/components/layout/sections/competences/competences-section";
 import { ArticlesSection } from "@/components/layout/sections/articles/articles-section";
 import { TechnologiesSection } from "@/components/layout/sections/technologies/technologies-section";
-import { LanguagesSection } from "@/components/layout/sections/languages/languages-section";
 import { FAQSection } from "@/components/layout/sections/faq/faq-section";
 import { FinalCTASection } from "@/components/layout/sections/cta/final-cta-section";
 
@@ -21,10 +20,7 @@ export default function HomePage() {
       <DescriptionSection />
       <CompetencesSection />
       <ArticlesSection />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <TechnologiesSection />
-        <LanguagesSection />
-      </div>
+      <TechnologiesSection />
       <FAQSection />
       <FinalCTASection />
     </main>
