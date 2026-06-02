@@ -13,16 +13,42 @@ export const metadata: Metadata = {
     "Développeur web & graphiste basé à La Réunion — création d'interfaces, identités visuelles et automatisation. Disponible en freelance.",
 };
 
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'VIRY Brandon',
+  jobTitle: 'Développeur Web & Graphiste',
+  description:
+    "Développeur web & graphiste basé à La Réunion — création d'interfaces, identités visuelles et automatisation.",
+  url: 'https://devweb.viry-brandon.fr',
+  sameAs: [
+    'https://github.com/brandonviry/',
+    'https://linkedin.com/in/brandon-viry-81187b237',
+    'https://www.instagram.com/virybrandon/',
+  ],
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'La Réunion',
+    addressCountry: 'FR',
+  },
+};
+
 export default function HomePage() {
   return (
-    <main className="flex-1 w-full">
-      <HeroAccueilSection />
-      <DescriptionSection />
-      <CompetencesSection />
-      <ArticlesSection />
-      <TechnologiesSection />
-      <FAQSection />
-      <FinalCTASection />
-    </main>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+      />
+      <main className="flex-1 w-full">
+        <HeroAccueilSection />
+        <DescriptionSection />
+        <CompetencesSection />
+        <ArticlesSection />
+        <TechnologiesSection />
+        <FAQSection />
+        <FinalCTASection />
+      </main>
+    </>
   );
 }

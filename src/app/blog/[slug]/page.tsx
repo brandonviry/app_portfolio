@@ -33,8 +33,36 @@ export default async function ArticlePage({ params }: Props) {
   const article = await getArticleBySlug(slug);
   if (!article) notFound();
 
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.title,
+    description: article.excerpt,
+    author: {
+      '@type': 'Person',
+      name: article.author,
+      url: 'https://devweb.viry-brandon.fr',
+    },
+    datePublished: article.date,
+    ...(article.imageSrc && { image: article.imageSrc }),
+    publisher: {
+      '@type': 'Person',
+      name: 'VIRY Brandon',
+      url: 'https://devweb.viry-brandon.fr',
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://devweb.viry-brandon.fr/blog/${article.slug}`,
+    },
+  };
+
   return (
-    <main className="flex-1 w-full">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <main className="flex-1 w-full">
 
       {/* En-tête article */}
       <section className={cn(
@@ -109,5 +137,6 @@ export default async function ArticlePage({ params }: Props) {
         </div>
       </section>
     </main>
+    </>
   );
 }

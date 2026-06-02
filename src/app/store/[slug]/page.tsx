@@ -59,8 +59,30 @@ export default async function AppPage({ params }: Props) {
 
   const typeMeta = TYPE_META[app.type] || { icon: <Monitor className="w-4 h-4" />, label: app.type };
 
+  const appSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: app.nom,
+    description: app.tagline || app.description,
+    applicationCategory: app.categorie,
+    operatingSystem: app.plateforme?.join(', ') || 'Web',
+    url: app.cta_primaire_url,
+    ...(app.version && { softwareVersion: app.version }),
+    ...(app.image_url && { image: app.image_url }),
+    author: {
+      '@type': 'Person',
+      name: 'VIRY Brandon',
+      url: 'https://devweb.viry-brandon.fr',
+    },
+  };
+
   return (
-    <main className="flex-1 w-full">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
+      />
+      <main className="flex-1 w-full">
 
       {/* En-tête */}
       <section className={cn(
@@ -212,5 +234,6 @@ export default async function AppPage({ params }: Props) {
         </div>
       </section>
     </main>
+    </>
   );
 }
