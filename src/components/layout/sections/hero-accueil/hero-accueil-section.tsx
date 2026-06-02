@@ -91,6 +91,7 @@ export function HeroAccueilSection() {
           )}
         >
           VIRY Brandon
+          <span className="sr-only"> — Développeur Graphiste La Réunion</span>
         </Typography>
 
         {/* Rôles */}

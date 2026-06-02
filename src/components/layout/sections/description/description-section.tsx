@@ -126,7 +126,7 @@ export function DescriptionSection() {
                   "leading-tight"
                 )}
               >
-                À propos de moi
+                Développeur web & Graphiste — La Réunion
               </Typography>
 
               {/* Divider */}

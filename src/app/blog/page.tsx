@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Blog - VIRY Brandon",
-  description: "Articles de VIRY Brandon sur le développement web, le design graphique et le Full-Stack Product making.",
+  description: "Articles de VIRY Brandon sur le développement web, le design graphique et l'automatisation.",
 };
 
 export default async function BlogPage() {

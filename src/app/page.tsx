@@ -8,9 +8,9 @@ import { FAQSection } from "@/components/layout/sections/faq/faq-section";
 import { FinalCTASection } from "@/components/layout/sections/cta/final-cta-section";
 
 export const metadata: Metadata = {
-  title: "Accueil - VIRY Brandon",
+  title: "Développeur Graphiste La Réunion | VIRY Brandon",
   description:
-    "VIRY Brandon — Programmeur, Développeur web, Graphiste & Designer Visuel, Full-Stack Product maker.",
+    "Développeur web & graphiste basé à La Réunion — création d'interfaces, identités visuelles et automatisation. Disponible en freelance.",
 };
 
 export default function HomePage() {
