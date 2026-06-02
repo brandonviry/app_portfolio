@@ -1,6 +1,6 @@
 import { auth, signOut } from "@/lib/auth";
 import Link from "next/link";
-import { LogOut, Home } from "lucide-react";
+import { LogOut, Home, AppWindow } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default async function AdminLayout({
@@ -43,6 +43,13 @@ export default async function AdminLayout({
                 className="text-sm text-text-secondary hover:text-accent transition-colors"
               >
                 Articles
+              </Link>
+              <Link
+                href="/admin/apps"
+                className="flex items-center gap-1.5 text-sm text-text-secondary hover:text-accent transition-colors"
+              >
+                <AppWindow className="w-3.5 h-3.5" />
+                Store
               </Link>
             </nav>
           </div>
