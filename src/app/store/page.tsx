@@ -9,8 +9,8 @@ import type { App } from '@/types/app';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Store | VIRY Brandon',
-  description: 'Applications web, SaaS et outils créés par VIRY Brandon — développeur graphiste La Réunion.',
+  title: 'Store — Apps & Outils | VIRY Brandon',
+  description: 'Applications web, SaaS et outils créés par VIRY Brandon — développeur graphiste La Réunion. Web apps, exécutables et services disponibles.',
 };
 
 async function getPublishedApps(): Promise<App[]> {
@@ -68,6 +68,7 @@ export default async function StorePage() {
 
           <Typography level="h1" className="text-accent font-extrabold tracking-tight">
             Store
+            <span className="sr-only"> — Applications & Outils par VIRY Brandon, Développeur Graphiste La Réunion</span>
           </Typography>
 
           <Divider variant="gradient" align="center" className="mx-auto" />

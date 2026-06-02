@@ -23,6 +23,14 @@
     <priority>0.9</priority>
   </url>
 
+  <!-- Page Store -->
+  <url>
+    <loc>https://devweb.viry-brandon.fr/store</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Page Contact -->
   <url>
     <loc>https://devweb.viry-brandon.fr/contact</loc>

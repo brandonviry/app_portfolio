@@ -5,11 +5,12 @@ import { Navigation } from '@/components/ui/navigation/navigation';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Typography } from '@/components/ui/typography/typography';
-import { Home, Mail, BookOpen, Settings } from 'lucide-react';
+import { Home, Mail, BookOpen, Settings, AppWindow } from 'lucide-react';
 
 const navigation = [
   { name: 'Accueil', href: '/', icon: Home },
   { name: 'Blog', href: '/blog', icon: BookOpen },
+  { name: 'Store', href: '/store', icon: AppWindow },
   { name: 'Contact', href: '/contact', icon: Mail },
 ];
 
