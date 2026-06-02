@@ -6,7 +6,7 @@
 ![React](https://img.shields.io/badge/React-19+-61DAFB?style=for-the-badge&logo=react)
 ![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?style=for-the-badge&logo=supabase)
 
-Portfolio professionnel de VIRY Brandon — Programmeur, Développeur web, Graphiste & Designer Visuel, Full-Stack Product maker. Développé avec Next.js 15, TypeScript et Tailwind CSS. Architecture basée sur l'Atomic Design.
+Portfolio professionnel de VIRY Brandon — Développeur web & Graphiste basé à La Réunion. Développé avec Next.js 15, TypeScript et Tailwind CSS. Architecture basée sur l'Atomic Design.
 
 ## 🚀 Pages & Fonctionnalités
 
@@ -18,6 +18,8 @@ Portfolio professionnel de VIRY Brandon — Programmeur, Développeur web, Graph
 | `/accueil` | Redirect → `/` |
 | `/blog` | Listing de tous les articles avec filtre par catégorie |
 | `/blog/[slug]` | Article individuel avec rendu Markdown complet |
+| `/store` | ✨ Store — listing de toutes les apps publiées |
+| `/store/[slug]` | ✨ Page détail d'une app (CTAs, description, plateformes) |
 | `/projets` | Galerie des projets avec filtres (catégorie, technologie, tri) |
 | `/contact` | Page de contact dédiée |
 | `/dev` | Ancienne page d'accueil portfolio conservée (brouillon) |
@@ -47,8 +49,10 @@ Ordre des sections :
 ### 🎛️ Interface Admin
 - **Authentification Sécurisée** : NextAuth.js avec hash bcrypt
 - **CRUD Projets** : Créer, lire, modifier, supprimer via interface web
+- **CRUD Articles** : Gestion complète du blog
+- **✨ CRUD Store** : Gestion des apps (web, SaaS, exécutables) avec plateformes et CTAs
 - **Base de Données** : Supabase PostgreSQL (UUIDs, timestamps, RLS)
-- **Dashboard** : Statistiques en temps réel (total projets, catégories, technologies)
+- **Dashboard** : Statistiques en temps réel (total projets, articles, apps)
 - **Production Ready** : Compatible Vercel (filesystem read-only)
 
 ## 🛠️ Stack Technique
@@ -81,6 +85,7 @@ Ordre des sections :
 ### Données
 - **Projets** : Supabase PostgreSQL
 - **Articles** : Supabase PostgreSQL (table `articles`)
+- **✨ Apps** : Supabase PostgreSQL (table `apps`)
 - **Stores statiques** : TypeScript locaux (`src/store/`) — compétences, FAQ, témoignages, logos
 
 ## 📦 Installation
@@ -137,15 +142,20 @@ src/
 │   ├── dev/                          # Page ancienne homepage portfolio (conservée)
 │   ├── projets/                      # Galerie projets avec filtres
 │   ├── contact/                      # Page de contact
+│   ├── store/                        # ✨ Store public
+│   │   ├── page.tsx                  # Listing apps (/store)
+│   │   └── [slug]/page.tsx           # Page détail app (/store/[slug])
 │   ├── admin/                        # Interface admin (protégée)
 │   │   ├── login/
 │   │   ├── projects/                 # CRUD projets
-│   │   └── articles/                 # ✨ CRUD articles
+│   │   ├── articles/                 # CRUD articles
+│   │   └── apps/                     # ✨ CRUD store apps
 │   ├── api/
 │   │   ├── contact/route.ts          # Envoi emails (Resend)
 │   │   ├── projects/route.ts         # API publique projets
 │   │   ├── admin/projects/           # API CRUD admin projets (Supabase)
-│   │   ├── admin/articles/           # ✨ API CRUD admin articles (Supabase)
+│   │   ├── admin/articles/           # API CRUD admin articles (Supabase)
+│   │   ├── admin/apps/               # ✨ API CRUD admin apps (Supabase)
 │   │   └── auth/[...nextauth]/       # NextAuth routes
 │   ├── layout.tsx                    # Layout global (Navbar + Footer)
 │   └── page.tsx                      # Route / (racine)
@@ -227,7 +237,8 @@ src/
 │   └── testimonials_data.ts
 │
 └── types/
-    ├── article.ts                    # ✨ Type Article
+    ├── article.ts                    # Type Article
+    ├── app.ts                        # ✨ Type App (store)
     └── project.ts
 ```
 
@@ -259,6 +270,9 @@ Conventions : **aucun border-radius**, coins géométriques, grille de points, p
 | `/admin/articles` | Liste articles (recherche, filtres statut/catégorie) |
 | `/admin/articles/new` | Créer un article |
 | `/admin/articles/[id]` | Modifier / supprimer un article |
+| `/admin/apps` | ✨ Liste apps du store (recherche, filtres statut/type) |
+| `/admin/apps/new` | ✨ Créer une app |
+| `/admin/apps/[id]` | ✨ Modifier / supprimer une app |
 
 ## ✍️ Rédaction des articles — Syntaxe complète
 
@@ -408,6 +422,143 @@ CREATE POLICY "Service role full access" ON articles
   FOR ALL USING (auth.role() = 'service_role');
 ```
 
+### Table `apps` ✨
+
+| Colonne | Type | Description |
+|---------|------|-------------|
+| `id` | UUID | Identifiant unique (auto) |
+| `slug` | TEXT UNIQUE | URL de l'app (`/store/mon-app`) |
+| `nom` | TEXT | Nom de l'app |
+| `tagline` | TEXT | Accroche courte (listing) |
+| `description` | TEXT | Description longue (page détail) |
+| `categorie` | TEXT | Catégorie (ex: Productivité, Dev Tool) |
+| `type` | TEXT | `web` / `saas` / `executable` |
+| `icone_url` | TEXT | URL de l'icône (optionnel) |
+| `image_url` | TEXT | Image de couverture (optionnel) |
+| `cta_primaire_label` | TEXT | Label du bouton principal (ex: "Ouvrir l'app") |
+| `cta_primaire_url` | TEXT | Lien du bouton principal |
+| `cta_secondaire_label` | TEXT | Label bouton secondaire (optionnel) |
+| `cta_secondaire_url` | TEXT | Lien bouton secondaire (optionnel) |
+| `plateforme` | TEXT[] | Tableaux de plateformes (`["Web", "Windows"]`) |
+| `version` | TEXT | Version de l'app (optionnel, ex: `1.2.0`) |
+| `publie` | BOOLEAN | `true` = visible publiquement sur `/store` |
+| `created_at` | TIMESTAMPTZ | Créé automatiquement |
+| `updated_at` | TIMESTAMPTZ | Mis à jour automatiquement |
+
+### SQL — Création de la table `apps`
+
+```sql
+CREATE TABLE IF NOT EXISTS apps (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  slug TEXT UNIQUE NOT NULL,
+  nom TEXT NOT NULL,
+  tagline TEXT,
+  description TEXT,
+  categorie TEXT NOT NULL,
+  type TEXT NOT NULL DEFAULT 'web',
+  icone_url TEXT,
+  image_url TEXT,
+  cta_primaire_label TEXT NOT NULL DEFAULT 'Ouvrir',
+  cta_primaire_url TEXT NOT NULL,
+  cta_secondaire_label TEXT,
+  cta_secondaire_url TEXT,
+  plateforme TEXT[] NOT NULL DEFAULT '{}',
+  version TEXT,
+  publie BOOLEAN NOT NULL DEFAULT false,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+ALTER TABLE apps ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Apps publiees visibles par tous"
+  ON apps FOR SELECT USING (publie = true);
+
+CREATE INDEX IF NOT EXISTS apps_slug_idx ON apps (slug);
+CREATE INDEX IF NOT EXISTS apps_publie_idx ON apps (publie);
+```
+
+> Le fichier complet est disponible dans `scripts/create-apps-table.sql`.
+
+### SQL — Exemples d'insertion (test)
+
+Coller dans **Supabase → SQL Editor** pour tester l'affichage du store :
+
+```sql
+INSERT INTO apps (slug, nom, tagline, description, categorie, type, icone_url, image_url, cta_primaire_label, cta_primaire_url, cta_secondaire_label, cta_secondaire_url, plateforme, version, publie)
+VALUES
+
+-- Web App
+(
+  'taskflow-pro',
+  'TaskFlow Pro',
+  'Gérez vos tâches sans effort',
+  'TaskFlow Pro est une application web de gestion de tâches pensée pour les indépendants et les petites équipes. Organisez vos projets, définissez des priorités et suivez votre progression en temps réel.',
+  'Productivité',
+  'web',
+  null,
+  null,
+  'Ouvrir l''app',
+  'https://exemple.com/taskflow',
+  null,
+  null,
+  ARRAY['Web'],
+  '1.2.0',
+  true
+),
+
+-- SaaS
+(
+  'designsync',
+  'DesignSync',
+  'Synchronisez vos assets Figma en un clic',
+  'DesignSync connecte vos fichiers Figma à votre codebase. Exportez automatiquement les tokens de design, les icônes et les composants vers votre projet. Compatible React, Vue et Svelte.',
+  'Design',
+  'saas',
+  null,
+  null,
+  'Accéder',
+  'https://exemple.com/designsync',
+  'Voir la démo',
+  'https://exemple.com/designsync/demo',
+  ARRAY['Web'],
+  '2.0.1',
+  true
+),
+
+-- Exécutable
+(
+  'devkit-cli',
+  'DevKit CLI',
+  'Votre boîte à outils de développeur en ligne de commande',
+  'DevKit CLI regroupe une collection d''utilitaires pour développeurs : génération de slugs, conversion de formats, hash de fichiers, minification CSS/JS et bien plus. Fonctionne hors ligne, sans dépendances cloud.',
+  'Dev Tool',
+  'executable',
+  null,
+  null,
+  'Télécharger',
+  'https://exemple.com/devkit/releases/latest',
+  null,
+  null,
+  ARRAY['Windows', 'Mac', 'Linux'],
+  '0.9.4',
+  true
+);
+```
+
+> Supprimer les données de test après validation :
+> ```sql
+> DELETE FROM apps WHERE slug IN ('taskflow-pro', 'designsync', 'devkit-cli');
+> ```
+
+### CTA par type d'app
+
+| Type | Label par défaut | Action |
+|------|-----------------|--------|
+| `web` | Ouvrir l'app | Lien externe vers la web app |
+| `saas` | Accéder | Lien externe vers le service |
+| `executable` | Télécharger | Lien de téléchargement direct |
+
 ### Table `projects` (existante)
 
 Gérée via l'interface admin `/admin/projects`. Voir la documentation Supabase existante.
@@ -428,7 +579,7 @@ Install        : npm install
 
 - **Section Témoignages** : commentée dans `/dev/page.tsx`, décommenter quand les données sont prêtes
 - **Liens CRAFT / GRAPH** : CRAFT → Notion (Davecraft), GRAPH → Behance
-- **Navbar / Footer** : liens Accueil, Blog, Contact (Projets retiré de la navigation principale)
+- **Navbar / Footer** : liens Accueil, Blog, Store, Contact (Projets retiré de la navigation principale)
 - **Images dans les articles** : toujours utiliser `![alt](url)` — les URLs sans extension ne sont pas détectées automatiquement. Domaines autorisés dans `next.config.js` : `i.ibb.co`, `raw.githubusercontent.com`, `images.unsplash.com`, `lokhatmedias.com`, `www.salonemploi.re`, `i.pinimg.com`
 - **Blocs de code dans Supabase** : utiliser 4 espaces d'indentation plutôt que les backticks triples (évite les problèmes de copier-coller dans l'éditeur SQL)
 - **Champ `publie`** : un article en `false` n'est jamais visible publiquement, utile pour les brouillons
