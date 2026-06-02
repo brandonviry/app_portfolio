@@ -14,20 +14,25 @@ Portfolio professionnel de VIRY Brandon — Programmeur, Développeur web, Graph
 
 | Route | Description |
 |-------|-------------|
-| `/accueil` | Page principale : Hero (nom + rôles), Compétences, Derniers articles, À propos, Contact |
+| `/` | Page principale (accueil) |
+| `/accueil` | Redirect → `/` |
 | `/blog` | Listing de tous les articles avec filtre par catégorie |
 | `/blog/[slug]` | Article individuel avec rendu Markdown complet |
 | `/projets` | Galerie des projets avec filtres (catégorie, technologie, tri) |
 | `/contact` | Page de contact dédiée |
-| `/dev` | Ancienne page d'accueil portfolio conservée (sections : Hero, Technologies, Langages, Description, Benefits, FAQ, CTA) |
+| `/dev` | Ancienne page d'accueil portfolio conservée (brouillon) |
 
-### Page /accueil (nouvelle page principale)
+### Page / (page principale)
 
-- **Hero** : Nom VIRY Brandon + 4 rôles listés (Programmeur, Développeur web, Graphiste & Designer Visuel, Full-Stack Product maker) — décoration graphique : grille de points, watermark, coins géométriques accent/cta, étiquettes latérales, année dynamique
-- **Compétences** : 3 blocs DEV / CRAFT / GRAPH avec liens — DEV pointe vers `/projets` ; CRAFT et GRAPH vers les articles de blog à venir
-- **Derniers Articles** : 6 derniers articles publiés depuis Supabase
-- **À propos** : Biographie complète + liens réseaux sociaux (Instagram, LinkedIn, Reddit)
-- **Contact** : Formulaire complet (Nom, Prénom, Mail, Sujet, Message, consentement RGPD) avec validation Zod
+Ordre des sections :
+
+1. **Hero** : Nom VIRY Brandon + 4 rôles — décoration graphique : grille de points, watermark, coins géométriques, étiquettes latérales, année dynamique
+2. **À propos** (`DescriptionSection`) : photo + 2 paragraphes bio + boutons "Me contacter" / "Voir mes projets" (scroll vers section suivante)
+3. **Voir mes projets** : 3 pôles DEV / CRAFT / GRAPH — DEV → `/projets`, CRAFT → Notion, GRAPH → Behance
+4. **Derniers articles** : 6 derniers articles publiés depuis Supabase + CTA → `/blog`
+5. **Technologies + Languages** : stack technique et langages maîtrisés
+6. **FAQ** : questions fréquentes
+7. **CTA final** : bouton "Me contacter" → `/contact`
 
 ### Blog /blog & /blog/[slug]
 - **Listing** : tous les articles publiés depuis Supabase, filtrage client-side instantané par catégorie
@@ -116,7 +121,7 @@ ADMIN_PASSWORD_HASH=<généré via node generate-hash.js "MotDePasse">
 npm run dev
 ```
 
-5. Ouvrez [http://localhost:3000/accueil](http://localhost:3000/accueil)
+5. Ouvrez [http://localhost:3000](http://localhost:3000)
 
 **Interface admin** : [http://localhost:3000/admin](http://localhost:3000/admin)
 
@@ -125,7 +130,7 @@ npm run dev
 ```
 src/
 ├── app/                              # Next.js App Router
-│   ├── accueil/                      # ✨ Page principale (Hero, Compétences, Articles, À propos, Contact)
+│   ├── accueil/                      # Redirect → /
 │   ├── blog/                         # ✨ Blog
 │   │   ├── page.tsx                  # Listing articles (/blog)
 │   │   └── [slug]/page.tsx           # Article individuel (/blog/[slug])
@@ -134,11 +139,13 @@ src/
 │   ├── contact/                      # Page de contact
 │   ├── admin/                        # Interface admin (protégée)
 │   │   ├── login/
-│   │   └── projects/                 # CRUD projets
+│   │   ├── projects/                 # CRUD projets
+│   │   └── articles/                 # ✨ CRUD articles
 │   ├── api/
 │   │   ├── contact/route.ts          # Envoi emails (Resend)
 │   │   ├── projects/route.ts         # API publique projets
-│   │   ├── admin/projects/           # API CRUD admin (Supabase)
+│   │   ├── admin/projects/           # API CRUD admin projets (Supabase)
+│   │   ├── admin/articles/           # ✨ API CRUD admin articles (Supabase)
 │   │   └── auth/[...nextauth]/       # NextAuth routes
 │   ├── layout.tsx                    # Layout global (Navbar + Footer)
 │   └── page.tsx                      # Route / (racine)
@@ -174,12 +181,13 @@ src/
 │       ├── header/navbar.tsx
 │       ├── footer/footer.tsx
 │       └── sections/
-│           ├── hero-accueil/         # ✨ Hero page /accueil (décorations graphiques)
-│           ├── competences/          # ✨ Blocs DEV / CRAFT / GRAPH
-│           ├── articles/             # ✨ Grille derniers articles (Supabase)
-│           ├── apropos/              # ✨ Biographie + réseaux sociaux
-│           ├── contact-accueil/      # ✨ Section contact page /accueil
-│           ├── blog/                 # ✨ Listing blog avec filtres
+│           ├── hero-accueil/         # ✨ Hero page principale
+│           ├── competences/          # ✨ Blocs DEV / CRAFT / GRAPH ("Voir mes projets")
+│           ├── articles/             # ✨ Grille derniers articles (Supabase) + CTA blog
+│           ├── description/          # ✨ À propos — photo + bio + boutons CTA
+│           ├── apropos/              # Biographie + réseaux sociaux (non utilisé sur /)
+│           ├── contact-accueil/      # Section contact (non utilisé sur /)
+│           ├── blog/                 # ✨ Listing blog avec filtres + lien retour
 │           ├── hero/                 # Hero page /dev
 │           ├── benefits/
 │           ├── cta/
@@ -413,7 +421,8 @@ Install        : npm install
 ## ⚠️ Notes
 
 - **Section Témoignages** : commentée dans `/dev/page.tsx`, décommenter quand les données sont prêtes
-- **Liens CRAFT / GRAPH** dans la section Compétences : pointent vers `/blog/...` non encore créés
+- **Liens CRAFT / GRAPH** : CRAFT → Notion (Davecraft), GRAPH → Behance
+- **Navbar / Footer** : liens Accueil, Blog, Contact (Projets retiré de la navigation principale)
 - **Images dans les articles** : toujours utiliser `![alt](url)` — les URLs sans extension ne sont pas détectées automatiquement. Domaines autorisés dans `next.config.js` : `i.ibb.co`, `raw.githubusercontent.com`, `images.unsplash.com`, `lokhatmedias.com`, `www.salonemploi.re`, `i.pinimg.com`
 - **Blocs de code dans Supabase** : utiliser 4 espaces d'indentation plutôt que les backticks triples (évite les problèmes de copier-coller dans l'éditeur SQL)
 - **Champ `publie`** : un article en `false` n'est jamais visible publiquement, utile pour les brouillons
