@@ -15,8 +15,15 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mon Portfolio",
-  description: "Portfolio de développeur full stack",
+  title: {
+    default: "Développeur Graphiste La Réunion | VIRY Brandon",
+    template: "%s | VIRY Brandon",
+  },
+  description:
+    "Développeur web & graphiste basé à La Réunion — création d'interfaces, identités visuelles et automatisation. Disponible en freelance.",
+  verification: {
+    google: "SLV2ObWWagL88vu2aiGtf7-Nf6vKQsT_UrQ2A160Q_E",
+  },
 };
 
 export default function RootLayout({
