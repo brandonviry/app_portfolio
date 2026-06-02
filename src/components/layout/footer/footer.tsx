@@ -1,7 +1,7 @@
 import { Typography } from "@/components/ui/typography/typography";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { Github, Linkedin, Instagram, Home, FolderGit2, Mail, BookOpen } from 'lucide-react';
+import { Github, Linkedin, Instagram, Home, Mail, BookOpen } from 'lucide-react';
 
 const socialLinks = [
   { name: 'GitHub', href: 'https://github.com/brandonviry/', icon: Github },
@@ -11,7 +11,6 @@ const socialLinks = [
 
 const navigation = [
   { name: 'Accueil', href: '/', icon: Home },
-  { name: 'Projets', href: '/projets', icon: FolderGit2 },
   { name: 'Blog', href: '/blog', icon: BookOpen },
   { name: 'Contact', href: '/contact', icon: Mail },
 ];
