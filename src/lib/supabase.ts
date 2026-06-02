@@ -164,3 +164,49 @@ export async function deleteArticle(id: string): Promise<void> {
 
   if (error) throw new Error(error.message);
 }
+
+// ─── Apps ─────────────────────────────────────────────────────────────────────
+
+export type AppDB = {
+  id: string;
+  slug: string;
+  nom: string;
+  tagline: string | null;
+  description: string | null;
+  categorie: string;
+  type: string;
+  icone_url: string | null;
+  image_url: string | null;
+  cta_primaire_label: string;
+  cta_primaire_url: string;
+  cta_secondaire_label: string | null;
+  cta_secondaire_url: string | null;
+  plateforme: string[];
+  version: string | null;
+  publie: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
+export async function getPublishedApps(): Promise<AppDB[]> {
+  const { data, error } = await supabase
+    .from('apps')
+    .select('*')
+    .eq('publie', true)
+    .order('created_at', { ascending: false });
+
+  if (error) throw new Error(error.message);
+  return data as AppDB[];
+}
+
+export async function getAppBySlug(slug: string): Promise<AppDB | null> {
+  const { data, error } = await supabase
+    .from('apps')
+    .select('*')
+    .eq('slug', slug)
+    .eq('publie', true)
+    .single();
+
+  if (error || !data) return null;
+  return data as AppDB;
+}

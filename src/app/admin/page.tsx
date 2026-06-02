@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { FolderGit2, Plus, Edit, BarChart3, Clock, FileText, Eye } from 'lucide-react';
+import { FolderGit2, Plus, Edit, BarChart3, Clock, FileText, Eye, AppWindow } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 type Project = {
@@ -200,6 +200,67 @@ export default function AdminDashboard() {
                 </h3>
                 <p className="text-sm text-text-secondary">
                   Rédiger un nouvel article de blog
+                </p>
+              </div>
+            </div>
+          </Link>
+
+          {/* Store — Apps */}
+          <Link
+            href="/admin/apps"
+            className={cn(
+              "p-6",
+              "bg-accent/5 border-2 border-accent/20",
+              "hover:bg-accent/10",
+              "transition-all duration-200",
+              "group"
+            )}
+          >
+            <div className="flex items-center gap-4">
+              <div className={cn(
+                "w-12 h-12",
+                "bg-accent/10",
+                "flex items-center justify-center",
+                "group-hover:scale-110 transition-transform"
+              )}>
+                <AppWindow className="w-6 h-6 text-accent" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-accent mb-1">
+                  Gérer le store
+                </h3>
+                <p className="text-sm text-text-secondary">
+                  Apps, outils et SaaS — créer, éditer, publier
+                </p>
+              </div>
+            </div>
+          </Link>
+
+          <Link
+            href="/admin/apps/new"
+            className={cn(
+              "p-6",
+              "bg-surface-1/10 border-2 border-border/20",
+              "hover:border-accent/50",
+              "transition-all duration-200",
+              "group"
+            )}
+          >
+            <div className="flex items-center gap-4">
+              <div className={cn(
+                "w-12 h-12",
+                "bg-surface-2",
+                "flex items-center justify-center",
+                "group-hover:scale-110 transition-transform"
+              )}>
+                <Plus className="w-6 h-6 text-accent" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-text-primary mb-1">
+                  Nouvelle app
+                </h3>
+                <p className="text-sm text-text-secondary">
+                  Ajouter une app au store
                 </p>
               </div>
             </div>
