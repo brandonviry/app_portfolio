@@ -35,7 +35,7 @@ export function CompetencesSection() {
             level="h2"
             className="text-accent text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight"
           >
-            Compétence
+            Création
           </Typography>
           <Divider variant="gradient" align="center" className="mx-auto" />
         </div>
