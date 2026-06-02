@@ -34,17 +34,16 @@ export function TechnologiesSection() {
                 "relative flex flex-col gap-6 p-8",
                 "border border-border/20 bg-surface-1",
                 "transition-all duration-300",
-                "hover:border-accent/30 hover:shadow-lg hover:shadow-accent/5",
+                "hover:border-accent/30",
                 "group"
               )}
             >
-              {/* Coin décoratif top-left */}
+              {/* Coins décoratifs */}
               <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-accent/40 group-hover:border-accent transition-colors duration-300" />
-              {/* Coin décoratif bottom-right */}
               <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-cta/30 group-hover:border-cta transition-colors duration-300" />
 
-              {/* Titre du pôle */}
-              <div className="space-y-2">
+              {/* En-tête du pôle */}
+              <div className="space-y-1">
                 <Typography
                   level="h3"
                   className="text-accent font-extrabold text-4xl tracking-widest"
@@ -60,10 +59,19 @@ export function TechnologiesSection() {
                 <Divider variant="gradient" align="left" />
               </div>
 
-              {/* Tags outils */}
-              <div className="flex flex-wrap gap-2">
-                {pole.tools.map((tool) => (
-                  <SkillTag key={tool} label={tool} />
+              {/* Sous-catégories */}
+              <div className="flex flex-col gap-5">
+                {pole.groups.map((group) => (
+                  <div key={group.title} className="space-y-2">
+                    <p className="text-xs font-semibold uppercase tracking-widest text-text-muted border-l-2 border-accent/40 pl-2">
+                      {group.title}
+                    </p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {group.tools.map((tool) => (
+                        <SkillTag key={tool} label={tool} />
+                      ))}
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
