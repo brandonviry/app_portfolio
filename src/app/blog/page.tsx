@@ -5,6 +5,8 @@ import { BlogListingSection } from "@/components/layout/sections/blog/blog-listi
 import { getPublishedArticles } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "Blog - VIRY Brandon",
   description: "Articles de VIRY Brandon sur le développement web, le design graphique et l'automatisation.",

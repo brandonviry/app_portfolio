@@ -7,6 +7,8 @@ import { Globe, ExternalLink, Download } from 'lucide-react';
 import type { App } from '@/types/app';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Store — Apps & Outils | VIRY Brandon',
   description: 'Applications web, SaaS et outils créés par VIRY Brandon — développeur graphiste La Réunion. Web apps, exécutables et services disponibles.',
