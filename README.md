@@ -157,6 +157,8 @@ src/
 │   │   ├── admin/articles/           # API CRUD admin articles (Supabase)
 │   │   ├── admin/apps/               # ✨ API CRUD admin apps (Supabase)
 │   │   └── auth/[...nextauth]/       # NextAuth routes
+│   ├── sitemap.ts                    # ✨ Sitemap dynamique (articles + apps depuis Supabase)
+│   ├── robots.ts                     # ✨ Robots.txt (bloque /admin/ et /api/)
 │   ├── layout.tsx                    # Layout global (Navbar + Footer)
 │   └── page.tsx                      # Route / (racine)
 │
@@ -563,6 +565,45 @@ VALUES
 
 Gérée via l'interface admin `/admin/projects`. Voir la documentation Supabase existante.
 
+## 🔍 SEO
+
+### Mot-clé principal
+
+`Développeur graphiste La Réunion` — présent dans le titre, la meta description, le H1 (sr-only), le H2, le footer et le copyright.
+
+### Sitemap dynamique
+
+`src/app/sitemap.ts` génère automatiquement `/sitemap.xml` à chaque requête en incluant :
+- Pages statiques : `/`, `/blog`, `/store`, `/contact`
+- Articles publiés : `/blog/[slug]` avec `lastModified` depuis `updated_at`
+- Apps publiées : `/store/[slug]` avec `lastModified` depuis `updated_at`
+
+> Soumettre le sitemap dans **Google Search Console → Sitemaps** : `https://devweb.viry-brandon.fr/sitemap.xml`
+
+### Robots.txt
+
+`src/app/robots.ts` bloque les crawlers sur `/admin/` et `/api/`, autorise le reste, et pointe vers le sitemap.
+
+### JSON-LD Structured Data
+
+| Page | Type schema.org | Effet |
+|------|----------------|-------|
+| `/` | `Person` | Knowledge panel Google (nom, liens sociaux, localisation) |
+| `/blog/[slug]` | `Article` | Rich snippets (date, auteur) |
+| `/store/[slug]` | `SoftwareApplication` | Rich snippets style Play Store |
+
+### Rendu dynamique
+
+`/blog` et `/store` ont `export const dynamic = 'force-dynamic'` — les données Supabase sont toujours fraîches sans redéploiement.
+
+### Métadonnées
+
+- Template global : `%s | VIRY Brandon` (défini dans `layout.tsx`)
+- Tag de vérification Google dans `layout.tsx` (`metadata.verification.google`)
+- Open Graph et Twitter Card activés par défaut via Next.js
+
+---
+
 ## 🚀 Déploiement (Vercel)
 
 1. Connectez le repository GitHub à Vercel
@@ -579,6 +620,7 @@ Install        : npm install
 
 - **Section Témoignages** : commentée dans `/dev/page.tsx`, décommenter quand les données sont prêtes
 - **Liens CRAFT / GRAPH** : CRAFT → Notion (Davecraft), GRAPH → Behance
+- **Sitemap dynamique** : remplace `public/sitemap.xml` — les nouvelles pages sont indexées automatiquement sans intervention
 - **Navbar / Footer** : liens Accueil, Blog, Store, Contact (Projets retiré de la navigation principale)
 - **Images dans les articles** : toujours utiliser `![alt](url)` — les URLs sans extension ne sont pas détectées automatiquement. Domaines autorisés dans `next.config.js` : `i.ibb.co`, `raw.githubusercontent.com`, `images.unsplash.com`, `lokhatmedias.com`, `www.salonemploi.re`, `i.pinimg.com`
 - **Blocs de code dans Supabase** : utiliser 4 espaces d'indentation plutôt que les backticks triples (évite les problèmes de copier-coller dans l'éditeur SQL)
