@@ -67,16 +67,36 @@ export const skillsData: SkillPole[] = [
     description: "No-code, automatisation & outils digitaux",
     groups: [
       {
-        title: "No-code & CMS",
-        tools: ["Webflow", "WordPress"],
+        title: "Code & Développement",
+        tools: ["JavaScript", "Python", "HTML", "CSS", "React", "Git"],
+      },
+      {
+        title: "Web & CMS",
+        tools: ["WordPress", "Webflow", "Framer"],
+      },
+      {
+        title: "No-Code",
+        tools: ["Notion", "Airtable", "Système.io"],
       },
       {
         title: "Automatisation",
-        tools: ["Zapier", "Make"],
+        tools: ["Zapier", "Make (Integromat)", "N8N", "Webhooks", "API", "Workflows"],
       },
       {
-        title: "Gestion & Paiement",
-        tools: ["Notion", "Airtable", "Stripe"],
+        title: "Design & Contenu",
+        tools: ["Canva", "Figma", "Suite Affinity", "UI/UX Design", "Design System", "Prototypage"],
+      },
+      {
+        title: "Tunnel de vente & Paiement",
+        tools: ["Stripe", "Système.io"],
+      },
+      {
+        title: "Outils collaboratifs",
+        tools: ["Discord", "WhatsApp", "Agile", "Code Review", "Documentation"],
+      },
+      {
+        title: "Vision Produit",
+        tools: ["Stratégie", "MVP", "Tests", "Itération"],
       },
     ],
   },
