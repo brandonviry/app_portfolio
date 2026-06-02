@@ -93,7 +93,7 @@ export function Navbar() {
                     "group-hover:text-accent"
                   )}
                 >
-                   Portfolio VIRY BRANDON
+                  VIRY Brandon — Développeur Graphiste
                 </Typography>
               </Link>
             </div>

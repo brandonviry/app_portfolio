@@ -25,7 +25,7 @@ export function Footer() {
           {/* Logo et description */}
           <div className="space-y-4">
             <Typography level="h6" className="text-foreground">
-              Portfolio
+              VIRY Brandon
             </Typography>
             <Typography level="body2" className="text-foreground/60">
               Développeur web & graphiste basé à La Réunion — design, code et automatisation.
