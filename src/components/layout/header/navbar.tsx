@@ -5,13 +5,15 @@ import { Navigation } from '@/components/ui/navigation/navigation';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Typography } from '@/components/ui/typography/typography';
-import { Home, Mail, BookOpen } from 'lucide-react';
+import { Home, Mail, BookOpen, Settings } from 'lucide-react';
 
 const navigation = [
   { name: 'Accueil', href: '/', icon: Home },
   { name: 'Blog', href: '/blog', icon: BookOpen },
   { name: 'Contact', href: '/contact', icon: Mail },
 ];
+
+const adminNav = { name: 'Admin', href: '/admin', icon: Settings };
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -99,8 +101,19 @@ export function Navbar() {
             </div>
 
             {/* Navigation desktop */}
-            <div className="hidden md:block">
+            <div className="hidden md:flex items-center gap-4">
               <Navigation items={navigation} />
+              <Link
+                href={adminNav.href}
+                className={cn(
+                  "p-2 text-text-secondary",
+                  "hover:text-accent transition-colors duration-200",
+                  "border border-border/20 hover:border-accent/40"
+                )}
+                title="Admin"
+              >
+                <adminNav.icon className="w-4 h-4" />
+              </Link>
             </div>
 
             {/* Bouton menu mobile */}
