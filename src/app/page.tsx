@@ -4,9 +4,8 @@ import { CompetencesSection } from "@/components/layout/sections/competences/com
 import { TechnologiesSection } from "@/components/layout/sections/technologies/technologies-section";
 import { LanguagesSection } from "@/components/layout/sections/languages/languages-section";
 import { ArticlesSection } from "@/components/layout/sections/articles/articles-section";
-import { AproposSection } from "@/components/layout/sections/apropos/apropos-section";
+import { DescriptionSection } from "@/components/layout/sections/description/description-section";
 import { FAQSection } from "@/components/layout/sections/faq/faq-section";
-import { ContactAccueilSection } from "@/components/layout/sections/contact-accueil/contact-accueil-section";
 import { FinalCTASection } from "@/components/layout/sections/cta/final-cta-section";
 
 export const metadata: Metadata = {
@@ -25,9 +24,8 @@ export default function HomePage() {
         <LanguagesSection />
       </div>
       <ArticlesSection />
-      <AproposSection />
+      <DescriptionSection />
       <FAQSection />
-      <ContactAccueilSection />
       <FinalCTASection />
     </main>
   );
