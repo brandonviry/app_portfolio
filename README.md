@@ -242,6 +242,9 @@ Conventions : **aucun border-radius**, coins géométriques, grille de points, p
 | `/admin/projects` | Liste projets |
 | `/admin/projects/new` | Créer un projet |
 | `/admin/projects/[id]` | Modifier un projet |
+| `/admin/articles` | Liste articles (recherche, filtres statut/catégorie) |
+| `/admin/articles/new` | Créer un article |
+| `/admin/articles/[id]` | Modifier / supprimer un article |
 
 ## ✍️ Rédaction des articles — Syntaxe complète
 
@@ -411,7 +414,7 @@ Install        : npm install
 
 - **Section Témoignages** : commentée dans `/dev/page.tsx`, décommenter quand les données sont prêtes
 - **Liens CRAFT / GRAPH** dans la section Compétences : pointent vers `/blog/...` non encore créés
-- **Images dans les articles** : toujours utiliser `![alt](url)` — les URLs sans extension ne sont pas détectées automatiquement
+- **Images dans les articles** : toujours utiliser `![alt](url)` — les URLs sans extension ne sont pas détectées automatiquement. Domaines autorisés dans `next.config.js` : `i.ibb.co`, `raw.githubusercontent.com`, `images.unsplash.com`, `lokhatmedias.com`, `www.salonemploi.re`, `i.pinimg.com`
 - **Blocs de code dans Supabase** : utiliser 4 espaces d'indentation plutôt que les backticks triples (évite les problèmes de copier-coller dans l'éditeur SQL)
 - **Champ `publie`** : un article en `false` n'est jamais visible publiquement, utile pour les brouillons
 
