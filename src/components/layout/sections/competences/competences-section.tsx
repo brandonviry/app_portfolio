@@ -26,7 +26,7 @@ const competences = [
 
 export function CompetencesSection() {
   return (
-    <section className={cn("relative py-16 md:py-24")}>
+    <section id="voir-mes-projets" className={cn("relative py-16 md:py-24")}>
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-surface-1/20 via-transparent to-surface-1/20 opacity-50" />
 
       <div className={cn("container mx-auto px-4 sm:px-6")}>
@@ -35,7 +35,7 @@ export function CompetencesSection() {
             level="h2"
             className="text-accent text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight"
           >
-            Création
+            Voir mes projets
           </Typography>
           <Divider variant="gradient" align="center" className="mx-auto" />
         </div>

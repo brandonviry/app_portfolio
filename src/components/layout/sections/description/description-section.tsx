@@ -200,8 +200,7 @@ export function DescriptionSection() {
               <Button
                 variant="outline"
                 size="lg"
-                href="/projets"
-                external
+                href="#voir-mes-projets"
                 fullWidth
                 className={cn(
                   "gap-2",
@@ -212,7 +211,6 @@ export function DescriptionSection() {
                 <Icon size="md">
                   <FolderGit2/>
                 </Icon>
-                
                 Voir mes projets
               </Button>
             </div>
