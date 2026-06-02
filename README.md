@@ -30,8 +30,8 @@ Ordre des sections :
 2. **À propos** (`DescriptionSection`) : photo + 2 paragraphes bio + boutons "Me contacter" / "Voir mes projets" (scroll vers section suivante)
 3. **Voir mes projets** : 3 pôles DEV / CRAFT / GRAPH — DEV → `/projets`, CRAFT → Notion, GRAPH → Behance
 4. **Derniers articles** : 6 derniers articles publiés depuis Supabase + CTA → `/blog`
-5. **Technologies + Languages** : stack technique et langages maîtrisés
-6. **FAQ** : questions fréquentes
+5. **Savoir-faire** : onglets DEV / CRAFT / GRAPH — chaque pôle affiche ses outils groupés par sous-catégorie (`skills_data.ts`)
+6. **FAQ** : 9 questions réparties sur les 3 pôles (3 DEV, 3 CRAFT, 3 GRAPH)
 7. **CTA final** : bouton "Me contacter" → `/contact`
 
 ### Blog /blog & /blog/[slug]
@@ -173,7 +173,13 @@ src/
 │   │   │   └── form-checkbox.tsx     # ✨ Atome checkbox avec label et gestion d'erreur
 │   │   ├── chip/, dropdown/, filter/ # Filtres projets
 │   │   ├── decoration/divider.tsx
-│   │   ├── icon/, badge/, avatar/
+│   │   ├── chip/, dropdown/, filter/ # Filtres projets
+│   │   ├── decoration/divider.tsx
+│   │   ├── badge/
+│   │   │   ├── skill-tag.tsx         # ✨ Tag statique outil/compétence (section Savoir-faire)
+│   │   │   ├── level-badge.tsx
+│   │   │   └── status-badge.tsx
+│   │   ├── icon/, avatar/
 │   │   ├── navigation/navigation.tsx
 │   │   └── ...
 │   │
@@ -188,15 +194,14 @@ src/
 │           ├── apropos/              # Biographie + réseaux sociaux (non utilisé sur /)
 │           ├── contact-accueil/      # Section contact (non utilisé sur /)
 │           ├── blog/                 # ✨ Listing blog avec filtres + lien retour
+│           ├── technologies/         # ✨ Section "Savoir-faire" — onglets DEV/CRAFT/GRAPH
 │           ├── hero/                 # Hero page /dev
 │           ├── benefits/
 │           ├── cta/
-│           ├── description/
 │           ├── faq/
 │           ├── languages/
 │           ├── projets/
 │           ├── social-proof/
-│           ├── technologies/
 │           └── testimonials/
 │
 ├── config/
@@ -212,11 +217,12 @@ src/
 ├── middleware.ts                     # Protection routes /admin/*
 │
 ├── store/                            # Données statiques TypeScript
+│   ├── skills_data.ts                # ✨ 3 pôles DEV/CRAFT/GRAPH avec sous-groupes d'outils
 │   ├── articles_data.ts              # ✨ Données articles de fallback
 │   ├── benefits_data.ts
 │   ├── competences_data.ts
 │   ├── description_data.ts
-│   ├── faq_data.ts
+│   ├── faq_data.ts                   # FAQ restructurée — 3 DEV + 3 CRAFT + 3 GRAPH
 │   ├── logos_data.ts
 │   └── testimonials_data.ts
 │
