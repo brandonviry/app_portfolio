@@ -106,12 +106,43 @@ export const skillsData: SkillPole[] = [
     description: "Design graphique & identité visuelle",
     groups: [
       {
-        title: "Design & Maquette",
-        tools: ["Figma", "Affinity Suite"],
+        title: "Identité visuelle",
+        tools: [
+          "Création d'identités visuelles", "Chartes graphiques",
+          "Design de logos", "Packaging", "Mascottes graphiques", "Emojis personnalisés",
+        ],
       },
       {
-        title: "Retouche & Création",
-        tools: ["Photoshop", "Illustrator", "InDesign", "Canva"],
+        title: "Projets visuels & Créations",
+        tools: [
+          "Cartes de jeu et visuels ludiques", "Affiches", "Magazines",
+          "Projets de livres", "Maquettage musical", "Maquettes de sites vitrines",
+        ],
+      },
+      {
+        title: "Supports Print & Digitaux",
+        tools: [
+          "Infographies", "Présentations visuelles (PDF/Slides)",
+          "Curriculum vitae designs", "QCM & fiches interactives",
+        ],
+      },
+      {
+        title: "Réseaux & Contenus digitaux",
+        tools: [
+          "Bannières (Substack, LinkedIn, YouTube)", "Publications thématiques",
+          "Carousels informatifs/promotionnels", "Miniatures YouTube (Méthode Shorts)",
+        ],
+      },
+      {
+        title: "Logiciels",
+        tools: ["Figma", "Photoshop", "Illustrator", "Affinity Suite", "Canva", "InDesign"],
+      },
+      {
+        title: "Compétences transversales",
+        tools: [
+          "Esprit stratégique", "Créativité", "Autonomie & adaptabilité",
+          "Travail en équipe", "Gestion de projet", "Résolution de problèmes",
+        ],
       },
     ],
   },
