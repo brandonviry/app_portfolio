@@ -28,7 +28,7 @@ export function Footer() {
               Portfolio
             </Typography>
             <Typography level="body2" className="text-foreground/60">
-              Développeur Full Stack passionné par la création d&apos;expériences web innovantes.
+              Développeur web & graphiste basé à La Réunion — design, code et automatisation.
             </Typography>
           </div>
 
@@ -90,7 +90,7 @@ export function Footer() {
         {/* Copyright */}
         <div className="mt-8 pt-8 border-t border-border/40 text-center">
           <Typography level="body2" className="text-foreground/60">
-            &copy; {currentYear} VIRY BRANDON - Développeur Full Stack La Réunion. Tous droits réservés.
+            &copy; {currentYear} VIRY BRANDON - Développeur Graphiste La Réunion. Tous droits réservés.
           </Typography>
         </div>
       </div>
