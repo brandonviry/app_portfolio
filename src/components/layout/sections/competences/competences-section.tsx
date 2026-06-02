@@ -8,16 +8,19 @@ const competences = [
     label: "DEV",
     description: "Développement web, architecture applicative et code propre.",
     href: "/projets",
+    external: false,
   },
   {
     label: "CRAFT",
     description: "Full-Stack Product making : no-code, automatisation, outils digitaux.",
-    href: "/blog/full-stack-product-maker-viry-brandon",
+    href: "https://steadfast-firefly-f2f.notion.site/1cae9ab38297806f89ecdd95e68a9d2c?v=1cbe9ab382978017a5fe000c37c30f87",
+    external: true,
   },
   {
     label: "GRAPH",
     description: "Identité visuelle, design graphique et création de contenus.",
-    href: "/blog/graphiste",
+    href: "https://www.behance.net/brandonviry",
+    external: true,
   },
 ];
 
@@ -68,6 +71,7 @@ export function CompetencesSection() {
                 variant="outline"
                 size="sm"
                 href={item.href}
+                external={item.external}
                 className="mt-auto group-hover:border-accent group-hover:text-accent transition-colors duration-300"
               >
                 En savoir plus
