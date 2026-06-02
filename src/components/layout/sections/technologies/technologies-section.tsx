@@ -29,7 +29,7 @@ export function TechnologiesSection() {
             level="h2"
             className="text-accent text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight"
           >
-            Technologies & Outils
+            Savoir-faire
           </Typography>
           <Divider variant="gradient" align="center" className="mx-auto" />
         </div>
