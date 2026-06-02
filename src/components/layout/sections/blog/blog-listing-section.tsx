@@ -41,7 +41,7 @@ export function BlogListingSection({ articles }: BlogListingSectionProps) {
 
         {/* Retour */}
         <Link
-          href="/accueil"
+          href="/"
           className={cn(
             "inline-flex items-center gap-2 mb-10",
             "text-xs text-text-secondary uppercase tracking-widest font-medium",
