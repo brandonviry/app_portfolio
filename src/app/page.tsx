@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import { HeroAccueilSection } from "@/components/layout/sections/hero-accueil/hero-accueil-section";
 import { CompetencesSection } from "@/components/layout/sections/competences/competences-section";
+import { TechnologiesSection } from "@/components/layout/sections/technologies/technologies-section";
+import { LanguagesSection } from "@/components/layout/sections/languages/languages-section";
 import { ArticlesSection } from "@/components/layout/sections/articles/articles-section";
 import { AproposSection } from "@/components/layout/sections/apropos/apropos-section";
+import { FAQSection } from "@/components/layout/sections/faq/faq-section";
 import { ContactAccueilSection } from "@/components/layout/sections/contact-accueil/contact-accueil-section";
+import { FinalCTASection } from "@/components/layout/sections/cta/final-cta-section";
 
 export const metadata: Metadata = {
   title: "Accueil - VIRY Brandon",
@@ -16,9 +20,15 @@ export default function HomePage() {
     <main className="flex-1 w-full">
       <HeroAccueilSection />
       <CompetencesSection />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <TechnologiesSection />
+        <LanguagesSection />
+      </div>
       <ArticlesSection />
       <AproposSection />
+      <FAQSection />
       <ContactAccueilSection />
+      <FinalCTASection />
     </main>
   );
 }
