@@ -139,7 +139,7 @@ export default function EditArticlePage({ params }: { params: Promise<{ id: stri
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent mx-auto mb-4" />
-          <p className="text-text-secondary">Chargement de l'article...</p>
+          <p className="text-text-secondary">Chargement de l&apos;article...</p>
         </div>
       </div>
     );
@@ -170,7 +170,7 @@ export default function EditArticlePage({ params }: { params: Promise<{ id: stri
             <ArrowLeft className="w-4 h-4" />
             Retour à la liste
           </Link>
-          <h1 className="text-4xl font-bold text-text-primary mb-1">Éditer l'article</h1>
+          <h1 className="text-4xl font-bold text-text-primary mb-1">Éditer l&apos;article</h1>
           <p className="text-text-secondary text-sm font-mono">/blog/{form.slug}</p>
         </div>
 
@@ -213,7 +213,7 @@ export default function EditArticlePage({ params }: { params: Promise<{ id: stri
               />
             </div>
             <p className="text-xs text-text-muted">
-              ⚠️ Modifier le slug change l'URL publique de l'article.{' '}
+              ⚠️ Modifier le slug change l&apos;URL publique de l&apos;article.{' '}
               <button
                 onClick={() => { setSlugManual(false); setField('slug', toSlug(form.titre)); }}
                 className="text-accent hover:underline"
