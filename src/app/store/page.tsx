@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Typography } from '@/components/ui/typography/typography';
 import { Divider } from '@/components/ui/decoration/divider';
-import { Button } from '@/components/ui/button/button';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/lib/supabase';
 import { Globe, ExternalLink, Download } from 'lucide-react';
