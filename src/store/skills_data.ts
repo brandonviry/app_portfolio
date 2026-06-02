@@ -17,28 +17,47 @@ export const skillsData: SkillPole[] = [
     description: "Développement web & applications",
     groups: [
       {
-        title: "Web & Frameworks",
-        tools: ["Next.js", "React", "SvelteKit", "Astro", "Tailwind CSS", "Shadcn-ui"],
-      },
-      {
-        title: "Backend & BDD",
-        tools: ["Node.js/Express", "Python/FastAPI", "PostgreSQL", "MySQL", "Prisma", "WebSockets", "Supabase"],
-      },
-      {
-        title: "Langages",
-        tools: ["TypeScript", "JavaScript", "HTML5/CSS3", "Bash", "Rust", "Go"],
+        title: "Développement Web & Stack",
+        tools: [
+          "Next.js/React", "SvelteKit (Svelte 5)", "Astro", "React/TypeScript",
+          "Next.js (SSR/SSG)", "Tailwind CSS", "Node.js/Express (JWT)",
+          "Python FastAPI/Flask", "PostgreSQL/MySQL + Prisma", "WebSockets", "Supabase",
+        ],
       },
       {
         title: "Mobile & Desktop",
-        tools: ["Ionic", "Tauri v2"],
+        tools: ["Ionic (Capacitor)", "Tauri v2"],
       },
       {
-        title: "DevOps & Tests",
-        tools: ["Docker", "Git", "GitHub Actions", "Vercel", "OVH", "Vitest", "Playwright", "Jest", "Cypress"],
+        title: "Langages (Legacy → Moderne)",
+        tools: [
+          "TypeScript", "JavaScript", "HTML5/CSS3",
+          "Python → Mojo", "C++ → Rust", "Java/C# → Go", "C → Zig",
+          "Bash", "Python", "Rust",
+        ],
       },
       {
-        title: "Environnement",
-        tools: ["VS Code", "VSCodium", "Windsurf", "Zed"],
+        title: "Outils, Qualité & DevOps",
+        tools: [
+          "Zustand", "React Hook Form", "Zod", "Shadcn-ui",
+          "Vitest", "Playwright (E2E)", "Jest", "Cypress",
+          "Git", "GitHub Actions", "Docker", "Vercel/VPS", "OVH",
+          "UX/UI responsive", "Mobile-first",
+        ],
+      },
+      {
+        title: "Méthodes & Soft Skills",
+        tools: [
+          "Agile/Scrum", "Documentation technique",
+          "Revues de code", "Polyvalence et adaptation aux besoins projet",
+        ],
+      },
+      {
+        title: "Environnement de Développement",
+        tools: [
+          "VSCodium + Claude Code", "VS Code + GPT-Codex",
+          "Windsurf + Gemini Pro/DeepSeek V3", "03 + Kimi K2", "Zed + Mistral CLI",
+        ],
       },
     ],
   },
